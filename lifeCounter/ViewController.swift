@@ -8,6 +8,7 @@
 
 import UIKit
 import Photos
+import CoreData
 
 class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINavigationControllerDelegate{
 
@@ -33,6 +34,8 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     var currentPlayer : Player!
     var selected : Player!
     
+    var appDelegate:AppDelegate!
+    var viewContext:NSManagedObjectContext!
     
     override func viewDidLoad() {
         
@@ -52,7 +55,45 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         formatter.unitsStyle = .positional
         formatter.allowedUnits = [.minute,.hour,.second]
         
+        setBackground_init()
         self.setNeedsStatusBarAppearanceUpdate()
+    }
+    
+    //背景設定初期メソッド（DBから読み込む）
+    func setBackground_init()  {
+        var player1Img:UIImage? = nil
+        var player2Img:UIImage? = nil
+        var scale1:CGFloat = CGFloat(1)
+        var scale2:CGFloat = CGFloat(1)
+        
+        
+//        let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate
+//        let viewContext = appDelegate.persistentContainer.viewContext
+        appDelegate = UIApplication.shared.delegate as? AppDelegate
+        viewContext = appDelegate.persistentContainer.viewContext
+        
+        let query: NSFetchRequest<Setting> = Setting.fetchRequest()
+        
+        do {
+            let fetchResults = try viewContext.fetch(query)
+            if fetchResults.count != 0 {
+                for result: AnyObject in fetchResults {
+                    let player: Int16 = result.value(forKey: "player") as! Int16
+                    
+                    if player==1 {
+                        player1Img=UIImage(data: result.value(forKey: "picture") as! Data)
+                        scale1 = result.value(forKey: "scale") as! CGFloat
+                    }
+                    else if player==2 {
+                        player2Img=UIImage(data: result.value(forKey: "picture") as! Data)
+                        scale2 = result.value(forKey: "scale") as! CGFloat
+                    }
+                }
+            }
+            self.settingBackground(playerView: &player1view, setImage: player1Img ?? UIImage(),scale: scale1,initial: true)
+            self.settingBackground(playerView: &player2view, setImage: player2Img ?? UIImage(),scale: scale2,initial: true)
+        } catch {
+        }
     }
     override var prefersStatusBarHidden: Bool{
         return true
@@ -67,16 +108,16 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
             UIView.animate(withDuration: 0.5 / 2) { () -> Void in
                 self.startBtn.transform = CGAffineTransform(rotationAngle:  CGFloat.pi / 2 *    ((random % 2 == 0) ? -1.0 : 1.0))
             }
-            player1view.backgroundColor = UIColor.clear
-            player2view.backgroundColor = UIColor.clear
+//            player1view.backgroundColor = UIColor.clear
+//            player2view.backgroundColor = UIColor.clear
             if random % 2 == 0 {
-                player2view.backgroundColor = UIColor.blue
+//                player2view.backgroundColor = UIColor.blue
                 timer2 = Timer.scheduledTimer(timeInterval: 1.0,target: self, selector:  #selector(self.timerFunc2),userInfo: nil, repeats: true)
                 //timer2.fire()
                 currentPlayer = .player2
             }
             else{
-                player1view.backgroundColor = UIColor.blue
+//                player1view.backgroundColor = UIColor.blue
                 timer1 = Timer.scheduledTimer(timeInterval: 1.0,target: self, selector:  #selector(self.timerFunc),userInfo: nil, repeats: true)
                 //timer1.fire()
                 currentPlayer = .player1
@@ -119,8 +160,8 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         UIView.animate(withDuration: 0.5 / 2) { () -> Void in
             self.startBtn.transform = CGAffineTransform(rotationAngle:  0)
         }
-        player1view.backgroundColor = UIColor.clear
-        player2view.backgroundColor = UIColor.clear
+//        player1view.backgroundColor = UIColor.clear
+//        player2view.backgroundColor = UIColor.clear
         lifeReset()
         
         passMin = 0//経過時間
@@ -142,14 +183,14 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         // preferredStyleにUIAlertControllerStyle.actionSheetを指定してアクションシートを表示する
         let actionSheet: UIAlertController = UIAlertController(
             title: "背景画像",
-            message: "設定する位置を選択してください",
+            message: "操作を選択してください",
             preferredStyle: UIAlertController.Style.actionSheet)
         
         // ②選択肢の作成と追加
         // titleに選択肢のテキストを、styleに.defaultを
         // handlerにボタンが押された時の処理をクロージャで実装する
         actionSheet.addAction(
-            UIAlertAction(title: "Player1",style: .default, handler: {
+            UIAlertAction(title: "設定（プレイヤー１）",style: .default, handler: {
                             (action: UIAlertAction!) -> Void in
                             self.selected = .player1
                             self.callPhotoLibrary()
@@ -158,16 +199,30 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         
         // ②選択肢の作成と追加
         actionSheet.addAction(
-            UIAlertAction(title: "Player2", style: .default, handler: {
+            UIAlertAction(title: "設定（プレイヤー２）", style: .default, handler: {
                 (action: UIAlertAction!) -> Void in
                 self.selected = .player2
                 self.callPhotoLibrary()
             })
         )
+        actionSheet.addAction(
+            UIAlertAction(title: "削除（プレイヤー１）", style: .default, handler: {
+                (action: UIAlertAction!) -> Void in
+                self.deleteImg(player: Player.player1)
+                self.setBackground_init()
+            })
+        )
+        actionSheet.addAction(
+            UIAlertAction(title: "削除（プレイヤー２）", style: .default, handler: {
+                (action: UIAlertAction!) -> Void in
+                self.deleteImg(player: Player.player2)
+                self.setBackground_init()
+            })
+        )
         
         // ②選択肢の作成と追加
         actionSheet.addAction(
-            UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            UIAlertAction(title: "キャンセル", style: .cancel, handler: nil)
         )
         
         // ③表示するViewと表示位置を指定する
@@ -176,6 +231,22 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         
         // ④アクションシートを表示
         present(actionSheet, animated: true, completion: nil)
+    }
+    
+    func deleteImg(player:Player)  {
+        let request: NSFetchRequest<Setting> = Setting.fetchRequest()
+        let predicate = NSPredicate(format: "player = \(Player.player1==player ? "1" : "2")")
+
+        request.predicate = predicate
+        do {
+            let fetchResults = try viewContext.fetch(request)
+            for result: AnyObject in fetchResults {
+                let record = result as! NSManagedObject
+                viewContext.delete(record)
+            }
+            try viewContext.save()
+        } catch {
+        }
     }
     func lifeReset(){
         let life:Int = 20
@@ -205,8 +276,8 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     
     @IBAction func end(_ sender: Any){
         if GameStatus.playing == gameStatus{
-            player1view.backgroundColor = Player.player1 == currentPlayer ? UIColor.clear: UIColor.blue
-            player2view.backgroundColor = Player.player1 == currentPlayer ? UIColor.blue: UIColor.clear
+//            player1view.backgroundColor = Player.player1 == currentPlayer ? UIColor.clear: UIColor.blue
+//            player2view.backgroundColor = Player.player1 == currentPlayer ? UIColor.blue: UIColor.clear
             UIView.animate(withDuration: 0.5 / 2) { () -> Void in
                 self.startBtn.transform = CGAffineTransform(rotationAngle:  CGFloat.pi / 2 *    (Player.player1 == self.currentPlayer ? -1.0 : 1.0))
             }
@@ -244,7 +315,8 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         lifeIncrement(.player1)
     }
     @IBAction func touchDown_centerPlusBtn1(_ sender: Any) {
-        if GameStatus.ready == gameStatus {
+        if GameStatus.ready == gameStatus ||
+            GameStatus.stop == gameStatus{
             lifeIncrement(.player1)
         }
         else{
@@ -255,7 +327,8 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         lifeIncrement(.player2)
     }
     @IBAction func touchDown_centerPlusBtn2(_ sender: Any) {
-        if GameStatus.ready == gameStatus {
+        if GameStatus.ready == gameStatus ||
+            GameStatus.stop == gameStatus {
             lifeIncrement(.player2)
         }
         else{
@@ -266,7 +339,8 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         lifeDecrement(.player1)
     }
     @IBAction func touchDown_centerMinusBtn1(_ sender: Any) {
-        if GameStatus.ready == gameStatus {
+        if GameStatus.ready == gameStatus ||
+            GameStatus.stop == gameStatus {
             lifeDecrement(.player1)
         }
         else{
@@ -277,7 +351,8 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         lifeDecrement(.player2)
     }
     @IBAction func touchDown_centerMinusBtn2(_ sender: Any) {
-        if GameStatus.ready == gameStatus {
+        if GameStatus.ready == gameStatus ||
+            GameStatus.stop == gameStatus {
             lifeDecrement(.player2)
         }
         else{
@@ -357,38 +432,104 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         }
     }
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]){
+//        let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate
+//        let viewContext = appDelegate.persistentContainer.viewContext
         if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            let request: NSFetchRequest<Setting> = Setting.fetchRequest()
+            var predicate:NSPredicate
+            let p1selected = (Player.player1 == self.selected)
+//            // スクリーンの縦横サイズを取得
+//            let playerViewWidth:CGFloat = playerView.frame.size.width
+//            let playerViewHeight:CGFloat = playerView.frame.size.height
+//
+//            // 画像の縦横サイズを取得
+//            let imgWidth:CGFloat = setImage.size.width
+//            let imgHeight:CGFloat = setImage.size.height
+            // スクリーンの縦横サイズを取得
+            let playerViewWidth:CGFloat = player1view.frame.size.width
+            let playerViewHeight:CGFloat = player1view.frame.size.height
+            
+            // 画像の縦横サイズを取得
+            let imgWidth:CGFloat = pickedImage.size.width
+            let imgHeight:CGFloat = pickedImage.size.height
+            
+            let scale:CGFloat = playerViewWidth / imgWidth
+            
+            predicate = NSPredicate(format: "player = " + (p1selected ? "1" : "2"))
+            request.predicate = predicate
+            
+            var change = false
+            
+            //change
+            do {
+                let fetchResults = try viewContext.fetch(request)
+                if(fetchResults.count != 0){
+                    change=true
+                    for result: AnyObject in fetchResults {
+                        let record = result as! NSManagedObject
+                        record.setValue((p1selected ? 1 : 2), forKey: "player")
+                        record.setValue(pickedImage.pngData(), forKey: "picture")
+                        record.setValue(scale, forKey: "scale")
+                    }
+                    try viewContext.save()
+                }
+            } catch {
+            }
+            //add
+            if !change {
+                let setting = NSEntityDescription.entity(forEntityName: "Setting", in: viewContext)
+                let newRecord = NSManagedObject(entity: setting!, insertInto: viewContext)
+                newRecord.setValue((p1selected ? 1 : 2), forKey: "player")
+                newRecord.setValue(pickedImage.pngData(), forKey: "picture")
+                newRecord.setValue(scale, forKey: "scale")
+                appDelegate.saveContext()
+            }
+            
+            //背景設定
             if Player.player1 == self.selected{
-                self.settingBackground(playerView: &player1view, setImage: pickedImage)
+                self.settingBackground(playerView: &player1view, setImage: pickedImage,scale: scale)
             }
             else{
-                self.settingBackground(playerView: &player2view, setImage: pickedImage)
+                self.settingBackground(playerView: &player2view, setImage: pickedImage,scale: scale)
             }
             self.dismiss(animated: true, completion: nil)
         }
     }
-    func settingBackground(playerView : inout UIView, setImage : UIImage)  {
+    
+    //背景画像を設定
+    //  playerView:プレイヤービュー
+    //  setImage:背景画像
+    func settingBackground(playerView : inout UIView, setImage : UIImage,scale:CGFloat,initial:Bool = false)  {
         
         let imageView = UIImageView(image:setImage)
         imageView.alpha = 0.6
         // スクリーンの縦横サイズを取得
-        let playerViewWidth:CGFloat = playerView.frame.size.width
-        let playerViewHeight:CGFloat = playerView.frame.size.height
+//        let playerViewWidth:CGFloat = playerView.frame.size.width
+//        let playerViewHeight:CGFloat = playerView.frame.size.height
         
         // 画像の縦横サイズを取得
         let imgWidth:CGFloat = setImage.size.width
         let imgHeight:CGFloat = setImage.size.height
         
+//        print("imgWidth:\(imgWidth)")
+//        print("imgHeight:\(imgHeight)")
+        
         // 画像サイズをスクリーン幅に合わせる
-        let scale:CGFloat = playerViewWidth / imgWidth
+//        let scale:CGFloat = playerViewWidth / imgWidth
+//        let scale:CGFloat = 0.4
+        print("scale:\(scale)")
         let rect:CGRect =
             CGRect(x:0, y:0, width:imgWidth*scale, height:imgHeight*scale)
+//        let scale_w:CGFloat = playerViewWidth / imgWidth
+//        let scale_h:CGFloat = playerViewWidth / imgHeight
+//        let rect:CGRect =
+//            CGRect(x:0, y:0, width:imgWidth*scale_w, height:imgHeight*scale_h)
         
         // ImageView frame をCGRectで作った矩形に合わせる
         imageView.frame = rect;
         
         // 画像の中心を画面の中心に設定
-        imageView.center = CGPoint(x:playerViewWidth/2, y:playerViewHeight/2)
+//        imageView.center = CGPoint(x:playerViewWidth/2, y:playerViewHeight/2)
         
         // UIImageViewのインスタンスをビューに追加
         imageView.tag = 100
