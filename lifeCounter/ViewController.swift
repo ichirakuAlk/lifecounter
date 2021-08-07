@@ -72,7 +72,7 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         appDelegate = UIApplication.shared.delegate as? AppDelegate
         viewContext = appDelegate.persistentContainer.viewContext
         
-        let query: NSFetchRequest<Setting> = Setting.fetchRequest()
+        let query: NSFetchRequest<Background> = Background.fetchRequest()
         
         do {
             let fetchResults = try viewContext.fetch(query)
@@ -234,7 +234,7 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     }
     
     func deleteImg(player:Player)  {
-        let request: NSFetchRequest<Setting> = Setting.fetchRequest()
+        let request: NSFetchRequest<Background> = Background.fetchRequest()
         let predicate = NSPredicate(format: "player = \(Player.player1==player ? "1" : "2")")
 
         request.predicate = predicate
@@ -419,7 +419,7 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
             
             let picker = UIImagePickerController()
             picker.modalPresentationStyle = UIModalPresentationStyle.popover
-            picker.delegate = self as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
+            picker.delegate = self as UIImagePickerControllerDelegate & UINavigationControllerDelegate
             picker.sourceType = UIImagePickerController.SourceType.photoLibrary
             //以下を設定することで、写真選択後にiOSデフォルトのトリミングViewが開くようになる
             picker.allowsEditing = true
@@ -435,7 +435,7 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
 //        let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate
 //        let viewContext = appDelegate.persistentContainer.viewContext
         if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
-            let request: NSFetchRequest<Setting> = Setting.fetchRequest()
+            let request: NSFetchRequest<Background> = Background.fetchRequest()
             var predicate:NSPredicate
             let p1selected = (Player.player1 == self.selected)
 //            // スクリーンの縦横サイズを取得
@@ -447,11 +447,11 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
 //            let imgHeight:CGFloat = setImage.size.height
             // スクリーンの縦横サイズを取得
             let playerViewWidth:CGFloat = player1view.frame.size.width
-            let playerViewHeight:CGFloat = player1view.frame.size.height
+//            let playerViewHeight:CGFloat = player1view.frame.size.height
             
             // 画像の縦横サイズを取得
             let imgWidth:CGFloat = pickedImage.size.width
-            let imgHeight:CGFloat = pickedImage.size.height
+//            let imgHeight:CGFloat = pickedImage.size.height
             
             let scale:CGFloat = playerViewWidth / imgWidth
             
@@ -477,8 +477,8 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
             }
             //add
             if !change {
-                let setting = NSEntityDescription.entity(forEntityName: "Setting", in: viewContext)
-                let newRecord = NSManagedObject(entity: setting!, insertInto: viewContext)
+                let background = NSEntityDescription.entity(forEntityName: "Background", in: viewContext)
+                let newRecord = NSManagedObject(entity: background!, insertInto: viewContext)
                 newRecord.setValue((p1selected ? 1 : 2), forKey: "player")
                 newRecord.setValue(pickedImage.pngData(), forKey: "picture")
                 newRecord.setValue(scale, forKey: "scale")
