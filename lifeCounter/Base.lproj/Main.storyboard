@@ -34,7 +34,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OXn-o0-U7l" userLabel="player1">
                                 <rect key="frame" x="0.0" y="494" width="414" height="368"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qzq-zg-uEo" userLabel="time">
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qzq-zg-uEo" userLabel="time">
                                         <rect key="frame" x="0.0" y="5" width="414" height="38.5"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="32"/>
@@ -107,7 +107,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2zP-ex-cmi" userLabel="player2">
                                 <rect key="frame" x="0.0" y="44" width="414" height="368"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3ac-Rj-OF4" userLabel="time2">
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3ac-Rj-OF4" userLabel="time2">
                                         <rect key="frame" x="0.0" y="5" width="414" height="38.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="32"/>
                                         <nil key="textColor"/>
@@ -181,6 +181,12 @@
                                             <action selector="touchDown_startBtn:" destination="BYZ-38-t0r" eventType="touchDown" id="lwJ-OW-DT4"/>
                                         </connections>
                                     </button>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="e0M-gr-WPF">
+                                        <rect key="frame" x="75" y="5" width="51" height="31"/>
+                                        <connections>
+                                            <action selector="timerSwValueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="yo7-Uk-7Dk"/>
+                                        </connections>
+                                    </switch>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TCC-Ub-C9Q" userLabel="clearBtn" customClass="CustomBtn" customModule="lifeCounter" customModuleProvider="target">
                                         <rect key="frame" x="354" y="-32.5" width="50" height="106"/>
                                         <state key="normal" image="clear"/>
@@ -201,8 +207,10 @@
                                     <constraint firstItem="zca-e2-Ri9" firstAttribute="leading" secondItem="RGB-OH-td1" secondAttribute="leading" constant="10" id="7FA-bR-WLY"/>
                                     <constraint firstItem="hmj-OV-HE6" firstAttribute="centerX" secondItem="RGB-OH-td1" secondAttribute="centerX" id="7Fr-Yk-Sxm"/>
                                     <constraint firstItem="zca-e2-Ri9" firstAttribute="centerY" secondItem="RGB-OH-td1" secondAttribute="centerY" id="DUq-94-ECX"/>
+                                    <constraint firstItem="e0M-gr-WPF" firstAttribute="leading" secondItem="zca-e2-Ri9" secondAttribute="trailing" constant="15" id="Hkx-0S-6P3"/>
                                     <constraint firstItem="TCC-Ub-C9Q" firstAttribute="centerY" secondItem="RGB-OH-td1" secondAttribute="centerY" id="Qjo-le-ocV"/>
                                     <constraint firstAttribute="trailing" secondItem="TCC-Ub-C9Q" secondAttribute="trailing" constant="10" id="jKD-SY-VHa"/>
+                                    <constraint firstItem="e0M-gr-WPF" firstAttribute="centerY" secondItem="RGB-OH-td1" secondAttribute="centerY" id="t36-o2-U6c"/>
                                     <constraint firstItem="hmj-OV-HE6" firstAttribute="centerY" secondItem="RGB-OH-td1" secondAttribute="centerY" id="vBi-bX-ROK"/>
                                 </constraints>
                             </view>
@@ -251,6 +259,7 @@
                         <outlet property="startBtn" destination="hmj-OV-HE6" id="0rm-3O-bKE"/>
                         <outlet property="time1" destination="qzq-zg-uEo" id="9ed-3r-Ll7"/>
                         <outlet property="time2" destination="3ac-Rj-OF4" id="78U-SV-zax"/>
+                        <outlet property="timerSw" destination="e0M-gr-WPF" id="h6l-MT-Eu9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

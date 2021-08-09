@@ -21,6 +21,7 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     @IBOutlet weak var life2: UILabel!
     @IBOutlet weak var time1: UILabel!
     @IBOutlet weak var time2: UILabel!
+    @IBOutlet weak var timerSw: UISwitch!
     
     var _life1 :Int=20
     var _life2 : Int=20
@@ -98,7 +99,11 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     override var prefersStatusBarHidden: Bool{
         return true
     }
-
+    @IBAction func timerSwValueChanged(_ sender: Any) {
+        time1.isHidden = !timerSw.isOn
+        time2.isHidden = !timerSw.isOn
+    }
+    
     @IBAction func touchDown_startBtn(_ sender: Any) {
         switch gameStatus {
         case .ready:
@@ -316,7 +321,8 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     }
     @IBAction func touchDown_centerPlusBtn1(_ sender: Any) {
         if GameStatus.ready == gameStatus ||
-            GameStatus.stop == gameStatus{
+            GameStatus.stop == gameStatus ||
+            !timerSw.isOn{
             lifeIncrement(.player1)
         }
         else{
@@ -328,7 +334,8 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     }
     @IBAction func touchDown_centerPlusBtn2(_ sender: Any) {
         if GameStatus.ready == gameStatus ||
-            GameStatus.stop == gameStatus {
+            GameStatus.stop == gameStatus ||
+            !timerSw.isOn {
             lifeIncrement(.player2)
         }
         else{
@@ -340,7 +347,8 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     }
     @IBAction func touchDown_centerMinusBtn1(_ sender: Any) {
         if GameStatus.ready == gameStatus ||
-            GameStatus.stop == gameStatus {
+            GameStatus.stop == gameStatus ||
+            !timerSw.isOn {
             lifeDecrement(.player1)
         }
         else{
@@ -352,7 +360,8 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     }
     @IBAction func touchDown_centerMinusBtn2(_ sender: Any) {
         if GameStatus.ready == gameStatus ||
-            GameStatus.stop == gameStatus {
+            GameStatus.stop == gameStatus ||
+            !timerSw.isOn {
             lifeDecrement(.player2)
         }
         else{
