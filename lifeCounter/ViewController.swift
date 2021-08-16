@@ -130,18 +130,20 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
             gameStatus = .playing
             
         case .playing:
-            startBtn.setImage(UIImage(named:"restart"), for: .normal)
-            if Player.player1 == currentPlayer{
-                if timer1 != nil{
-                    timer1!.invalidate()
+            if timerSw.isOn {
+                startBtn.setImage(UIImage(named:"restart"), for: .normal)
+                if Player.player1 == currentPlayer{
+                    if timer1 != nil{
+                        timer1!.invalidate()
+                    }
                 }
-            }
-            else{
-                if timer2 != nil{
-                    timer2!.invalidate()
+                else{
+                    if timer2 != nil{
+                        timer2!.invalidate()
+                    }
                 }
+                gameStatus = .stop
             }
-            gameStatus = .stop
         case .stop:
             startBtn.setImage(UIImage(named:"start"), for: .normal)
             if Player.player1 == currentPlayer{
@@ -180,6 +182,8 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         }
         startBtn.setImage(UIImage(named:"start"), for: .normal)
         gameStatus = .ready
+        timerSw.isOn=false
+        timerSwValueChanged(sender)
     }
     @IBAction func touchDown_settingBtn(_ sender: Any) {
         

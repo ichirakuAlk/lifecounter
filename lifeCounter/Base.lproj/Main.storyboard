@@ -174,44 +174,65 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RGB-OH-td1" userLabel="middleView">
                                 <rect key="frame" x="0.0" y="427.5" width="414" height="41"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hmj-OV-HE6" userLabel="startBtn">
-                                        <rect key="frame" x="182" y="-32.5" width="50" height="106"/>
-                                        <state key="normal" image="start"/>
-                                        <connections>
-                                            <action selector="touchDown_startBtn:" destination="BYZ-38-t0r" eventType="touchDown" id="lwJ-OW-DT4"/>
-                                        </connections>
-                                    </button>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="e0M-gr-WPF">
-                                        <rect key="frame" x="75" y="5" width="51" height="31"/>
-                                        <connections>
-                                            <action selector="timerSwValueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="yo7-Uk-7Dk"/>
-                                        </connections>
-                                    </switch>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TCC-Ub-C9Q" userLabel="clearBtn" customClass="CustomBtn" customModule="lifeCounter" customModuleProvider="target">
-                                        <rect key="frame" x="354" y="-32.5" width="50" height="106"/>
-                                        <state key="normal" image="clear"/>
-                                        <connections>
-                                            <action selector="touchDown_clearBtn:" destination="BYZ-38-t0r" eventType="touchDown" id="aD5-1g-SiI"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zca-e2-Ri9" userLabel="settingBtn">
-                                        <rect key="frame" x="10" y="-32.5" width="50" height="106"/>
-                                        <state key="normal" image="setting"/>
-                                        <connections>
-                                            <action selector="touchDown_settingBtn:" destination="BYZ-38-t0r" eventType="touchDown" id="CJK-w4-sgc"/>
-                                        </connections>
-                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9z2-pU-Auw">
+                                        <rect key="frame" x="8" y="-4.5" width="398" height="50"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zca-e2-Ri9" userLabel="settingBtn">
+                                                <rect key="frame" x="0.0" y="0.0" width="66.5" height="50"/>
+                                                <state key="normal" image="setting"/>
+                                                <connections>
+                                                    <action selector="touchDown_settingBtn:" destination="BYZ-38-t0r" eventType="touchDown" id="CJK-w4-sgc"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="luZ-w0-0j8" userLabel="dice6">
+                                                <rect key="frame" x="66.5" y="0.0" width="66" height="50"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                                <state key="normal" title="6" image="square.fill" catalog="system">
+                                                    <color key="titleColor" systemColor="labelColor"/>
+                                                </state>
+                                            </button>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="e0M-gr-WPF">
+                                                <rect key="frame" x="132.5" y="0.0" width="68.5" height="50"/>
+                                                <connections>
+                                                    <action selector="timerSwValueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="yo7-Uk-7Dk"/>
+                                                </connections>
+                                            </switch>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hmj-OV-HE6" userLabel="startBtn">
+                                                <rect key="frame" x="199" y="0.0" width="66.5" height="50"/>
+                                                <state key="normal" image="start"/>
+                                                <connections>
+                                                    <action selector="touchDown_startBtn:" destination="BYZ-38-t0r" eventType="touchDown" id="lwJ-OW-DT4"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vp3-4e-oYx" userLabel="dice20">
+                                                <rect key="frame" x="265.5" y="0.0" width="66" height="50"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                                <state key="normal" title="20" image="hexagon.fill" catalog="system">
+                                                    <color key="titleColor" systemColor="labelColor"/>
+                                                </state>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TCC-Ub-C9Q" userLabel="clearBtn" customClass="CustomBtn" customModule="lifeCounter" customModuleProvider="target">
+                                                <rect key="frame" x="331.5" y="0.0" width="66.5" height="50"/>
+                                                <state key="normal" image="clear"/>
+                                                <connections>
+                                                    <action selector="touchDown_clearBtn:" destination="BYZ-38-t0r" eventType="touchDown" id="aD5-1g-SiI"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="Vp3-4e-oYx" firstAttribute="width" secondItem="zca-e2-Ri9" secondAttribute="width" id="LA8-Ah-RGc"/>
+                                            <constraint firstItem="luZ-w0-0j8" firstAttribute="width" secondItem="zca-e2-Ri9" secondAttribute="width" id="Yft-cu-i85"/>
+                                            <constraint firstItem="e0M-gr-WPF" firstAttribute="width" secondItem="zca-e2-Ri9" secondAttribute="width" id="kas-F4-vEB"/>
+                                            <constraint firstItem="hmj-OV-HE6" firstAttribute="width" secondItem="zca-e2-Ri9" secondAttribute="width" id="knS-an-3Gt"/>
+                                            <constraint firstItem="TCC-Ub-C9Q" firstAttribute="width" secondItem="zca-e2-Ri9" secondAttribute="width" id="kpA-WY-Pg1"/>
+                                        </constraints>
+                                    </stackView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="zca-e2-Ri9" firstAttribute="leading" secondItem="RGB-OH-td1" secondAttribute="leading" constant="10" id="7FA-bR-WLY"/>
-                                    <constraint firstItem="hmj-OV-HE6" firstAttribute="centerX" secondItem="RGB-OH-td1" secondAttribute="centerX" id="7Fr-Yk-Sxm"/>
-                                    <constraint firstItem="zca-e2-Ri9" firstAttribute="centerY" secondItem="RGB-OH-td1" secondAttribute="centerY" id="DUq-94-ECX"/>
-                                    <constraint firstItem="e0M-gr-WPF" firstAttribute="leading" secondItem="zca-e2-Ri9" secondAttribute="trailing" constant="15" id="Hkx-0S-6P3"/>
-                                    <constraint firstItem="TCC-Ub-C9Q" firstAttribute="centerY" secondItem="RGB-OH-td1" secondAttribute="centerY" id="Qjo-le-ocV"/>
-                                    <constraint firstAttribute="trailing" secondItem="TCC-Ub-C9Q" secondAttribute="trailing" constant="10" id="jKD-SY-VHa"/>
-                                    <constraint firstItem="e0M-gr-WPF" firstAttribute="centerY" secondItem="RGB-OH-td1" secondAttribute="centerY" id="t36-o2-U6c"/>
-                                    <constraint firstItem="hmj-OV-HE6" firstAttribute="centerY" secondItem="RGB-OH-td1" secondAttribute="centerY" id="vBi-bX-ROK"/>
+                                    <constraint firstItem="9z2-pU-Auw" firstAttribute="leading" secondItem="RGB-OH-td1" secondAttribute="leading" constant="8" id="2uE-aL-g9a"/>
+                                    <constraint firstItem="9z2-pU-Auw" firstAttribute="centerY" secondItem="RGB-OH-td1" secondAttribute="centerY" id="vIW-GA-rHe"/>
+                                    <constraint firstAttribute="trailing" secondItem="9z2-pU-Auw" secondAttribute="trailing" constant="8" id="vP5-dN-Bv4"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -230,7 +251,6 @@
                             <constraint firstItem="k0P-wl-mSU" firstAttribute="width" secondItem="WXi-tU-VPE" secondAttribute="width" multiplier="0.2" id="NOe-LJ-aKT"/>
                             <constraint firstItem="2zP-ex-cmi" firstAttribute="leading" secondItem="N1f-fR-9MN" secondAttribute="trailing" id="OMs-NX-83m"/>
                             <constraint firstItem="RGB-OH-td1" firstAttribute="leading" secondItem="N1f-fR-9MN" secondAttribute="trailing" id="PSQ-Ix-JFe"/>
-                            <constraint firstItem="hmj-OV-HE6" firstAttribute="height" secondItem="N1f-fR-9MN" secondAttribute="height" multiplier="0.13" id="U54-Lh-hNt"/>
                             <constraint firstItem="k2Y-n8-EWS" firstAttribute="width" secondItem="WXi-tU-VPE" secondAttribute="width" multiplier="0.2" id="Wrs-EJ-Taf"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="OXn-o0-U7l" secondAttribute="bottom" id="YYE-9C-tzk"/>
                             <constraint firstItem="OXn-o0-U7l" firstAttribute="leading" secondItem="N1f-fR-9MN" secondAttribute="trailing" id="Yuy-R9-qYs"/>
@@ -238,7 +258,6 @@
                             <constraint firstItem="cPl-cr-d5S" firstAttribute="width" secondItem="WXi-tU-VPE" secondAttribute="width" multiplier="0.3" id="ZUq-zY-7Ov"/>
                             <constraint firstItem="WXi-tU-VPE" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="bn3-Vy-b7G"/>
                             <constraint firstItem="2zP-ex-cmi" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="c2e-8L-Ts7"/>
-                            <constraint firstItem="TCC-Ub-C9Q" firstAttribute="height" secondItem="N1f-fR-9MN" secondAttribute="height" multiplier="0.13" id="fpc-nZ-Fia"/>
                             <constraint firstItem="N1f-fR-9MN" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="iad-RW-bCT"/>
                             <constraint firstItem="OXn-o0-U7l" firstAttribute="height" secondItem="N1f-fR-9MN" secondAttribute="height" multiplier="0.45" id="rDr-Ac-C3A"/>
                             <constraint firstItem="qT1-ma-Zif" firstAttribute="width" secondItem="WXi-tU-VPE" secondAttribute="width" multiplier="0.3" id="ri5-VM-fem"/>
@@ -246,7 +265,6 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="WXi-tU-VPE" secondAttribute="trailing" id="uuE-ZR-ylE"/>
                             <constraint firstItem="TzD-18-S8U" firstAttribute="width" secondItem="WXi-tU-VPE" secondAttribute="width" multiplier="0.3" id="w0P-Fo-uRJ"/>
                             <constraint firstItem="N1f-fR-9MN" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="xAr-AI-VfT"/>
-                            <constraint firstItem="zca-e2-Ri9" firstAttribute="height" secondItem="N1f-fR-9MN" secondAttribute="height" multiplier="0.13" id="xWS-Ij-qWy"/>
                         </constraints>
                     </view>
                     <connections>
@@ -264,13 +282,18 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="129" y="94"/>
+            <point key="canvasLocation" x="128.98550724637681" y="93.75"/>
         </scene>
     </scenes>
     <resources>
         <image name="clear" width="50" height="50"/>
+        <image name="hexagon.fill" catalog="system" width="128" height="124"/>
         <image name="setting" width="50" height="50"/>
+        <image name="square.fill" catalog="system" width="128" height="114"/>
         <image name="start" width="50" height="50"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
