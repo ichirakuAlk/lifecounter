@@ -59,7 +59,13 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         setBackground_init()
         self.setNeedsStatusBarAppearanceUpdate()
     }
-    
+//    override func viewWillAppear(_ animated: Bool) {
+//        print("viewwillappear!!!!!!")
+//
+//        settingBtn.setImage(UIImage(named: "setting" + (UITraitCollection.isDarkMode ? "n" : "d")), for: .normal)
+//        startBtn.setImage(UIImage(named: "start" + (UITraitCollection.isDarkMode ? "n" : "d")), for: .normal)
+//        clearBtn.setImage(UIImage(named: "restart" + (UITraitCollection.isDarkMode ? "n" : "d")), for: .normal)
+//    }
     //背景設定初期メソッド（DBから読み込む）
     func setBackground_init()  {
         var player1Img:UIImage? = nil
@@ -131,7 +137,8 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
             
         case .playing:
             if timerSw.isOn {
-                startBtn.setImage(UIImage(named:"restart"), for: .normal)
+//                startBtn.setImage(UIImage(named:"stop" + (UITraitCollection.isDarkMode ? "n" : "d")), for: .normal)
+                startBtn.setImage(UIImage(named:"stop"), for: .normal)
                 if Player.player1 == currentPlayer{
                     if timer1 != nil{
                         timer1!.invalidate()
@@ -146,6 +153,7 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
             }
         case .stop:
             startBtn.setImage(UIImage(named:"start"), for: .normal)
+//            startBtn.setImage(UIImage(named:"start" + (UITraitCollection.isDarkMode ? "n" : "d")), for: .normal)
             if Player.player1 == currentPlayer{
                 timer1 = Timer.scheduledTimer(timeInterval: 1.0,target: self, selector:  #selector(self.timerFunc),userInfo: nil, repeats: true)
                 //timer1.fire()
@@ -181,6 +189,7 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
             timer2!.invalidate()
         }
         startBtn.setImage(UIImage(named:"start"), for: .normal)
+//        startBtn.setImage(UIImage(named:"start" + (UITraitCollection.isDarkMode ? "n" : "d")), for: .normal)
         gameStatus = .ready
         timerSw.isOn=false
         timerSwValueChanged(sender)
@@ -242,6 +251,10 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         present(actionSheet, animated: true, completion: nil)
     }
     
+    @IBAction func touchDown_dice6(_ sender: Any) {
+        ViewController_popup.dispDiceImage = getDiceImage(type: DiceType.six)
+        performSegue(withIdentifier: "toPopUp", sender: nil)
+    }
     func deleteImg(player:Player)  {
         let request: NSFetchRequest<Background> = Background.fetchRequest()
         let predicate = NSPredicate(format: "player = \(Player.player1==player ? "1" : "2")")
@@ -380,6 +393,10 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         case ready
         case playing
         case stop
+    }
+    enum DiceType {
+        case six
+        case twenty
     }
     func lifeIncrement(_ p:Player){
         switch p {
@@ -560,6 +577,19 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
             }
             playerView.addSubview(subView)
         }
+    }
+    
+    func getDiceImage(type:DiceType) -> UIImage {
+        var num:Int
+        var image = UIImage()
+        switch type {
+        case .six:
+            num = Int.random(in: 1 ... 6)
+            image = UIImage(named: UITraitCollection.isDarkMode ? "dice\(num)n" : "dice\(num)d")!
+        case .twenty:
+            num = Int.random(in: 1 ... 20)
+        }
+        return image
     }
 }
 

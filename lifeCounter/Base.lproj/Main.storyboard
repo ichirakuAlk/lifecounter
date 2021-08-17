@@ -174,70 +174,70 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RGB-OH-td1" userLabel="middleView">
                                 <rect key="frame" x="0.0" y="427.5" width="414" height="41"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9z2-pU-Auw">
-                                        <rect key="frame" x="8" y="-4.5" width="398" height="50"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zca-e2-Ri9" userLabel="settingBtn">
-                                                <rect key="frame" x="0.0" y="0.0" width="66.5" height="50"/>
-                                                <state key="normal" image="setting"/>
-                                                <connections>
-                                                    <action selector="touchDown_settingBtn:" destination="BYZ-38-t0r" eventType="touchDown" id="CJK-w4-sgc"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="luZ-w0-0j8" userLabel="dice6">
-                                                <rect key="frame" x="66.5" y="0.0" width="66" height="50"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                                <state key="normal" title="6" image="square.fill" catalog="system">
-                                                    <color key="titleColor" systemColor="labelColor"/>
-                                                </state>
-                                            </button>
-                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="e0M-gr-WPF">
-                                                <rect key="frame" x="132.5" y="0.0" width="68.5" height="50"/>
-                                                <connections>
-                                                    <action selector="timerSwValueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="yo7-Uk-7Dk"/>
-                                                </connections>
-                                            </switch>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hmj-OV-HE6" userLabel="startBtn">
-                                                <rect key="frame" x="199" y="0.0" width="66.5" height="50"/>
-                                                <state key="normal" image="start"/>
-                                                <connections>
-                                                    <action selector="touchDown_startBtn:" destination="BYZ-38-t0r" eventType="touchDown" id="lwJ-OW-DT4"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vp3-4e-oYx" userLabel="dice20">
-                                                <rect key="frame" x="265.5" y="0.0" width="66" height="50"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                                <state key="normal" title="20" image="hexagon.fill" catalog="system">
-                                                    <color key="titleColor" systemColor="labelColor"/>
-                                                </state>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TCC-Ub-C9Q" userLabel="clearBtn" customClass="CustomBtn" customModule="lifeCounter" customModuleProvider="target">
-                                                <rect key="frame" x="331.5" y="0.0" width="66.5" height="50"/>
-                                                <state key="normal" image="clear"/>
-                                                <connections>
-                                                    <action selector="touchDown_clearBtn:" destination="BYZ-38-t0r" eventType="touchDown" id="aD5-1g-SiI"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstItem="Vp3-4e-oYx" firstAttribute="width" secondItem="zca-e2-Ri9" secondAttribute="width" id="LA8-Ah-RGc"/>
-                                            <constraint firstItem="luZ-w0-0j8" firstAttribute="width" secondItem="zca-e2-Ri9" secondAttribute="width" id="Yft-cu-i85"/>
-                                            <constraint firstItem="e0M-gr-WPF" firstAttribute="width" secondItem="zca-e2-Ri9" secondAttribute="width" id="kas-F4-vEB"/>
-                                            <constraint firstItem="hmj-OV-HE6" firstAttribute="width" secondItem="zca-e2-Ri9" secondAttribute="width" id="knS-an-3Gt"/>
-                                            <constraint firstItem="TCC-Ub-C9Q" firstAttribute="width" secondItem="zca-e2-Ri9" secondAttribute="width" id="kpA-WY-Pg1"/>
-                                        </constraints>
-                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TCC-Ub-C9Q" userLabel="clearBtn" customClass="CustomBtn" customModule="lifeCounter" customModuleProvider="target">
+                                        <rect key="frame" x="348" y="-4.5" width="50" height="50"/>
+                                        <state key="normal" image="restart"/>
+                                        <connections>
+                                            <action selector="touchDown_clearBtn:" destination="BYZ-38-t0r" eventType="touchDown" id="aD5-1g-SiI"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="luZ-w0-0j8" userLabel="dice6">
+                                        <rect key="frame" x="76" y="2.5" width="38.5" height="36"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <state key="normal" title="6" image="square.fill" catalog="system">
+                                            <color key="titleColor" systemColor="labelColor"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="touchDown_dice6:" destination="BYZ-38-t0r" eventType="touchDown" id="gCd-cQ-bcV"/>
+                                        </connections>
+                                    </button>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="e0M-gr-WPF">
+                                        <rect key="frame" x="162" y="4" width="51" height="31"/>
+                                        <connections>
+                                            <action selector="timerSwValueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="yo7-Uk-7Dk"/>
+                                        </connections>
+                                    </switch>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vp3-4e-oYx" userLabel="dice20">
+                                        <rect key="frame" x="281" y="2.5" width="57" height="36"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <state key="normal" title="20" image="hexagon.fill" catalog="system">
+                                            <color key="titleColor" systemColor="labelColor"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hmj-OV-HE6" userLabel="startBtn">
+                                        <rect key="frame" x="221" y="-4.5" width="50" height="50"/>
+                                        <state key="normal" image="start"/>
+                                        <connections>
+                                            <action selector="touchDown_startBtn:" destination="BYZ-38-t0r" eventType="touchDown" id="lwJ-OW-DT4"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zca-e2-Ri9" userLabel="settingBtn">
+                                        <rect key="frame" x="16" y="-4.5" width="50" height="50"/>
+                                        <state key="normal" image="setting"/>
+                                        <connections>
+                                            <action selector="touchDown_settingBtn:" destination="BYZ-38-t0r" eventType="touchDown" id="CJK-w4-sgc"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstItem="9z2-pU-Auw" firstAttribute="leading" secondItem="RGB-OH-td1" secondAttribute="leading" constant="8" id="2uE-aL-g9a"/>
-                                    <constraint firstItem="9z2-pU-Auw" firstAttribute="centerY" secondItem="RGB-OH-td1" secondAttribute="centerY" id="vIW-GA-rHe"/>
-                                    <constraint firstAttribute="trailing" secondItem="9z2-pU-Auw" secondAttribute="trailing" constant="8" id="vP5-dN-Bv4"/>
+                                    <constraint firstItem="hmj-OV-HE6" firstAttribute="centerY" secondItem="RGB-OH-td1" secondAttribute="centerY" id="8rs-rC-hjl"/>
+                                    <constraint firstItem="TCC-Ub-C9Q" firstAttribute="leading" secondItem="Vp3-4e-oYx" secondAttribute="trailing" constant="10" id="A9U-F7-V3K"/>
+                                    <constraint firstItem="Vp3-4e-oYx" firstAttribute="centerY" secondItem="RGB-OH-td1" secondAttribute="centerY" id="Cpk-i3-2Hy"/>
+                                    <constraint firstItem="TCC-Ub-C9Q" firstAttribute="centerY" secondItem="RGB-OH-td1" secondAttribute="centerY" id="E2E-jD-ME3"/>
+                                    <constraint firstAttribute="trailing" secondItem="TCC-Ub-C9Q" secondAttribute="trailing" constant="16" id="ESa-1j-9qM"/>
+                                    <constraint firstItem="luZ-w0-0j8" firstAttribute="leading" secondItem="zca-e2-Ri9" secondAttribute="trailing" constant="10" id="HFu-6b-JfR"/>
+                                    <constraint firstItem="luZ-w0-0j8" firstAttribute="centerY" secondItem="RGB-OH-td1" secondAttribute="centerY" id="JM0-qP-UHV"/>
+                                    <constraint firstItem="Vp3-4e-oYx" firstAttribute="leading" secondItem="hmj-OV-HE6" secondAttribute="trailing" constant="10" id="QFu-EQ-nfU"/>
+                                    <constraint firstItem="hmj-OV-HE6" firstAttribute="leading" secondItem="e0M-gr-WPF" secondAttribute="trailing" constant="10" id="Y6b-nB-oMT"/>
+                                    <constraint firstItem="zca-e2-Ri9" firstAttribute="centerY" secondItem="RGB-OH-td1" secondAttribute="centerY" id="ez4-5u-4gE"/>
+                                    <constraint firstItem="e0M-gr-WPF" firstAttribute="top" secondItem="RGB-OH-td1" secondAttribute="top" constant="4" id="klO-gp-MUb"/>
+                                    <constraint firstItem="zca-e2-Ri9" firstAttribute="leading" secondItem="RGB-OH-td1" secondAttribute="leading" constant="16" id="stS-XH-dro"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Dg9-iZ-AV2" firstAttribute="width" secondItem="WXi-tU-VPE" secondAttribute="width" multiplier="0.2" id="0pC-Le-tUr"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="OXn-o0-U7l" secondAttribute="trailing" id="4U0-fv-h8o"/>
@@ -278,16 +278,62 @@
                         <outlet property="time1" destination="qzq-zg-uEo" id="9ed-3r-Ll7"/>
                         <outlet property="time2" destination="3ac-Rj-OF4" id="78U-SV-zax"/>
                         <outlet property="timerSw" destination="e0M-gr-WPF" id="h6l-MT-Eu9"/>
+                        <segue destination="5g8-hv-xUn" kind="presentation" identifier="toPopUp" modalTransitionStyle="crossDissolve" id="XRw-tU-eFJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="128.98550724637681" y="93.75"/>
         </scene>
+        <!--View Controller popup-->
+        <scene sceneID="E0A-SX-Qyn">
+            <objects>
+                <viewController modalPresentationStyle="overCurrentContext" id="5g8-hv-xUn" customClass="ViewController_popup" customModule="lifeCounter" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" tag="1" contentMode="scaleToFill" id="Gb5-Am-JV8">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view alpha="0.90000000000000002" tag="2" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iLN-EY-ons">
+                                <rect key="frame" x="32" y="273" width="350" height="350"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="350" id="m6Y-2E-X5P"/>
+                                    <constraint firstAttribute="height" constant="350" id="nws-PQ-Voa"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.cornerRadius=15" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="3" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dice1d" translatesAutoresizingMaskIntoConstraints="NO" id="xiR-82-VMh">
+                                <rect key="frame" x="87" y="328" width="240" height="240"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="64r-g2-NlI"/>
+                                    <constraint firstAttribute="height" constant="240" id="DwT-Md-MPo"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="2YF-UH-TI3"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="xiR-82-VMh" firstAttribute="centerX" secondItem="Gb5-Am-JV8" secondAttribute="centerX" id="DOM-3h-p5L"/>
+                            <constraint firstItem="xiR-82-VMh" firstAttribute="centerY" secondItem="Gb5-Am-JV8" secondAttribute="centerY" id="etc-lv-hCM"/>
+                            <constraint firstItem="iLN-EY-ons" firstAttribute="centerX" secondItem="Gb5-Am-JV8" secondAttribute="centerX" id="g9B-WW-XCk"/>
+                            <constraint firstItem="iLN-EY-ons" firstAttribute="centerY" secondItem="Gb5-Am-JV8" secondAttribute="centerY" id="gGw-OP-33Q"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="diceImage" destination="xiR-82-VMh" id="6Ep-to-xgy"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vlO-Gv-G1y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="816" y="94"/>
+        </scene>
     </scenes>
     <resources>
-        <image name="clear" width="50" height="50"/>
+        <image name="dice1d" width="1299" height="1299"/>
         <image name="hexagon.fill" catalog="system" width="128" height="124"/>
+        <image name="restart" width="50" height="50"/>
         <image name="setting" width="50" height="50"/>
         <image name="square.fill" catalog="system" width="128" height="114"/>
         <image name="start" width="50" height="50"/>
