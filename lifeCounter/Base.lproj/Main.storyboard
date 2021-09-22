@@ -192,20 +192,13 @@
                                         </connections>
                                     </button>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="e0M-gr-WPF">
-                                        <rect key="frame" x="162" y="4" width="51" height="31"/>
+                                        <rect key="frame" x="124.5" y="5" width="51" height="31"/>
                                         <connections>
                                             <action selector="timerSwValueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="yo7-Uk-7Dk"/>
                                         </connections>
                                     </switch>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vp3-4e-oYx" userLabel="dice20">
-                                        <rect key="frame" x="281" y="2.5" width="57" height="36"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                        <state key="normal" title="20" image="hexagon.fill" catalog="system">
-                                            <color key="titleColor" systemColor="labelColor"/>
-                                        </state>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hmj-OV-HE6" userLabel="startBtn">
-                                        <rect key="frame" x="221" y="-4.5" width="50" height="50"/>
+                                        <rect key="frame" x="183.5" y="-4.5" width="50" height="50"/>
                                         <state key="normal" image="start"/>
                                         <connections>
                                             <action selector="touchDown_startBtn:" destination="BYZ-38-t0r" eventType="touchDown" id="lwJ-OW-DT4"/>
@@ -222,16 +215,14 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="hmj-OV-HE6" firstAttribute="centerY" secondItem="RGB-OH-td1" secondAttribute="centerY" id="8rs-rC-hjl"/>
-                                    <constraint firstItem="TCC-Ub-C9Q" firstAttribute="leading" secondItem="Vp3-4e-oYx" secondAttribute="trailing" constant="10" id="A9U-F7-V3K"/>
-                                    <constraint firstItem="Vp3-4e-oYx" firstAttribute="centerY" secondItem="RGB-OH-td1" secondAttribute="centerY" id="Cpk-i3-2Hy"/>
                                     <constraint firstItem="TCC-Ub-C9Q" firstAttribute="centerY" secondItem="RGB-OH-td1" secondAttribute="centerY" id="E2E-jD-ME3"/>
                                     <constraint firstAttribute="trailing" secondItem="TCC-Ub-C9Q" secondAttribute="trailing" constant="16" id="ESa-1j-9qM"/>
                                     <constraint firstItem="luZ-w0-0j8" firstAttribute="leading" secondItem="zca-e2-Ri9" secondAttribute="trailing" constant="10" id="HFu-6b-JfR"/>
                                     <constraint firstItem="luZ-w0-0j8" firstAttribute="centerY" secondItem="RGB-OH-td1" secondAttribute="centerY" id="JM0-qP-UHV"/>
-                                    <constraint firstItem="Vp3-4e-oYx" firstAttribute="leading" secondItem="hmj-OV-HE6" secondAttribute="trailing" constant="10" id="QFu-EQ-nfU"/>
-                                    <constraint firstItem="hmj-OV-HE6" firstAttribute="leading" secondItem="e0M-gr-WPF" secondAttribute="trailing" constant="10" id="Y6b-nB-oMT"/>
+                                    <constraint firstItem="hmj-OV-HE6" firstAttribute="leading" secondItem="e0M-gr-WPF" secondAttribute="trailing" constant="10" id="Rv4-uc-gUX"/>
+                                    <constraint firstItem="e0M-gr-WPF" firstAttribute="centerY" secondItem="RGB-OH-td1" secondAttribute="centerY" id="b47-Ku-6ru"/>
                                     <constraint firstItem="zca-e2-Ri9" firstAttribute="centerY" secondItem="RGB-OH-td1" secondAttribute="centerY" id="ez4-5u-4gE"/>
-                                    <constraint firstItem="e0M-gr-WPF" firstAttribute="top" secondItem="RGB-OH-td1" secondAttribute="top" constant="4" id="klO-gp-MUb"/>
+                                    <constraint firstItem="e0M-gr-WPF" firstAttribute="leading" secondItem="luZ-w0-0j8" secondAttribute="trailing" constant="10" id="mpJ-Zr-fUp"/>
                                     <constraint firstItem="zca-e2-Ri9" firstAttribute="leading" secondItem="RGB-OH-td1" secondAttribute="leading" constant="16" id="stS-XH-dro"/>
                                 </constraints>
                             </view>
@@ -301,7 +292,9 @@
                                     <constraint firstAttribute="height" constant="350" id="nws-PQ-Voa"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.cornerRadius=15" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="3" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dice1d" translatesAutoresizingMaskIntoConstraints="NO" id="xiR-82-VMh">
@@ -332,7 +325,6 @@
     </scenes>
     <resources>
         <image name="dice1d" width="1299" height="1299"/>
-        <image name="hexagon.fill" catalog="system" width="128" height="124"/>
         <image name="restart" width="50" height="50"/>
         <image name="setting" width="50" height="50"/>
         <image name="square.fill" catalog="system" width="128" height="114"/>
