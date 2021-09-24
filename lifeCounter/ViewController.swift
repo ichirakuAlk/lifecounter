@@ -10,7 +10,8 @@ import UIKit
 import Photos
 import CoreData
 
-class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINavigationControllerDelegate{
+class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITableViewDelegate, UITableViewDataSource{
+    
 
     @IBOutlet weak var player1view: UIView!
     @IBOutlet weak var player2view: UIView!
@@ -21,15 +22,20 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     @IBOutlet weak var life2: UILabel!
     @IBOutlet weak var time1: UILabel!
     @IBOutlet weak var time2: UILabel!
+    @IBOutlet weak var time_master: UILabel!
     @IBOutlet weak var timerSw: UISwitch!
+    @IBOutlet weak var tableView: UITableView!
+    var lifeflow_lifes = [[Int]]()
     
     var _life1 :Int=20
     var _life2 : Int=20
     
     var timer1:Timer?
     var timer2:Timer?
+    var timer_master:Timer?
     
     var passMin:Int = 0
+    var passMin_master:Int = 0
     let formatter = DateComponentsFormatter()
     var gameStatus:GameStatus = GameStatus.ready
     var currentPlayer : Player!
@@ -37,6 +43,8 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     
     var appDelegate:AppDelegate!
     var viewContext:NSManagedObjectContext!
+    var countDownCnt:Countdown = Countdown.three
+    
     
     override func viewDidLoad() {
         
@@ -58,6 +66,9 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         
         setBackground_init()
         self.setNeedsStatusBarAppearanceUpdate()
+        
+        tableView?.dataSource = self
+        tableView?.delegate = self
     }
 //    override func viewWillAppear(_ animated: Bool) {
 //        print("viewwillappear!!!!!!")
@@ -110,6 +121,26 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         time2.isHidden = !timerSw.isOn
     }
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return lifeflow_lifes.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let lifes:[Int] = lifeflow_lifes[indexPath.row]
+        let cell: TableViewCell_lifeflow = tableView.dequeueReusableCell(withIdentifier: "TableViewCell_lifeflow") as! TableViewCell_lifeflow
+        cell.setCell(data: Data_lifeflow(p1life: lifes[0], p2life: lifes[1]))
+        return cell
+    }
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//    }
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let swipeCell = UITableViewRowAction(style: .default, title: NSLocalizedString("deleteBtn_title", comment: "")) { action, index in
+            self.lifeflow_lifes.remove(at: indexPath.row)
+            tableView.reloadData()
+        }
+        swipeCell.backgroundColor = .red
+        return [swipeCell]
+    }
     @IBAction func touchDown_startBtn(_ sender: Any) {
         switch gameStatus {
         case .ready:
@@ -133,6 +164,7 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
                 //timer1.fire()
                 currentPlayer = .player1
             }
+            timer_master = Timer.scheduledTimer(timeInterval: 1.0,target: self, selector:  #selector(self.timerFunc_master),userInfo: nil, repeats: true)
             gameStatus = .playing
             
         case .playing:
@@ -149,6 +181,9 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
                         timer2!.invalidate()
                     }
                 }
+                if timer_master != nil{
+                    timer_master!.invalidate()
+                }
                 gameStatus = .stop
             }
         case .stop:
@@ -162,6 +197,7 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
                 timer2 = Timer.scheduledTimer(timeInterval: 1.0,target: self, selector:  #selector(self.timerFunc2),userInfo: nil, repeats: true)
                 //timer2.fire()
             }
+            timer_master = Timer.scheduledTimer(timeInterval: 1.0,target: self, selector:  #selector(self.timerFunc_master),userInfo: nil, repeats: true)
             gameStatus = .playing
         }
     }
@@ -180,6 +216,9 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         lifeReset()
         
         passMin = 0//経過時間
+        passMin_master = 0//経過時間
+        updateDisp(passMin: &passMin_master ,time:time_master)
+        
         time1.text = formatter.string(from: TimeInterval(0))!
         time2.text = formatter.string(from: TimeInterval(0))!
         if timer1 != nil{
@@ -188,6 +227,11 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         if timer2 != nil{
             timer2!.invalidate()
         }
+        if timer_master != nil{
+            timer_master!.invalidate()
+        }
+        lifeflow_lifes.removeAll()
+        tableView.reloadData()
         startBtn.setImage(UIImage(named:"start"), for: .normal)
 //        startBtn.setImage(UIImage(named:"start" + (UITraitCollection.isDarkMode ? "n" : "d")), for: .normal)
         gameStatus = .ready
@@ -319,6 +363,7 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
                 time1.text = formatter.string(from: TimeInterval(0))!
             }
             currentPlayer = Player.player1 == currentPlayer ? .player2 : .player1
+//            recodeLife()
         }
     }
     
@@ -328,10 +373,33 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     @objc func timerFunc2()  {
         updateDisp(passMin: &passMin ,time:time2)
     }
+    @objc func timerFunc_master()  {
+        updateDisp(passMin: &passMin_master ,time:time_master)
+        countDown()
+        if countDownCnt == .zero {
+            recodeLife()
+        }
+    }
     
     func updateDisp(passMin:inout Int,time : UILabel)  {
-        passMin = passMin + 1
         time.text = formatter.string(from: TimeInterval(Double(passMin)))!
+        passMin = passMin + 1
+    }
+    func recodeLife()  {
+        print("life recode")
+        //前のライフと同じ場合記録しない
+        if lifeflow_lifes.count != 0
+            && lifeflow_lifes[lifeflow_lifes.count-1][0] == _life1
+            && lifeflow_lifes[lifeflow_lifes.count-1][1] == _life2
+        {
+            print("life recode return")
+            return
+        }
+//        var test :[[Int]]
+//        test.append([1,2])
+        
+        lifeflow_lifes.append([_life1,_life2])
+        tableView.reloadData()
     }
     @IBAction func touchDown_plusBtn1(_ sender: Any) {
         lifeIncrement(.player1)
@@ -398,6 +466,12 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         case six
         case twenty
     }
+    enum Countdown {
+        case three
+        case two
+        case one
+        case zero
+    }
     func lifeIncrement(_ p:Player){
         switch p {
         case .player1:
@@ -459,6 +533,18 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
                 popover.permittedArrowDirections = UIPopoverArrowDirection.any
             }
             self.present(picker, animated: true, completion: nil)
+        }
+    }
+    func countDown() {
+        switch countDownCnt {
+        case .three:
+            countDownCnt = .two
+        case .two:
+            countDownCnt = .one
+        case .one:
+            countDownCnt = .zero
+        case .zero:
+            countDownCnt = .three
         }
     }
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]){
