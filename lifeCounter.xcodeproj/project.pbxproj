@@ -9,6 +9,14 @@
 /* Begin PBXBuildFile section */
 		CF0A718126FC48DC00BA3769 /* TableViewCell_lifeflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0A718026FC48DC00BA3769 /* TableViewCell_lifeflow.swift */; };
 		CF0A718426FCA4AC00BA3769 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CF0A718626FCA4AC00BA3769 /* Localizable.strings */; };
+		CF0A71B326FD862500BA3769 /* Life+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0A71AF26FD862500BA3769 /* Life+CoreDataClass.swift */; };
+		CF0A71B426FD862500BA3769 /* Life+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0A71B026FD862500BA3769 /* Life+CoreDataProperties.swift */; };
+		CF0A71B526FD862500BA3769 /* Game+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0A71B126FD862500BA3769 /* Game+CoreDataClass.swift */; };
+		CF0A71B626FD862500BA3769 /* Game+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0A71B226FD862500BA3769 /* Game+CoreDataProperties.swift */; };
+		CF0A71B826FD971A00BA3769 /* ViewController_history.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0A71B726FD971A00BA3769 /* ViewController_history.swift */; };
+		CF0A71BA26FDA9F000BA3769 /* TableViewCell_game.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0A71B926FDA9F000BA3769 /* TableViewCell_game.swift */; };
+		CF0A71BC26FDB4DC00BA3769 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0A71BB26FDB4DC00BA3769 /* Utilities.swift */; };
+		CF0A71BE26FDDAB900BA3769 /* Consts.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0A71BD26FDDAB900BA3769 /* Consts.swift */; };
 		CF0E1DB626BE488D00611194 /* Background+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0E1DB426BE488D00611194 /* Background+CoreDataClass.swift */; };
 		CF0E1DB726BE488D00611194 /* Background+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0E1DB526BE488D00611194 /* Background+CoreDataProperties.swift */; };
 		CF152EFE26CA570E003A7D6C /* ViewController_popup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF152EFD26CA570E003A7D6C /* ViewController_popup.swift */; };
@@ -27,6 +35,14 @@
 		CF0A718826FCA53B00BA3769 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
 		CF0A718926FCA53B00BA3769 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		CF0A718A26FCA55000BA3769 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CF0A71AF26FD862500BA3769 /* Life+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Life+CoreDataClass.swift"; sourceTree = "<group>"; };
+		CF0A71B026FD862500BA3769 /* Life+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Life+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		CF0A71B126FD862500BA3769 /* Game+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Game+CoreDataClass.swift"; sourceTree = "<group>"; };
+		CF0A71B226FD862500BA3769 /* Game+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Game+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		CF0A71B726FD971A00BA3769 /* ViewController_history.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController_history.swift; sourceTree = "<group>"; };
+		CF0A71B926FDA9F000BA3769 /* TableViewCell_game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell_game.swift; sourceTree = "<group>"; };
+		CF0A71BB26FDB4DC00BA3769 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		CF0A71BD26FDDAB900BA3769 /* Consts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Consts.swift; sourceTree = "<group>"; };
 		CF0E1DB426BE488D00611194 /* Background+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Background+CoreDataClass.swift"; sourceTree = "<group>"; };
 		CF0E1DB526BE488D00611194 /* Background+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Background+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CF152EFD26CA570E003A7D6C /* ViewController_popup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController_popup.swift; sourceTree = "<group>"; };
@@ -55,6 +71,10 @@
 		CFC02F2E22A681A000DACEC8 = {
 			isa = PBXGroup;
 			children = (
+				CF0A71AF26FD862500BA3769 /* Life+CoreDataClass.swift */,
+				CF0A71B026FD862500BA3769 /* Life+CoreDataProperties.swift */,
+				CF0A71B126FD862500BA3769 /* Game+CoreDataClass.swift */,
+				CF0A71B226FD862500BA3769 /* Game+CoreDataProperties.swift */,
 				CF0E1DB426BE488D00611194 /* Background+CoreDataClass.swift */,
 				CF0E1DB526BE488D00611194 /* Background+CoreDataProperties.swift */,
 				CFC02F3922A681A000DACEC8 /* lifeCounter */,
@@ -76,6 +96,7 @@
 				CFC02F3A22A681A000DACEC8 /* AppDelegate.swift */,
 				CFC02F3C22A681A000DACEC8 /* ViewController.swift */,
 				CF152EFD26CA570E003A7D6C /* ViewController_popup.swift */,
+				CF0A71B726FD971A00BA3769 /* ViewController_history.swift */,
 				CFC02F3E22A681A000DACEC8 /* Main.storyboard */,
 				CFC02F4422A681A200DACEC8 /* Assets.xcassets */,
 				CFC02F4622A681A200DACEC8 /* LaunchScreen.storyboard */,
@@ -83,7 +104,10 @@
 				CFC02F4122A681A000DACEC8 /* lifeCounter.xcdatamodeld */,
 				CF152EFF26CB541B003A7D6C /* Extentions.swift */,
 				CF0A718026FC48DC00BA3769 /* TableViewCell_lifeflow.swift */,
+				CF0A71B926FDA9F000BA3769 /* TableViewCell_game.swift */,
 				CF0A718626FCA4AC00BA3769 /* Localizable.strings */,
+				CF0A71BB26FDB4DC00BA3769 /* Utilities.swift */,
+				CF0A71BD26FDDAB900BA3769 /* Consts.swift */,
 			);
 			path = lifeCounter;
 			sourceTree = "<group>";
@@ -162,13 +186,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				CFC02F3D22A681A000DACEC8 /* ViewController.swift in Sources */,
+				CF0A71BE26FDDAB900BA3769 /* Consts.swift in Sources */,
 				CF0A718126FC48DC00BA3769 /* TableViewCell_lifeflow.swift in Sources */,
 				CF0E1DB626BE488D00611194 /* Background+CoreDataClass.swift in Sources */,
+				CF0A71BC26FDB4DC00BA3769 /* Utilities.swift in Sources */,
+				CF0A71B526FD862500BA3769 /* Game+CoreDataClass.swift in Sources */,
 				CFC02F4322A681A000DACEC8 /* lifeCounter.xcdatamodeld in Sources */,
+				CF0A71B626FD862500BA3769 /* Game+CoreDataProperties.swift in Sources */,
+				CF0A71B826FD971A00BA3769 /* ViewController_history.swift in Sources */,
+				CF0A71BA26FDA9F000BA3769 /* TableViewCell_game.swift in Sources */,
 				CF152EFE26CA570E003A7D6C /* ViewController_popup.swift in Sources */,
 				CFC02F3B22A681A000DACEC8 /* AppDelegate.swift in Sources */,
+				CF0A71B326FD862500BA3769 /* Life+CoreDataClass.swift in Sources */,
 				CF0E1DB726BE488D00611194 /* Background+CoreDataProperties.swift in Sources */,
 				CF152F0026CB541B003A7D6C /* Extentions.swift in Sources */,
+				CF0A71B426FD862500BA3769 /* Life+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,7 +352,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

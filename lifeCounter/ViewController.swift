@@ -61,8 +61,10 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         settingBtn.contentHorizontalAlignment = .fill
         settingBtn.contentVerticalAlignment = .fill
         
-        formatter.unitsStyle = .positional
-        formatter.allowedUnits = [.minute,.hour,.second]
+//        formatter.unitsStyle = .positional
+//        formatter.allowedUnits = [.minute,.hour,.second]
+        formatter.unitsStyle = .brief
+        formatter.allowedUnits = [.minute, .second]
         
         setBackground_init()
         self.setNeedsStatusBarAppearanceUpdate()
@@ -214,6 +216,7 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
 //        player1view.backgroundColor = UIColor.clear
 //        player2view.backgroundColor = UIColor.clear
         lifeReset()
+        saveGame()
         
         passMin = 0//経過時間
         passMin_master = 0//経過時間
@@ -238,21 +241,40 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         timerSw.isOn=false
         timerSwValueChanged(sender)
     }
+    
+    func saveGame()  {
+        let gameEntity = NSEntityDescription.entity(forEntityName: "Game", in: viewContext)
+        let gameRecode = NSManagedObject(entity: gameEntity!, insertInto: viewContext) as! Game
+        gameRecode.gameDate=Date()
+        gameRecode.time=time_master.text
+
+        for (index,lifes) in lifeflow_lifes.enumerated() {
+            for (index_life,life) in lifes.enumerated() {
+                let lifeEntity = NSEntityDescription.entity(forEntityName: "Life", in: viewContext)
+                let lifeRecode = NSManagedObject(entity: lifeEntity!, insertInto: viewContext) as! Life
+                lifeRecode.player=Int16(index_life)
+                lifeRecode.stage=Int16(index)
+                lifeRecode.life=Int16(life)
+                lifeRecode.game = gameRecode
+            }
+        }
+        appDelegate.saveContext()
+    }
     @IBAction func touchDown_settingBtn(_ sender: Any) {
         
         // ①UIAlertControllerクラスのインスタンスを生成する
         // titleにタイトル, messegeにメッセージ, prefereedStyleにスタイルを指定する
         // preferredStyleにUIAlertControllerStyle.actionSheetを指定してアクションシートを表示する
         let actionSheet: UIAlertController = UIAlertController(
-            title: "背景画像",
-            message: "操作を選択してください",
+            title: NSLocalizedString("bgAlert_title", comment: ""),
+            message: NSLocalizedString("bgAlert_messsage", comment: ""),
             preferredStyle: UIAlertController.Style.actionSheet)
         
         // ②選択肢の作成と追加
         // titleに選択肢のテキストを、styleに.defaultを
         // handlerにボタンが押された時の処理をクロージャで実装する
         actionSheet.addAction(
-            UIAlertAction(title: "設定（プレイヤー１）",style: .default, handler: {
+            UIAlertAction(title: NSLocalizedString("bgAlert_button_set_1", comment: ""),style: .default, handler: {
                             (action: UIAlertAction!) -> Void in
                             self.selected = .player1
                             self.callPhotoLibrary()
@@ -261,21 +283,21 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         
         // ②選択肢の作成と追加
         actionSheet.addAction(
-            UIAlertAction(title: "設定（プレイヤー２）", style: .default, handler: {
+            UIAlertAction(title: NSLocalizedString("bgAlert_button_set_2", comment: ""), style: .default, handler: {
                 (action: UIAlertAction!) -> Void in
                 self.selected = .player2
                 self.callPhotoLibrary()
             })
         )
         actionSheet.addAction(
-            UIAlertAction(title: "削除（プレイヤー１）", style: .default, handler: {
+            UIAlertAction(title: NSLocalizedString("bgAlert_button_del_1", comment: ""), style: .default, handler: {
                 (action: UIAlertAction!) -> Void in
                 self.deleteImg(player: Player.player1)
                 self.setBackground_init()
             })
         )
         actionSheet.addAction(
-            UIAlertAction(title: "削除（プレイヤー２）", style: .default, handler: {
+            UIAlertAction(title: NSLocalizedString("bgAlert_button_del_2", comment: ""), style: .default, handler: {
                 (action: UIAlertAction!) -> Void in
                 self.deleteImg(player: Player.player2)
                 self.setBackground_init()
@@ -284,7 +306,7 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         
         // ②選択肢の作成と追加
         actionSheet.addAction(
-            UIAlertAction(title: "キャンセル", style: .cancel, handler: nil)
+            UIAlertAction(title: NSLocalizedString("bgAlert_button_cancel", comment: ""), style: .cancel, handler: nil)
         )
         
         // ③表示するViewと表示位置を指定する
@@ -386,7 +408,7 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         passMin = passMin + 1
     }
     func recodeLife()  {
-        print("life recode")
+//        print("life recode")
         //前のライフと同じ場合記録しない
         if lifeflow_lifes.count != 0
             && lifeflow_lifes[lifeflow_lifes.count-1][0] == _life1
@@ -399,6 +421,9 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
 //        test.append([1,2])
         
         lifeflow_lifes.append([_life1,_life2])
+        for lifes in lifeflow_lifes {
+            print("add! p1 : \(lifes[0]) , p2 : \(lifes[1])")
+        }
         tableView.reloadData()
     }
     @IBAction func touchDown_plusBtn1(_ sender: Any) {

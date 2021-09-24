@@ -6,3 +6,18 @@
   Copyright © 2021 kurachi. All rights reserved.
 */
 "deleteBtn_title" = "delete";
+"renameBtn_title" = "rename";
+"bgAlert_title" = "background image";
+"bgAlert_messsage" = "choose one";
+"bgAlert_button_set_1" = "add or modify(player1)";
+"bgAlert_button_set_2" = "add or modify(player2)";
+"bgAlert_button_del_1" = "delete(player1)";
+"bgAlert_button_del_2" = "delete(player2)";
+"bgAlert_button_cancel" = "cancel";
+"confirm_title" = "Confirm";
+"confirm_sentence_delete" = "%@\nDelete this history?";
+"dialog_button_yes" = "yes";
+"dialog_button_no" = "no";
+"rename_title" = "rename";
+"rename_sentence" = "Please Enter new name";
+"dialog_button_change" = "change";
