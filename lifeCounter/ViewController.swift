@@ -31,11 +31,11 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     var _life1 :Int=20
     var _life2 : Int=20
     
-    var timer1:Timer?
-    var timer2:Timer?
+//    var timer1:Timer?
+//    var timer2:Timer?
     var timer_master:Timer?
     
-    var passMin:Int = 0
+//    var passMin:Int = 0
     var passMin_master:Int = 0
     let formatter = DateComponentsFormatter()
     var gameStatus:GameStatus = GameStatus.ready
@@ -50,6 +50,9 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        //受信設定
+        NotificationCenter.default.addObserver(self, selector: #selector(notificationFunc_pushhome(notification:)), name: .notificationName, object: nil)
+        
         // Do any additional setup after loading the view.
         player2view.transform=CGAffineTransform(rotationAngle: CGFloat(Double.pi))
         startBtn.imageView?.contentMode = .scaleAspectFit
@@ -74,6 +77,11 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         tableView?.dataSource = self
         tableView?.delegate = self
         timeHiddenRefresh()
+    }
+    @objc func notificationFunc_pushhome(notification: NSNotification?) {
+        print("called! notificationFunc_pushhome")
+        //画面初期化
+        screenInitialize([])
     }
 //    override func viewWillAppear(_ animated: Bool) {
 //        print("viewwillappear!!!!!!")
@@ -172,10 +180,15 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
             setRecodeSw(isOn: setting.recode)
         } catch {
         }
+        
     }
     func timeHiddenRefresh()  {
-        time1.isHidden = !timerSw.isOn
-        time2.isHidden = !timerSw.isOn
+//        time1.isHidden = !timerSw.isOn
+//        time2.isHidden = !timerSw.isOn
+        time1.isHidden = true
+        time2.isHidden = true
+        startBtn.isHidden = !timerSw.isOn
+        clearBtn.isHidden = !timerSw.isOn
         lifeflow_width.constant=timerSw.isOn ? 80 : 0
     }
     
@@ -206,18 +219,12 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
             //ちょいバック回転(回転と言うよりはそれになるといった感じ。pi / 2   は画像の初期位置を0としてそれから45°き回転させた位置)
             let random = Int.random(in: 1 ... 10)
             startBtn.setImage(UIImage(named:"pause"), for: .normal)
-//            player1view.backgroundColor = UIColor.clear
-//            player2view.backgroundColor = UIColor.clear
             if random % 2 == 0 {
-//                player2view.backgroundColor = UIColor.blue
-                timer2 = Timer.scheduledTimer(timeInterval: 1.0,target: self, selector:  #selector(self.timerFunc2),userInfo: nil, repeats: true)
-                //timer2.fire()
+//                timer2 = Timer.scheduledTimer(timeInterval: 1.0,target: self, selector:  #selector(self.timerFunc2),userInfo: nil, repeats: true)
                 currentPlayer = .player2
             }
             else{
-//                player1view.backgroundColor = UIColor.blue
-                timer1 = Timer.scheduledTimer(timeInterval: 1.0,target: self, selector:  #selector(self.timerFunc),userInfo: nil, repeats: true)
-                //timer1.fire()
+//                timer1 = Timer.scheduledTimer(timeInterval: 1.0,target: self, selector:  #selector(self.timerFunc),userInfo: nil, repeats: true)
                 currentPlayer = .player1
             }
             timer_master = Timer.scheduledTimer(timeInterval: 1.0,target: self, selector:  #selector(self.timerFunc_master),userInfo: nil, repeats: true)
@@ -225,30 +232,28 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
             
         case .playing:
             startBtn.setImage(UIImage(named:"start"), for: .normal)
-            if Player.player1 == currentPlayer{
-                if timer1 != nil{
-                    timer1!.invalidate()
-                }
-            }
-            else{
-                if timer2 != nil{
-                    timer2!.invalidate()
-                }
-            }
+//            if Player.player1 == currentPlayer{
+//                if timer1 != nil{
+//                    timer1!.invalidate()
+//                }
+//            }
+//            else{
+//                if timer2 != nil{
+//                    timer2!.invalidate()
+//                }
+//            }
             if timer_master != nil{
                 timer_master!.invalidate()
             }
             gameStatus = .stop
         case .stop:
             startBtn.setImage(UIImage(named:"pause"), for: .normal)
-            if Player.player1 == currentPlayer{
-                timer1 = Timer.scheduledTimer(timeInterval: 1.0,target: self, selector:  #selector(self.timerFunc),userInfo: nil, repeats: true)
-                //timer1.fire()
-            }
-            else{
-                timer2 = Timer.scheduledTimer(timeInterval: 1.0,target: self, selector:  #selector(self.timerFunc2),userInfo: nil, repeats: true)
-                //timer2.fire()
-            }
+//            if Player.player1 == currentPlayer{
+//                timer1 = Timer.scheduledTimer(timeInterval: 1.0,target: self, selector:  #selector(self.timerFunc),userInfo: nil, repeats: true)
+//            }
+//            else{
+//                timer2 = Timer.scheduledTimer(timeInterval: 1.0,target: self, selector:  #selector(self.timerFunc2),userInfo: nil, repeats: true)
+//            }
             timer_master = Timer.scheduledTimer(timeInterval: 1.0,target: self, selector:  #selector(self.timerFunc_master),userInfo: nil, repeats: true)
             gameStatus = .playing
         }
@@ -257,41 +262,47 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         
         let t:CGFloat = 1.0
         self.clearBtn.spinAnim(self.clearBtn,t)
-//        self.clearBtn.transform = CGAffineTransform(rotationAngle:  CGFloat.pi * t )//回転させたところで止めたい場合はこの行がいる
         
         //ちょいバック回転(回転と言うよりはそれになるといった感じ。pi / 2 は画像の初期位置を0としてそれから45°き回転させた位置)
-        UIView.animate(withDuration: 0.5 / 2) { () -> Void in
-            self.startBtn.transform = CGAffineTransform(rotationAngle:  0)
-        }
-//        player1view.backgroundColor = UIColor.clear
-//        player2view.backgroundColor = UIColor.clear
+//        UIView.animate(withDuration: 0.5 / 2) { () -> Void in
+//            self.startBtn.transform = CGAffineTransform(rotationAngle:  0)
+//        }
         lifeReset()
         if timerSw.isOn {
             saveGame()
         }
         
-        passMin = 0//経過時間
+//        passMin = 0//経過時間
+        //画面初期化
+        screenInitialize(sender)
+        timerSwValueChanged(sender)
+    }
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        //画面初期化
+//        screenInitialize([])
+//    }
+    func screenInitialize(_ sender: Any)  {
         passMin_master = 0//経過時間
         updateDisp(passMin: &passMin_master ,time:time_master)
         
-        time1.text = formatter.string(from: TimeInterval(0))!
-        time2.text = formatter.string(from: TimeInterval(0))!
-        if timer1 != nil{
-            timer1!.invalidate()
-        }
-        if timer2 != nil{
-            timer2!.invalidate()
-        }
+    //        time1.text = formatter.string(from: TimeInterval(0))!
+    //        time2.text = formatter.string(from: TimeInterval(0))!
+    //        if timer1 != nil{
+    //            timer1!.invalidate()
+    //        }
+    //        if timer2 != nil{
+    //            timer2!.invalidate()
+    //        }
         if timer_master != nil{
             timer_master!.invalidate()
         }
         lifeflow_lifes.removeAll()
         tableView.reloadData()
         startBtn.setImage(UIImage(named:"start"), for: .normal)
-//        startBtn.setImage(UIImage(named:"start" + (UITraitCollection.isDarkMode ? "n" : "d")), for: .normal)
+    //        startBtn.setImage(UIImage(named:"start" + (UITraitCollection.isDarkMode ? "n" : "d")), for: .normal)
         gameStatus = .ready
-//        timerSw.isOn=false
-        timerSwValueChanged(sender)
+    //        timerSw.isOn=false
     }
     
     func saveGame()  {
@@ -414,34 +425,34 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         }
     }
     
-    @IBAction func end(_ sender: Any){
-        if GameStatus.playing == gameStatus{
-            passMin = 0
-            if Player.player1 == currentPlayer {
-                if timer1 != nil{
-                    timer1!.invalidate()
-                }
-                timer2 = Timer.scheduledTimer(timeInterval: 1.0,target: self, selector:     #selector(self.timerFunc2),userInfo: nil, repeats: true)
-                time2.text = formatter.string(from: TimeInterval(0))!
-            }
-            else{
-                if timer2 != nil{
-                    timer2!.invalidate()
-                }
-                timer1 = Timer.scheduledTimer(timeInterval: 1.0,target: self, selector:     #selector(self.timerFunc),userInfo: nil, repeats: true)
-                time1.text = formatter.string(from: TimeInterval(0))!
-            }
-            currentPlayer = Player.player1 == currentPlayer ? .player2 : .player1
-//            recodeLife()
-        }
-    }
+//    @IBAction func end(_ sender: Any){
+//        if GameStatus.playing == gameStatus{
+//            passMin = 0
+//            if Player.player1 == currentPlayer {
+//                if timer1 != nil{
+//                    timer1!.invalidate()
+//                }
+//                timer2 = Timer.scheduledTimer(timeInterval: 1.0,target: self, selector:     #selector(self.timerFunc2),userInfo: nil, repeats: true)
+//                time2.text = formatter.string(from: TimeInterval(0))!
+//            }
+//            else{
+//                if timer2 != nil{
+//                    timer2!.invalidate()
+//                }
+//                timer1 = Timer.scheduledTimer(timeInterval: 1.0,target: self, selector:     #selector(self.timerFunc),userInfo: nil, repeats: true)
+//                time1.text = formatter.string(from: TimeInterval(0))!
+//            }
+//            currentPlayer = Player.player1 == currentPlayer ? .player2 : .player1
+////            recodeLife()
+//        }
+//    }
     
-    @objc func timerFunc()  {
-        updateDisp(passMin: &passMin ,time:time1)
-    }
-    @objc func timerFunc2()  {
-        updateDisp(passMin: &passMin ,time:time2)
-    }
+//    @objc func timerFunc()  {
+//        updateDisp(passMin: &passMin ,time:time1)
+//    }
+//    @objc func timerFunc2()  {
+//        updateDisp(passMin: &passMin ,time:time2)
+//    }
     @objc func timerFunc_master()  {
         updateDisp(passMin: &passMin_master ,time:time_master)
         countDown()
@@ -477,53 +488,53 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         lifeIncrement(.player1)
     }
     @IBAction func touchDown_centerPlusBtn1(_ sender: Any) {
-        if GameStatus.ready == gameStatus ||
-            GameStatus.stop == gameStatus ||
-            !timerSw.isOn{
+//        if GameStatus.ready == gameStatus ||
+//            GameStatus.stop == gameStatus ||
+//            !timerSw.isOn{
             lifeIncrement(.player1)
-        }
-        else{
-            end(sender)
-        }
+//        }
+//        else{
+//            end(sender)
+//        }
     }
     @IBAction func touchDown_plusBtn2(_ sender: Any) {
         lifeIncrement(.player2)
     }
     @IBAction func touchDown_centerPlusBtn2(_ sender: Any) {
-        if GameStatus.ready == gameStatus ||
-            GameStatus.stop == gameStatus ||
-            !timerSw.isOn {
+//        if GameStatus.ready == gameStatus ||
+//            GameStatus.stop == gameStatus ||
+//            !timerSw.isOn {
             lifeIncrement(.player2)
-        }
-        else{
-            end(sender)
-        }
+//        }
+//        else{
+//            end(sender)
+//        }
     }
     @IBAction func touchDown_minusBtn1(_ sender: Any) {
         lifeDecrement(.player1)
     }
     @IBAction func touchDown_centerMinusBtn1(_ sender: Any) {
-        if GameStatus.ready == gameStatus ||
-            GameStatus.stop == gameStatus ||
-            !timerSw.isOn {
+//        if GameStatus.ready == gameStatus ||
+//            GameStatus.stop == gameStatus ||
+//            !timerSw.isOn {
             lifeDecrement(.player1)
-        }
-        else{
-            end(sender)
-        }
+//        }
+//        else{
+//            end(sender)
+//        }
     }
     @IBAction func touchDown_minusBtn2(_ sender: Any) {
         lifeDecrement(.player2)
     }
     @IBAction func touchDown_centerMinusBtn2(_ sender: Any) {
-        if GameStatus.ready == gameStatus ||
-            GameStatus.stop == gameStatus ||
-            !timerSw.isOn {
+//        if GameStatus.ready == gameStatus ||
+//            GameStatus.stop == gameStatus ||
+//            !timerSw.isOn {
             lifeDecrement(.player2)
-        }
-        else{
-            end(sender)
-        }
+//        }
+//        else{
+//            end(sender)
+//        }
     }
     enum Player {
         case player1
