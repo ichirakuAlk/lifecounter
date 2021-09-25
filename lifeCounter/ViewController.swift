@@ -149,9 +149,7 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
             
             //ちょいバック回転(回転と言うよりはそれになるといった感じ。pi / 2   は画像の初期位置を0としてそれから45°き回転させた位置)
             let random = Int.random(in: 1 ... 10)
-            UIView.animate(withDuration: 0.5 / 2) { () -> Void in
-                self.startBtn.transform = CGAffineTransform(rotationAngle:  CGFloat.pi / 2 *    ((random % 2 == 0) ? -1.0 : 1.0))
-            }
+            startBtn.setImage(UIImage(named:"pause"), for: .normal)
 //            player1view.backgroundColor = UIColor.clear
 //            player2view.backgroundColor = UIColor.clear
             if random % 2 == 0 {
@@ -170,27 +168,23 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
             gameStatus = .playing
             
         case .playing:
-            if timerSw.isOn {
-//                startBtn.setImage(UIImage(named:"stop" + (UITraitCollection.isDarkMode ? "n" : "d")), for: .normal)
-                startBtn.setImage(UIImage(named:"stop"), for: .normal)
-                if Player.player1 == currentPlayer{
-                    if timer1 != nil{
-                        timer1!.invalidate()
-                    }
+            startBtn.setImage(UIImage(named:"stop"), for: .normal)
+            if Player.player1 == currentPlayer{
+                if timer1 != nil{
+                    timer1!.invalidate()
                 }
-                else{
-                    if timer2 != nil{
-                        timer2!.invalidate()
-                    }
-                }
-                if timer_master != nil{
-                    timer_master!.invalidate()
-                }
-                gameStatus = .stop
             }
+            else{
+                if timer2 != nil{
+                    timer2!.invalidate()
+                }
+            }
+            if timer_master != nil{
+                timer_master!.invalidate()
+            }
+            gameStatus = .stop
         case .stop:
-            startBtn.setImage(UIImage(named:"start"), for: .normal)
-//            startBtn.setImage(UIImage(named:"start" + (UITraitCollection.isDarkMode ? "n" : "d")), for: .normal)
+            startBtn.setImage(UIImage(named:"pause"), for: .normal)
             if Player.player1 == currentPlayer{
                 timer1 = Timer.scheduledTimer(timeInterval: 1.0,target: self, selector:  #selector(self.timerFunc),userInfo: nil, repeats: true)
                 //timer1.fire()
@@ -364,11 +358,6 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     
     @IBAction func end(_ sender: Any){
         if GameStatus.playing == gameStatus{
-//            player1view.backgroundColor = Player.player1 == currentPlayer ? UIColor.clear: UIColor.blue
-//            player2view.backgroundColor = Player.player1 == currentPlayer ? UIColor.blue: UIColor.clear
-            UIView.animate(withDuration: 0.5 / 2) { () -> Void in
-                self.startBtn.transform = CGAffineTransform(rotationAngle:  CGFloat.pi / 2 *    (Player.player1 == self.currentPlayer ? -1.0 : 1.0))
-            }
             passMin = 0
             if Player.player1 == currentPlayer {
                 if timer1 != nil{
