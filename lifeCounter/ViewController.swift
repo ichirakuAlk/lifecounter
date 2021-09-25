@@ -25,6 +25,7 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     @IBOutlet weak var time_master: UILabel!
     @IBOutlet weak var timerSw: UISwitch!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var lifeflow_width: NSLayoutConstraint!
     var lifeflow_lifes = [[Int]]()
     
     var _life1 :Int=20
@@ -67,10 +68,12 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         formatter.allowedUnits = [.minute, .second]
         
         setBackground_init()
+        setMasterSetting_init()
         self.setNeedsStatusBarAppearanceUpdate()
         
         tableView?.dataSource = self
         tableView?.delegate = self
+        timeHiddenRefresh()
     }
 //    override func viewWillAppear(_ animated: Bool) {
 //        print("viewwillappear!!!!!!")
@@ -115,12 +118,65 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         } catch {
         }
     }
+    func setMasterSetting_init()  {
+        let query: NSFetchRequest<Setting> = Setting.fetchRequest()
+        do {
+            let fetchResults = try viewContext.fetch(query)
+            if fetchResults.count != 1 {
+                setRecodeSw(isOn: false)
+            }
+            else{
+                setRecodeSw(isOn: (fetchResults[0] as Setting).recode)
+            }
+//            for result: AnyObject in fetchResults {
+//                let game = result as! Game
+//                games.append(game)
+//            }
+        } catch {
+        }
+    }
+    func setRecodeSw(isOn:Bool)  {
+        timerSw.isOn=isOn
+    }
     override var prefersStatusBarHidden: Bool{
         return true
     }
     @IBAction func timerSwValueChanged(_ sender: Any) {
+        timeHiddenRefresh()
+        let appDelegate: AppDelegate = UIApplication.shared.delegate as! AppDelegate
+        let viewContext = appDelegate.persistentContainer.viewContext
+        
+        //delete
+        let request: NSFetchRequest<Setting> = Setting.fetchRequest()
+        do {
+            let fetchResults = try viewContext.fetch(request)
+            for result: AnyObject in fetchResults {
+                let record = result as! NSManagedObject
+                viewContext.delete(record)
+            }
+            try viewContext.save()
+        } catch {
+        }
+        
+        //insert
+        let entity = NSEntityDescription.entity(forEntityName: "Setting", in: viewContext)
+        let recode = NSManagedObject(entity: entity!, insertInto: viewContext) as! Setting
+        recode.recode=timerSw.isOn
+        appDelegate.saveContext()
+        
+        //select
+        let query: NSFetchRequest<Setting> = Setting.fetchRequest()
+        do {
+            let fetchResults = try viewContext.fetch(query)
+            let setting = fetchResults[0] as Setting
+            setRecodeSw(isOn: setting.recode)
+        } catch {
+        }
+    }
+    func timeHiddenRefresh()  {
         time1.isHidden = !timerSw.isOn
         time2.isHidden = !timerSw.isOn
+        lifeflow_width.constant=timerSw.isOn ? 80 : 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -168,7 +224,7 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
             gameStatus = .playing
             
         case .playing:
-            startBtn.setImage(UIImage(named:"stop"), for: .normal)
+            startBtn.setImage(UIImage(named:"start"), for: .normal)
             if Player.player1 == currentPlayer{
                 if timer1 != nil{
                     timer1!.invalidate()
@@ -210,7 +266,9 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
 //        player1view.backgroundColor = UIColor.clear
 //        player2view.backgroundColor = UIColor.clear
         lifeReset()
-        saveGame()
+        if timerSw.isOn {
+            saveGame()
+        }
         
         passMin = 0//経過時間
         passMin_master = 0//経過時間
@@ -232,7 +290,7 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         startBtn.setImage(UIImage(named:"start"), for: .normal)
 //        startBtn.setImage(UIImage(named:"start" + (UITraitCollection.isDarkMode ? "n" : "d")), for: .normal)
         gameStatus = .ready
-        timerSw.isOn=false
+//        timerSw.isOn=false
         timerSwValueChanged(sender)
     }
     
