@@ -31,11 +31,8 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     var _life1 :Int=20
     var _life2 : Int=20
     
-//    var timer1:Timer?
-//    var timer2:Timer?
     var timer_master:Timer?
     
-//    var passMin:Int = 0
     var passMin_master:Int = 0
     let formatter = DateComponentsFormatter()
     var gameStatus:GameStatus = GameStatus.ready
@@ -65,8 +62,6 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         settingBtn.contentHorizontalAlignment = .fill
         settingBtn.contentVerticalAlignment = .fill
         
-//        formatter.unitsStyle = .positional
-//        formatter.allowedUnits = [.minute,.hour,.second]
         formatter.unitsStyle = .brief
         formatter.allowedUnits = [.minute, .second]
         
@@ -83,13 +78,6 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         //画面初期化
         screenInitialize([])
     }
-//    override func viewWillAppear(_ animated: Bool) {
-//        print("viewwillappear!!!!!!")
-//
-//        settingBtn.setImage(UIImage(named: "setting" + (UITraitCollection.isDarkMode ? "n" : "d")), for: .normal)
-//        startBtn.setImage(UIImage(named: "start" + (UITraitCollection.isDarkMode ? "n" : "d")), for: .normal)
-//        clearBtn.setImage(UIImage(named: "restart" + (UITraitCollection.isDarkMode ? "n" : "d")), for: .normal)
-//    }
     //背景設定初期メソッド（DBから読み込む）
     func setBackground_init()  {
         var player1Img:UIImage? = nil
@@ -97,9 +85,6 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         var scale1:CGFloat = CGFloat(1)
         var scale2:CGFloat = CGFloat(1)
         
-        
-//        let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate
-//        let viewContext = appDelegate.persistentContainer.viewContext
         appDelegate = UIApplication.shared.delegate as? AppDelegate
         viewContext = appDelegate.persistentContainer.viewContext
         
@@ -136,10 +121,6 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
             else{
                 setRecodeSw(isOn: (fetchResults[0] as Setting).recode)
             }
-//            for result: AnyObject in fetchResults {
-//                let game = result as! Game
-//                games.append(game)
-//            }
         } catch {
         }
     }
@@ -183,13 +164,10 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         
     }
     func timeHiddenRefresh()  {
-//        time1.isHidden = !timerSw.isOn
-//        time2.isHidden = !timerSw.isOn
         time1.isHidden = true
         time2.isHidden = true
         startBtn.isHidden = !timerSw.isOn
-        clearBtn.isHidden = !timerSw.isOn
-        lifeflow_width.constant=timerSw.isOn ? 80 : 0
+        lifeflow_width.constant = timerSw.isOn ? 80 : 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -202,8 +180,6 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         cell.setCell(data: Data_lifeflow(p1life: lifes[0], p2life: lifes[1]))
         return cell
     }
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//    }
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let swipeCell = UITableViewRowAction(style: .default, title: NSLocalizedString("deleteBtn_title", comment: "")) { action, index in
             self.lifeflow_lifes.remove(at: indexPath.row)
@@ -220,11 +196,9 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
             let random = Int.random(in: 1 ... 10)
             startBtn.setImage(UIImage(named:"pause"), for: .normal)
             if random % 2 == 0 {
-//                timer2 = Timer.scheduledTimer(timeInterval: 1.0,target: self, selector:  #selector(self.timerFunc2),userInfo: nil, repeats: true)
                 currentPlayer = .player2
             }
             else{
-//                timer1 = Timer.scheduledTimer(timeInterval: 1.0,target: self, selector:  #selector(self.timerFunc),userInfo: nil, repeats: true)
                 currentPlayer = .player1
             }
             timer_master = Timer.scheduledTimer(timeInterval: 1.0,target: self, selector:  #selector(self.timerFunc_master),userInfo: nil, repeats: true)
@@ -232,77 +206,39 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
             
         case .playing:
             startBtn.setImage(UIImage(named:"start"), for: .normal)
-//            if Player.player1 == currentPlayer{
-//                if timer1 != nil{
-//                    timer1!.invalidate()
-//                }
-//            }
-//            else{
-//                if timer2 != nil{
-//                    timer2!.invalidate()
-//                }
-//            }
             if timer_master != nil{
                 timer_master!.invalidate()
             }
             gameStatus = .stop
         case .stop:
             startBtn.setImage(UIImage(named:"pause"), for: .normal)
-//            if Player.player1 == currentPlayer{
-//                timer1 = Timer.scheduledTimer(timeInterval: 1.0,target: self, selector:  #selector(self.timerFunc),userInfo: nil, repeats: true)
-//            }
-//            else{
-//                timer2 = Timer.scheduledTimer(timeInterval: 1.0,target: self, selector:  #selector(self.timerFunc2),userInfo: nil, repeats: true)
-//            }
             timer_master = Timer.scheduledTimer(timeInterval: 1.0,target: self, selector:  #selector(self.timerFunc_master),userInfo: nil, repeats: true)
             gameStatus = .playing
         }
     }
     @IBAction func touchDown_clearBtn(_ sender: Any) {
-        
         let t:CGFloat = 1.0
         self.clearBtn.spinAnim(self.clearBtn,t)
         
-        //ちょいバック回転(回転と言うよりはそれになるといった感じ。pi / 2 は画像の初期位置を0としてそれから45°き回転させた位置)
-//        UIView.animate(withDuration: 0.5 / 2) { () -> Void in
-//            self.startBtn.transform = CGAffineTransform(rotationAngle:  0)
-//        }
         lifeReset()
         if timerSw.isOn {
             saveGame()
         }
         
-//        passMin = 0//経過時間
         //画面初期化
         screenInitialize(sender)
         timerSwValueChanged(sender)
     }
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        //画面初期化
-//        screenInitialize([])
-//    }
     func screenInitialize(_ sender: Any)  {
         passMin_master = 0//経過時間
         updateDisp(passMin: &passMin_master ,time:time_master)
-        
-    //        time1.text = formatter.string(from: TimeInterval(0))!
-    //        time2.text = formatter.string(from: TimeInterval(0))!
-    //        if timer1 != nil{
-    //            timer1!.invalidate()
-    //        }
-    //        if timer2 != nil{
-    //            timer2!.invalidate()
-    //        }
         if timer_master != nil{
             timer_master!.invalidate()
         }
         lifeflow_lifes.removeAll()
         tableView.reloadData()
         startBtn.setImage(UIImage(named:"start"), for: .normal)
-    //        startBtn.setImage(UIImage(named:"start" + (UITraitCollection.isDarkMode ? "n" : "d")), for: .normal)
         gameStatus = .ready
-    //        timerSw.isOn=false
     }
     
     func saveGame()  {
@@ -324,18 +260,10 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         appDelegate.saveContext()
     }
     @IBAction func touchDown_settingBtn(_ sender: Any) {
-        
-        // ①UIAlertControllerクラスのインスタンスを生成する
-        // titleにタイトル, messegeにメッセージ, prefereedStyleにスタイルを指定する
-        // preferredStyleにUIAlertControllerStyle.actionSheetを指定してアクションシートを表示する
         let actionSheet: UIAlertController = UIAlertController(
             title: NSLocalizedString("bgAlert_title", comment: ""),
             message: NSLocalizedString("bgAlert_messsage", comment: ""),
             preferredStyle: UIAlertController.Style.actionSheet)
-        
-        // ②選択肢の作成と追加
-        // titleに選択肢のテキストを、styleに.defaultを
-        // handlerにボタンが押された時の処理をクロージャで実装する
         actionSheet.addAction(
             UIAlertAction(title: NSLocalizedString("bgAlert_button_set_1", comment: ""),style: .default, handler: {
                             (action: UIAlertAction!) -> Void in
@@ -343,8 +271,6 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
                             self.callPhotoLibrary()
             })
         )
-        
-        // ②選択肢の作成と追加
         actionSheet.addAction(
             UIAlertAction(title: NSLocalizedString("bgAlert_button_set_2", comment: ""), style: .default, handler: {
                 (action: UIAlertAction!) -> Void in
@@ -366,17 +292,11 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
                 self.setBackground_init()
             })
         )
-        
-        // ②選択肢の作成と追加
         actionSheet.addAction(
             UIAlertAction(title: NSLocalizedString("bgAlert_button_cancel", comment: ""), style: .cancel, handler: nil)
         )
-        
-        // ③表示するViewと表示位置を指定する
         actionSheet.popoverPresentationController?.sourceView = view
         actionSheet.popoverPresentationController?.sourceRect = (sender as AnyObject).frame
-        
-        // ④アクションシートを表示
         present(actionSheet, animated: true, completion: nil)
     }
     
@@ -424,35 +344,6 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
             }
         }
     }
-    
-//    @IBAction func end(_ sender: Any){
-//        if GameStatus.playing == gameStatus{
-//            passMin = 0
-//            if Player.player1 == currentPlayer {
-//                if timer1 != nil{
-//                    timer1!.invalidate()
-//                }
-//                timer2 = Timer.scheduledTimer(timeInterval: 1.0,target: self, selector:     #selector(self.timerFunc2),userInfo: nil, repeats: true)
-//                time2.text = formatter.string(from: TimeInterval(0))!
-//            }
-//            else{
-//                if timer2 != nil{
-//                    timer2!.invalidate()
-//                }
-//                timer1 = Timer.scheduledTimer(timeInterval: 1.0,target: self, selector:     #selector(self.timerFunc),userInfo: nil, repeats: true)
-//                time1.text = formatter.string(from: TimeInterval(0))!
-//            }
-//            currentPlayer = Player.player1 == currentPlayer ? .player2 : .player1
-////            recodeLife()
-//        }
-//    }
-    
-//    @objc func timerFunc()  {
-//        updateDisp(passMin: &passMin ,time:time1)
-//    }
-//    @objc func timerFunc2()  {
-//        updateDisp(passMin: &passMin ,time:time2)
-//    }
     @objc func timerFunc_master()  {
         updateDisp(passMin: &passMin_master ,time:time_master)
         countDown()
@@ -466,7 +357,6 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         passMin = passMin + 1
     }
     func recodeLife()  {
-//        print("life recode")
         //前のライフと同じ場合記録しない
         if lifeflow_lifes.count != 0
             && lifeflow_lifes[lifeflow_lifes.count-1][0] == _life1
@@ -475,8 +365,6 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
             print("life recode return")
             return
         }
-//        var test :[[Int]]
-//        test.append([1,2])
         
         lifeflow_lifes.append([_life1,_life2])
         for lifes in lifeflow_lifes {
