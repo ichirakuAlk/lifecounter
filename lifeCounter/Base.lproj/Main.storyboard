@@ -340,6 +340,9 @@
                     </view>
                     <connections>
                         <outlet property="clearBtn" destination="TCC-Ub-C9Q" id="fae-bJ-EmP"/>
+                        <outlet property="constraint_dice_right" destination="mpJ-Zr-fUp" id="ENQ-pm-j3x"/>
+                        <outlet property="constraint_history_right" destination="O90-cB-kft" id="gFM-rN-CHB"/>
+                        <outlet property="constraint_image_right" destination="HFu-6b-JfR" id="p5g-3z-QGk"/>
                         <outlet property="life1" destination="8pb-Yg-uZT" id="qkd-vs-tPt"/>
                         <outlet property="life2" destination="8dy-MU-EOU" id="QDy-QM-VvM"/>
                         <outlet property="lifeflow_width" destination="h6h-fd-xAi" id="6Rw-jh-Gbg"/>
@@ -477,10 +480,30 @@
                         <subviews>
                             <view alpha="0.90000000000000002" tag="2" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iLN-EY-ons">
                                 <rect key="frame" x="32" y="273" width="350" height="350"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="3" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dice1d" translatesAutoresizingMaskIntoConstraints="NO" id="NoS-1i-QLv">
+                                        <rect key="frame" x="100" y="8" width="150" height="150"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="150" id="lJ7-Jc-BTl"/>
+                                            <constraint firstAttribute="width" constant="150" id="wyA-n9-uHZ"/>
+                                        </constraints>
+                                    </imageView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="3" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dice1d" translatesAutoresizingMaskIntoConstraints="NO" id="xiR-82-VMh">
+                                        <rect key="frame" x="100" y="192" width="150" height="150"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="150" id="64r-g2-NlI"/>
+                                            <constraint firstAttribute="height" constant="150" id="DwT-Md-MPo"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="xiR-82-VMh" secondAttribute="bottom" constant="8" id="3bS-1E-2Jr"/>
+                                    <constraint firstItem="NoS-1i-QLv" firstAttribute="leading" secondItem="iLN-EY-ons" secondAttribute="leading" constant="100" id="i9V-Em-vuA"/>
                                     <constraint firstAttribute="width" constant="350" id="m6Y-2E-X5P"/>
+                                    <constraint firstItem="NoS-1i-QLv" firstAttribute="top" secondItem="iLN-EY-ons" secondAttribute="top" constant="8" id="nXa-my-mji"/>
                                     <constraint firstAttribute="height" constant="350" id="nws-PQ-Voa"/>
+                                    <constraint firstItem="xiR-82-VMh" firstAttribute="leading" secondItem="iLN-EY-ons" secondAttribute="leading" constant="100" id="ut9-Lh-0KO"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -488,25 +511,17 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="3" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dice1d" translatesAutoresizingMaskIntoConstraints="NO" id="xiR-82-VMh">
-                                <rect key="frame" x="87" y="328" width="240" height="240"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="240" id="64r-g2-NlI"/>
-                                    <constraint firstAttribute="height" constant="240" id="DwT-Md-MPo"/>
-                                </constraints>
-                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="2YF-UH-TI3"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="xiR-82-VMh" firstAttribute="centerX" secondItem="Gb5-Am-JV8" secondAttribute="centerX" id="DOM-3h-p5L"/>
-                            <constraint firstItem="xiR-82-VMh" firstAttribute="centerY" secondItem="Gb5-Am-JV8" secondAttribute="centerY" id="etc-lv-hCM"/>
                             <constraint firstItem="iLN-EY-ons" firstAttribute="centerX" secondItem="Gb5-Am-JV8" secondAttribute="centerX" id="g9B-WW-XCk"/>
                             <constraint firstItem="iLN-EY-ons" firstAttribute="centerY" secondItem="Gb5-Am-JV8" secondAttribute="centerY" id="gGw-OP-33Q"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="diceImage" destination="xiR-82-VMh" id="6Ep-to-xgy"/>
+                        <outlet property="diceImage2" destination="NoS-1i-QLv" id="oq9-Sb-wSR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vlO-Gv-G1y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

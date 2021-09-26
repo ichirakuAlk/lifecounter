@@ -15,7 +15,9 @@ class ViewController_popup: UIViewController {
 //    @IBOutlet weak var popUpView: UIView!
 //    static var dispText: String = ""
     @IBOutlet weak var diceImage: UIImageView!
+    @IBOutlet weak var diceImage2: UIImageView!
     static var dispDiceImage:UIImage!
+    static var dispDiceImage2:UIImage!
     override func viewDidLoad() {
         super.viewDidLoad()
 //        text.adjustsFontSizeToFitWidth = true
@@ -25,6 +27,7 @@ class ViewController_popup: UIViewController {
 //        //トーストのイメージの設定（ダークモード対応）
 //        popUpImage.image=UITraitCollection.isDarkMode ? UIImage(named: Consts.TOAST_WHITE_IMAGE)! : UIImage(named: Consts.TOAST_BLACK_IMAGE)!
         diceImage.image=ViewController_popup.dispDiceImage
+        diceImage2.image=ViewController_popup.dispDiceImage2
         DispatchQueue.main.asyncAfter(deadline: .now() + DISPLAYTIME) {
             self.dismiss(animated: true, completion: nil)
         }

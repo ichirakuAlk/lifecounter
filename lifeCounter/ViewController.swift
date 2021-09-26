@@ -26,6 +26,9 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     @IBOutlet weak var timerSw: UISwitch!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var lifeflow_width: NSLayoutConstraint!
+    @IBOutlet weak var constraint_history_right: NSLayoutConstraint!
+    @IBOutlet weak var constraint_image_right: NSLayoutConstraint!
+    @IBOutlet weak var constraint_dice_right: NSLayoutConstraint!
     var lifeflow_lifes = [[Int]]()
     
     var _life1 :Int=20
@@ -168,6 +171,9 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         time2.isHidden = true
         startBtn.isHidden = !timerSw.isOn
         lifeflow_width.constant = timerSw.isOn ? 80 : 0
+        constraint_history_right.constant=timerSw.isOn ? 10 : 30
+        constraint_image_right.constant=timerSw.isOn ? 10 : 30
+        constraint_dice_right.constant=timerSw.isOn ? 10 : 30
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -301,7 +307,14 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     }
     
     @IBAction func touchDown_dice6(_ sender: Any) {
-        ViewController_popup.dispDiceImage = getDiceImage(type: DiceType.six)
+        let diceNum_p1 = getDiceNum(type: DiceType.six)
+        var diceNum_p2 = getDiceNum(type: DiceType.six)
+        while diceNum_p1 == diceNum_p2 {
+            print("一致したので振り直し p1:\(diceNum_p1),p2\(diceNum_p2)")
+            diceNum_p2 = getDiceNum(type: DiceType.six)
+        }
+        ViewController_popup.dispDiceImage = getDiceImage(type: .six, num: diceNum_p1)
+        ViewController_popup.dispDiceImage2 = getDiceImage(type: .six, num: diceNum_p2)
         performSegue(withIdentifier: "toPopUp", sender: nil)
     }
     func deleteImg(player:Player)  {
@@ -636,15 +649,23 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         }
     }
     
-    func getDiceImage(type:DiceType) -> UIImage {
+    func getDiceNum(type:DiceType) -> Int16 {
         var num:Int
-        var image = UIImage()
         switch type {
         case .six:
             num = Int.random(in: 1 ... 6)
-            image = UIImage(named: UITraitCollection.isDarkMode ? "dice\(num)n" : "dice\(num)d")!
         case .twenty:
             num = Int.random(in: 1 ... 20)
+        }
+        return Int16(num)
+    }
+    func getDiceImage(type:DiceType,num:Int16) -> UIImage {
+        var image = UIImage()
+        switch type {
+        case .six:
+            image = UIImage(named: UITraitCollection.isDarkMode ? "dice\(num)n" : "dice\(num)d")!
+        case .twenty:
+            image = UIImage()
         }
         return image
     }
