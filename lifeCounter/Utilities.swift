@@ -16,4 +16,7 @@ class Utilities {
         formatter.dateFormat = Consts.FORMAT_DATE_HIS
         return formatter.string(from: date!)
     }
+    static func isSmall() -> Bool{
+        return UIScreen.main.bounds.size.width <= 320//4インチiPhoneの横幅（iPhone 5,5s,5c,SE）
+    }
 }

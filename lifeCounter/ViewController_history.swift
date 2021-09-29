@@ -27,7 +27,7 @@ class ViewController_history: UIViewController,UITableViewDelegate, UITableViewD
         _bannerView.rootViewController = self
         //AD : test device
         let request: GADRequest = GADRequest()
-        request.testDevices = [Consts.ADMOB_TEST_DEVICE_ID_SE2]
+//        request.testDevices = [Consts.ADMOB_TEST_DEVICE_ID_SE2]
         _bannerView.load(request)
         bannerView.addSubview(_bannerView)
         

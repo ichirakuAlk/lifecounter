@@ -27,9 +27,11 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     @IBOutlet weak var timerSw: UISwitch!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var lifeflow_width: NSLayoutConstraint!
+    @IBOutlet weak var constraint_sw_right: NSLayoutConstraint!
     @IBOutlet weak var constraint_history_right: NSLayoutConstraint!
-    @IBOutlet weak var constraint_image_right: NSLayoutConstraint!
     @IBOutlet weak var constraint_dice_right: NSLayoutConstraint!
+    @IBOutlet weak var constraint_image_right: NSLayoutConstraint!
+    @IBOutlet weak var constraint_clear_right: NSLayoutConstraint!
     var lifeflow_lifes = [[Int]]()
     
     var _life1 :Int=20
@@ -176,10 +178,16 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         time1.isHidden = true
         time2.isHidden = true
         startBtn.isHidden = !timerSw.isOn
+        settingBtn.isHidden = timerSw.isOn
         lifeflow_width.constant = timerSw.isOn ? 80 : 0
-        constraint_history_right.constant=timerSw.isOn ? 10 : 30
-        constraint_image_right.constant=timerSw.isOn ? 10 : 30
-        constraint_dice_right.constant=timerSw.isOn ? 10 : 30
+        if Utilities.isSmall() {
+            constraint_sw_right.constant=timerSw.isOn ? 15 : 25
+            constraint_history_right.constant=timerSw.isOn ? 15 : 25
+            constraint_clear_right.constant=timerSw.isOn ? 10 : 16
+        }
+//        constraint_history_right.constant=timerSw.isOn ? 10 : 30
+        constraint_dice_right.constant=timerSw.isOn ? (Utilities.isSmall() ? -20 : -10) : 25
+        constraint_image_right.constant=timerSw.isOn ? 0 : 30
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -229,7 +237,7 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         }
     }
     @IBAction func touchDown_clearBtn(_ sender: Any) {
-        let t:CGFloat = 1.0
+        let t:CGFloat = -1.0
         self.clearBtn.spinAnim(self.clearBtn,t)
         
         //広告表示(勝ってたら広告を表示)
