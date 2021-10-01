@@ -80,6 +80,7 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         setMasterSetting_init()
         self.setNeedsStatusBarAppearanceUpdate()
         
+        tableView.rowHeight = 30
         tableView?.dataSource = self
         tableView?.delegate = self
         timeHiddenRefresh()

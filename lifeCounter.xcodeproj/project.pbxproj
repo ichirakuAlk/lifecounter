@@ -21,6 +21,7 @@
 		CF0A71C126FEC28300BA3769 /* Setting+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0A71BF26FEC28300BA3769 /* Setting+CoreDataClass.swift */; };
 		CF0A71C226FEC28300BA3769 /* Setting+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0A71C026FEC28300BA3769 /* Setting+CoreDataProperties.swift */; };
 		CF0A71C42702B44C00BA3769 /* GoogleMobileAds.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF0A71C32702B44C00BA3769 /* GoogleMobileAds.xcframework */; };
+		CF0A71C72705D29700BA3769 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CF0A71C92705D29700BA3769 /* InfoPlist.strings */; };
 		CF0E1DB626BE488D00611194 /* Background+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0E1DB426BE488D00611194 /* Background+CoreDataClass.swift */; };
 		CF0E1DB726BE488D00611194 /* Background+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0E1DB526BE488D00611194 /* Background+CoreDataProperties.swift */; };
 		CF152EFE26CA570E003A7D6C /* ViewController_popup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF152EFD26CA570E003A7D6C /* ViewController_popup.swift */; };
@@ -53,6 +54,8 @@
 		CF0A71BF26FEC28300BA3769 /* Setting+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Setting+CoreDataClass.swift"; sourceTree = "<group>"; };
 		CF0A71C026FEC28300BA3769 /* Setting+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Setting+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CF0A71C32702B44C00BA3769 /* GoogleMobileAds.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleMobileAds.xcframework; path = "Pods/Google-Mobile-Ads-SDK/Frameworks/GoogleMobileAdsFramework-Current/GoogleMobileAds.xcframework"; sourceTree = "<group>"; };
+		CF0A71C82705D29700BA3769 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CF0A71CA2705D2B200BA3769 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CF0E1DB426BE488D00611194 /* Background+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Background+CoreDataClass.swift"; sourceTree = "<group>"; };
 		CF0E1DB526BE488D00611194 /* Background+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Background+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CF152EFD26CA570E003A7D6C /* ViewController_popup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController_popup.swift; sourceTree = "<group>"; };
@@ -142,6 +145,7 @@
 				CF0A718626FCA4AC00BA3769 /* Localizable.strings */,
 				CF0A71BB26FDB4DC00BA3769 /* Utilities.swift */,
 				CF0A71BD26FDDAB900BA3769 /* Consts.swift */,
+				CF0A71C92705D29700BA3769 /* InfoPlist.strings */,
 			);
 			path = lifeCounter;
 			sourceTree = "<group>";
@@ -211,6 +215,7 @@
 				CF0A718426FCA4AC00BA3769 /* Localizable.strings in Resources */,
 				CFC02F4522A681A200DACEC8 /* Assets.xcassets in Resources */,
 				CFC02F4022A681A000DACEC8 /* Main.storyboard in Resources */,
+				CF0A71C72705D29700BA3769 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,6 +299,15 @@
 				CF0A718A26FCA55000BA3769 /* ja */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		CF0A71C92705D29700BA3769 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CF0A71C82705D29700BA3769 /* en */,
+				CF0A71CA2705D2B200BA3769 /* ja */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 		CFC02F3E22A681A000DACEC8 /* Main.storyboard */ = {
@@ -442,7 +456,9 @@
 			baseConfigurationReference = 839764C303ABFC67D946DB00 /* Pods-lifeCounter.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 7H3WV46MCH;
 				INFOPLIST_FILE = lifeCounter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -451,8 +467,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.kurachi.lifeCounter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = MTGlifecounter;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -462,6 +479,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 7H3WV46MCH;
 				INFOPLIST_FILE = lifeCounter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -471,7 +489,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.kurachi.lifeCounter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
