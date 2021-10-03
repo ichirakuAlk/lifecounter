@@ -184,7 +184,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="luZ-w0-0j8" userLabel="dice6">
                                         <rect key="frame" x="133" y="2.5" width="19.5" height="36"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                        <state key="normal" image="dot.squareshape.fill" catalog="system">
+                                        <state key="normal" image="die.face.6" catalog="system">
                                             <color key="titleColor" systemColor="labelColor"/>
                                         </state>
                                         <connections>
@@ -283,7 +283,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jax-9h-n1X">
-                                <rect key="frame" x="356.5" y="69.5" width="35.5" height="20.5"/>
+                                <rect key="frame" x="342" y="69.5" width="35.5" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -315,13 +315,13 @@
                             <constraint firstItem="Jax-9h-n1X" firstAttribute="top" secondItem="lgj-b8-IHx" secondAttribute="bottom" constant="5" id="bWy-BU-mq4"/>
                             <constraint firstItem="WXi-tU-VPE" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="bn3-Vy-b7G"/>
                             <constraint firstItem="AL2-V7-y2P" firstAttribute="top" secondItem="Jax-9h-n1X" secondAttribute="bottom" constant="8" id="c85-tt-KeK"/>
-                            <constraint firstItem="Jax-9h-n1X" firstAttribute="centerX" secondItem="AL2-V7-y2P" secondAttribute="centerX" id="cAB-Kd-Gi9"/>
                             <constraint firstItem="AL2-V7-y2P" firstAttribute="leading" secondItem="OXn-o0-U7l" secondAttribute="trailing" id="foM-TO-fXn"/>
                             <constraint firstItem="N1f-fR-9MN" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="iad-RW-bCT"/>
                             <constraint firstItem="OXn-o0-U7l" firstAttribute="height" secondItem="N1f-fR-9MN" secondAttribute="height" multiplier="0.45" id="rDr-Ac-C3A"/>
                             <constraint firstItem="qT1-ma-Zif" firstAttribute="width" secondItem="WXi-tU-VPE" secondAttribute="width" multiplier="0.3" id="ri5-VM-fem"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="AL2-V7-y2P" secondAttribute="bottom" id="tOs-LQ-gMD"/>
                             <constraint firstItem="WXi-tU-VPE" firstAttribute="leading" secondItem="N1f-fR-9MN" secondAttribute="trailing" id="tzV-8K-R2j"/>
+                            <constraint firstItem="Jax-9h-n1X" firstAttribute="leading" secondItem="2zP-ex-cmi" secondAttribute="trailing" constant="8" id="ugW-tX-GGV"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="WXi-tU-VPE" secondAttribute="trailing" id="uuE-ZR-ylE"/>
                             <constraint firstItem="TzD-18-S8U" firstAttribute="width" secondItem="WXi-tU-VPE" secondAttribute="width" multiplier="0.3" id="w0P-Fo-uRJ"/>
                             <constraint firstItem="N1f-fR-9MN" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="xAr-AI-VfT"/>
@@ -334,6 +334,7 @@
                         <outlet property="constraint_history_right" destination="MUE-Rg-263" id="zfY-Jo-0dh"/>
                         <outlet property="constraint_image_right" destination="arH-pW-jl7" id="4nC-Zs-Ozv"/>
                         <outlet property="constraint_sw_right" destination="5hK-gG-0tg" id="AqG-jF-Yye"/>
+                        <outlet property="dice" destination="luZ-w0-0j8" id="Z41-q3-GxH"/>
                         <outlet property="life1" destination="8pb-Yg-uZT" id="qkd-vs-tPt"/>
                         <outlet property="life2" destination="8dy-MU-EOU" id="QDy-QM-VvM"/>
                         <outlet property="lifeflow_width" destination="h6h-fd-xAi" id="6Rw-jh-Gbg"/>
@@ -533,8 +534,8 @@
     </scenes>
     <resources>
         <image name="dice1d" width="1299" height="1299"/>
+        <image name="die.face.6" catalog="system" width="128" height="114"/>
         <image name="doc.plaintext" catalog="system" width="115" height="128"/>
-        <image name="dot.squareshape.fill" catalog="system" width="128" height="114"/>
         <image name="photo" catalog="system" width="128" height="93"/>
         <image name="restart" width="48" height="48"/>
         <image name="start" width="48" height="48"/>

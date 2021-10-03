@@ -21,3 +21,7 @@
 "rename_title" = "rename";
 "rename_sentence" = "Please Enter new name";
 "dialog_button_change" = "change";
+"PhotoAuthAlert_title" = "Allow access to photos";
+"PhotoAuthAlert_messsage" = "You need to allow access to your photos. Please change the setting.";
+"PhotoAuthAlert_button_1" = "change";
+"PhotoAuthAlert_button_cancel" = "cancel";

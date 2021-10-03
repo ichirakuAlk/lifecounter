@@ -32,6 +32,7 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     @IBOutlet weak var constraint_dice_right: NSLayoutConstraint!
     @IBOutlet weak var constraint_image_right: NSLayoutConstraint!
     @IBOutlet weak var constraint_clear_right: NSLayoutConstraint!
+    @IBOutlet weak var dice: UIButton!
     var lifeflow_lifes = [[Int]]()
     
     var _life1 :Int=20
@@ -84,6 +85,26 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         tableView?.dataSource = self
         tableView?.delegate = self
         timeHiddenRefresh()
+        
+        //写真アクセス許可
+        if #available(iOS 14, *) {
+            let accessLebel:PHAccessLevel = .addOnly
+            PHPhotoLibrary.requestAuthorization(for: accessLebel){status in
+                DispatchQueue.main.async() {
+                }
+            }
+//            PHPhotoLibrary.authorizationStatus(for: accessLebel)
+        }
+        else {
+            // Fallback on earlier versions
+            PHPhotoLibrary.requestAuthorization(){status in
+                DispatchQueue.main.async() {
+                }
+            }
+//            PHPhotoLibrary.authorizationStatus()
+            dice.setTitle("D6", for: .normal)
+        }
+        
     }
     @objc func notificationFunc_pushhome(notification: NSNotification?) {
         print("called! notificationFunc_pushhome")
@@ -310,9 +331,9 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
             preferredStyle: UIAlertController.Style.actionSheet)
         actionSheet.addAction(
             UIAlertAction(title: NSLocalizedString("bgAlert_button_set_1", comment: ""),style: .default, handler: {
-                            (action: UIAlertAction!) -> Void in
-                            self.selected = .player1
-                            self.callPhotoLibrary()
+                (action: UIAlertAction!) -> Void in
+                    self.selected = .player1
+                    self.callPhotoLibrary()
             })
         )
         actionSheet.addAction(
@@ -516,21 +537,30 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     }
     // 写真へのアクセスがOFFのときに使うメソッド
     func requestAuthorizationOn(){
+        var status:PHAuthorizationStatus
+        if #available(iOS 14, *) {
+            let accessLebel:PHAccessLevel = .addOnly
+            status = PHPhotoLibrary.authorizationStatus(for: accessLebel)
+        } else {
+            // Fallback on earlier versions
+            status = PHPhotoLibrary.authorizationStatus()
+        }
         // authorization
-        let status = PHPhotoLibrary.authorizationStatus()
-        if (status == PHAuthorizationStatus.denied) {
+        if (status != .authorized) {
+//            if (status == PHAuthorizationStatus.denied) {
             //アクセス不能の場合。アクセス許可をしてもらう。snowなどはこれを利用して、写真へのアクセスを禁止している場合は先に進めないようにしている。
             //アラートビューで設定変更するかしないかを聞く
-            let alert = UIAlertController(title: "写真へのアクセスを許可",
-                                          message: "写真へのアクセスを許可する必要があります。設定を変更してください。",
+            let alert = UIAlertController(title: NSLocalizedString("PhotoAuthAlert_title", comment: ""),
+                                          message: NSLocalizedString("PhotoAuthAlert_messsage", comment: ""),
                                           preferredStyle: .alert)
-            let settingsAction = UIAlertAction(title: "設定変更", style: .default) { (_) -> Void in
-                guard let _ = URL(string: UIApplication.openSettingsURLString ) else {
+            let settingsAction = UIAlertAction(title: NSLocalizedString("PhotoAuthAlert_button_1", comment: ""), style: .default) { (_) -> Void in
+                guard let settingsURL = URL(string: UIApplication.openSettingsURLString ) else {
                     return
                 }
+                UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
             }
             alert.addAction(settingsAction)
-            alert.addAction(UIAlertAction(title: "キャンセル", style: .cancel) { _ in
+            alert.addAction(UIAlertAction(title: NSLocalizedString("PhotoAuthAlert_button_cancel", comment: ""), style: .cancel) { _ in
                 // ダイアログがキャンセルされた。つまりアクセス許可は得られない。
             })
             self.present(alert, animated: true, completion: nil)
@@ -539,7 +569,7 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     //フォトライブラリを呼び出すメソッド
     func callPhotoLibrary(){
         //権限の確認
-        requestAuthorizationOn()
+        self.requestAuthorizationOn()
         
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.photoLibrary) {
             

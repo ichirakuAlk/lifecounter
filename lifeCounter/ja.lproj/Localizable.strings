@@ -21,3 +21,7 @@
 "rename_title" = "名前変更";
 "rename_sentence" = "新しい名前を入力してください";
 "dialog_button_change" = "変更";
+"PhotoAuthAlert_title" = "写真へのアクセスを許可";
+"PhotoAuthAlert_messsage" = "写真へのアクセスを許可する必要があります。設定を変更してください。";
+"PhotoAuthAlert_button_1" = "設定変更";
+"PhotoAuthAlert_button_cancel" = "キャンセル";

@@ -22,6 +22,7 @@
 		CF0A71C226FEC28300BA3769 /* Setting+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0A71C026FEC28300BA3769 /* Setting+CoreDataProperties.swift */; };
 		CF0A71C42702B44C00BA3769 /* GoogleMobileAds.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF0A71C32702B44C00BA3769 /* GoogleMobileAds.xcframework */; };
 		CF0A71C72705D29700BA3769 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CF0A71C92705D29700BA3769 /* InfoPlist.strings */; };
+		CF0A71CF2708C48D00BA3769 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF0A71CE2708C48D00BA3769 /* AssetsLibrary.framework */; };
 		CF0E1DB626BE488D00611194 /* Background+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0E1DB426BE488D00611194 /* Background+CoreDataClass.swift */; };
 		CF0E1DB726BE488D00611194 /* Background+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0E1DB526BE488D00611194 /* Background+CoreDataProperties.swift */; };
 		CF152EFE26CA570E003A7D6C /* ViewController_popup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF152EFD26CA570E003A7D6C /* ViewController_popup.swift */; };
@@ -56,6 +57,7 @@
 		CF0A71C32702B44C00BA3769 /* GoogleMobileAds.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleMobileAds.xcframework; path = "Pods/Google-Mobile-Ads-SDK/Frameworks/GoogleMobileAdsFramework-Current/GoogleMobileAds.xcframework"; sourceTree = "<group>"; };
 		CF0A71C82705D29700BA3769 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CF0A71CA2705D2B200BA3769 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CF0A71CE2708C48D00BA3769 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		CF0E1DB426BE488D00611194 /* Background+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Background+CoreDataClass.swift"; sourceTree = "<group>"; };
 		CF0E1DB526BE488D00611194 /* Background+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Background+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CF152EFD26CA570E003A7D6C /* ViewController_popup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController_popup.swift; sourceTree = "<group>"; };
@@ -75,6 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF0A71CF2708C48D00BA3769 /* AssetsLibrary.framework in Frameworks */,
 				CF0A71C42702B44C00BA3769 /* GoogleMobileAds.xcframework in Frameworks */,
 				B8F547CAE98D458F49C815F1 /* Pods_lifeCounter.framework in Frameworks */,
 			);
@@ -95,6 +98,7 @@
 		833BB34A80B5C6F8E70EC980 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CF0A71CE2708C48D00BA3769 /* AssetsLibrary.framework */,
 				CF0A71C32702B44C00BA3769 /* GoogleMobileAds.xcframework */,
 				8C928E358D1300EBFB348FFD /* Pods_lifeCounter.framework */,
 			);
@@ -458,7 +462,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 7H3WV46MCH;
 				INFOPLIST_FILE = lifeCounter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -479,7 +483,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 7H3WV46MCH;
 				INFOPLIST_FILE = lifeCounter/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
