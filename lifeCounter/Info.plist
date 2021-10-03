@@ -26,8 +26,8 @@
 	<true/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-    <key>NSPhotoLibraryAddUsageDescription</key>
-    <string>use the photo library's photo as a background image in this app</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>use the photo library's photo as a background image in this app</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>use the photo library's photo as a background image in this app</string>
 	<key>NSUserTrackingUsageDescription</key>
