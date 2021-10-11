@@ -9,7 +9,6 @@
 import UIKit
 import CoreData
 import AppTrackingTransparency
-import GoogleMobileAds
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -41,16 +40,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-        if #available(iOS 14, *) {
-            if ATTrackingManager.trackingAuthorizationStatus == .notDetermined {
-                ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
-                    GADMobileAds.sharedInstance().start(completionHandler: nil)
-                })
-            }
-        } else {
-            // Fallback on earlier versions
-            GADMobileAds.sharedInstance().start(completionHandler: nil)
-        }
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
 

@@ -9,9 +9,8 @@
 import UIKit
 import Photos
 import CoreData
-import GoogleMobileAds
 
-class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITableViewDelegate, UITableViewDataSource,GADInterstitialDelegate{
+class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITableViewDelegate, UITableViewDataSource{
     
 
     @IBOutlet weak var player1view: UIView!
@@ -50,14 +49,12 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     var viewContext:NSManagedObjectContext!
     var countDownCnt:Countdown = Countdown.three
     
-    var interstitial: GADInterstitial!
     override func viewDidLoad() {
         
         super.viewDidLoad()
         //受信設定
         NotificationCenter.default.addObserver(self, selector: #selector(notificationFunc_pushhome(notification:)), name: .notificationName, object: nil)
         
-        interstitial = createAndLoadInterstitial()
 //        interstitial = GADInterstitial(adUnitID: Consts.ADMOB_UNIT_ID_INTERSTITIAL_CLEAR)
 //        let request = GADRequest()
 //        interstitial.load(request)
@@ -262,14 +259,6 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         let t:CGFloat = -1.0
         self.clearBtn.spinAnim(self.clearBtn,t)
         
-        //広告表示(勝ってたら広告を表示)
-        if interstitial.isReady && Int(life1.text!)! > Int(life2.text!)! {
-            interstitial.present(fromRootViewController: self)
-        }
-        else {
-            print("Ad wasn't ready")
-        }
-        
         lifeReset()
         if timerSw.isOn {
             saveGame()
@@ -278,20 +267,6 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         //画面初期化
         screenInitialize(sender)
         timerSwValueChanged(sender)
-    }
-    
-    //広告作成
-    func createAndLoadInterstitial() -> GADInterstitial {
-        var interstitial = GADInterstitial(adUnitID: Consts.ADMOB_UNIT_ID_INTERSTITIAL_CLEAR)
-        interstitial.delegate = self
-        interstitial.load(GADRequest())
-        return interstitial
-    }
-
-    //広告非表示
-    func interstitialDidDismissScreen(_ ad: GADInterstitial) {
-        print("interstitialDidDismissScreen!!")
-        interstitial = createAndLoadInterstitial()
     }
     
     func screenInitialize(_ sender: Any)  {
