@@ -33,6 +33,8 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     @IBOutlet weak var constraint_image_right: NSLayoutConstraint!
     @IBOutlet weak var constraint_clear_right: NSLayoutConstraint!
     @IBOutlet weak var dice: UIButton!
+    @IBOutlet weak var p1bg: UIView!
+    @IBOutlet weak var p2bg: UIView!
     var lifeflow_lifes = [[Int]]()
     
     var _life1 :Int=20
@@ -64,6 +66,7 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         
         // Do any additional setup after loading the view.
         player2view.transform=CGAffineTransform(rotationAngle: CGFloat(Double.pi))
+        p2bg.transform=CGAffineTransform(rotationAngle: CGFloat(Double.pi))
         startBtn.imageView?.contentMode = .scaleAspectFit
         startBtn.contentHorizontalAlignment = .fill
         startBtn.contentVerticalAlignment = .fill
@@ -139,8 +142,8 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
                     }
                 }
             }
-            self.settingBackground(playerView: &player1view, setImage: player1Img ?? UIImage(),scale: scale1,initial: true)
-            self.settingBackground(playerView: &player2view, setImage: player2Img ?? UIImage(),scale: scale2,initial: true)
+            self.settingBackground(playerView: &p1bg, setImage: player1Img ?? UIImage(),scale: scale1,initial: true)
+            self.settingBackground(playerView: &p2bg, setImage: player2Img ?? UIImage(),scale: scale2,initial: true)
         } catch {
         }
     }
@@ -614,7 +617,7 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
 //            let imgWidth:CGFloat = setImage.size.width
 //            let imgHeight:CGFloat = setImage.size.height
             // スクリーンの縦横サイズを取得
-            let playerViewWidth:CGFloat = player1view.frame.size.width
+            let playerViewWidth:CGFloat = p1bg.frame.size.width
 //            let playerViewHeight:CGFloat = player1view.frame.size.height
             
             // 画像の縦横サイズを取得
@@ -655,10 +658,10 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
             
             //背景設定
             if Player.player1 == self.selected{
-                self.settingBackground(playerView: &player1view, setImage: pickedImage,scale: scale)
+                self.settingBackground(playerView: &p1bg, setImage: pickedImage,scale: scale)
             }
             else{
-                self.settingBackground(playerView: &player2view, setImage: pickedImage,scale: scale)
+                self.settingBackground(playerView: &p2bg, setImage: pickedImage,scale: scale)
             }
             self.dismiss(animated: true, completion: nil)
         }
@@ -707,13 +710,18 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
             viewWithTag.removeFromSuperview()
         }
         
-        var b:Bool = true
-        for subView in playerView.subviews{
-            if b{
-                playerView.addSubview(imageView)
-                b=false
+        if playerView.subviews.count == 0 {
+            playerView.addSubview(imageView)
+        }
+        else{
+            var b:Bool = true
+            for subView in playerView.subviews{
+                if b{
+                    playerView.addSubview(imageView)
+                    b=false
+                }
+                playerView.addSubview(subView)
             }
-            playerView.addSubview(subView)
         }
     }
     
