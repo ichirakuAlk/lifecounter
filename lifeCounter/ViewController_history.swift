@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import GoogleMobileAds
 
 class ViewController_history: UIViewController,UITableViewDelegate, UITableViewDataSource {
     var games = [Game]()
@@ -16,8 +17,19 @@ class ViewController_history: UIViewController,UITableViewDelegate, UITableViewD
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var lifeflow_p1: UITextView!
     @IBOutlet weak var lifeflow_p2: UITextView!
+    @IBOutlet weak var bannerView: GADBannerView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        //アド
+        //AD : unit id
+        let _bannerView: GADBannerView = GADBannerView(adSize: kGADAdSizeLargeBanner)
+        _bannerView.adUnitID = Consts.ADMOB_UNIT_ID_HISTORY
+        _bannerView.rootViewController = self
+        //AD : test device
+        let request: GADRequest = GADRequest()
+//        request.testDevices = [Consts.ADMOB_TEST_DEVICE_ID_SE2]
+        _bannerView.load(request)
+        bannerView.addSubview(_bannerView)
         
         tableView?.dataSource = self
         tableView?.delegate = self

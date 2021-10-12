@@ -3,11 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7BB1E22C79918AFD86009532 /* libPods-lifeCounter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DBB3AF974A8F2B7A9AAA26E4 /* libPods-lifeCounter.a */; };
+		B8F547CAE98D458F49C815F1 /* Pods_lifeCounter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C928E358D1300EBFB348FFD /* Pods_lifeCounter.framework */; };
 		CF0A718126FC48DC00BA3769 /* TableViewCell_lifeflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0A718026FC48DC00BA3769 /* TableViewCell_lifeflow.swift */; };
 		CF0A718426FCA4AC00BA3769 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CF0A718626FCA4AC00BA3769 /* Localizable.strings */; };
 		CF0A71B326FD862500BA3769 /* Life+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0A71AF26FD862500BA3769 /* Life+CoreDataClass.swift */; };
@@ -20,6 +20,7 @@
 		CF0A71BE26FDDAB900BA3769 /* Consts.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0A71BD26FDDAB900BA3769 /* Consts.swift */; };
 		CF0A71C126FEC28300BA3769 /* Setting+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0A71BF26FEC28300BA3769 /* Setting+CoreDataClass.swift */; };
 		CF0A71C226FEC28300BA3769 /* Setting+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0A71C026FEC28300BA3769 /* Setting+CoreDataProperties.swift */; };
+		CF0A71C42702B44C00BA3769 /* GoogleMobileAds.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = CF0A71C32702B44C00BA3769 /* GoogleMobileAds.xcframework */; };
 		CF0A71C72705D29700BA3769 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CF0A71C92705D29700BA3769 /* InfoPlist.strings */; };
 		CF0E1DB626BE488D00611194 /* Background+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0E1DB426BE488D00611194 /* Background+CoreDataClass.swift */; };
 		CF0E1DB726BE488D00611194 /* Background+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0E1DB526BE488D00611194 /* Background+CoreDataProperties.swift */; };
@@ -35,6 +36,7 @@
 
 /* Begin PBXFileReference section */
 		839764C303ABFC67D946DB00 /* Pods-lifeCounter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lifeCounter.debug.xcconfig"; path = "Target Support Files/Pods-lifeCounter/Pods-lifeCounter.debug.xcconfig"; sourceTree = "<group>"; };
+		8C928E358D1300EBFB348FFD /* Pods_lifeCounter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_lifeCounter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		941FE98D9F312D2877E77511 /* Pods-lifeCounter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lifeCounter.release.xcconfig"; path = "Target Support Files/Pods-lifeCounter/Pods-lifeCounter.release.xcconfig"; sourceTree = "<group>"; };
 		CF0A718026FC48DC00BA3769 /* TableViewCell_lifeflow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell_lifeflow.swift; sourceTree = "<group>"; };
 		CF0A718526FCA4AC00BA3769 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -67,7 +69,6 @@
 		CFC02F4422A681A200DACEC8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CFC02F4722A681A200DACEC8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CFC02F4922A681A200DACEC8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DBB3AF974A8F2B7A9AAA26E4 /* libPods-lifeCounter.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-lifeCounter.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,7 +76,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7BB1E22C79918AFD86009532 /* libPods-lifeCounter.a in Frameworks */,
+				CF0A71C42702B44C00BA3769 /* GoogleMobileAds.xcframework in Frameworks */,
+				B8F547CAE98D458F49C815F1 /* Pods_lifeCounter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,7 +98,7 @@
 			children = (
 				CF0A71CE2708C48D00BA3769 /* AssetsLibrary.framework */,
 				CF0A71C32702B44C00BA3769 /* GoogleMobileAds.xcframework */,
-				DBB3AF974A8F2B7A9AAA26E4 /* libPods-lifeCounter.a */,
+				8C928E358D1300EBFB348FFD /* Pods_lifeCounter.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -161,6 +163,7 @@
 				CFC02F3322A681A000DACEC8 /* Sources */,
 				CFC02F3422A681A000DACEC8 /* Frameworks */,
 				CFC02F3522A681A000DACEC8 /* Resources */,
+				304F80D7E7FDFEEF637D8246 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -241,6 +244,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		304F80D7E7FDFEEF637D8246 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-lifeCounter/Pods-lifeCounter-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-lifeCounter/Pods-lifeCounter-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-lifeCounter/Pods-lifeCounter-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
