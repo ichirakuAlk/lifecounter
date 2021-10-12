@@ -1,0 +1,41 @@
+
+/* Class = "UILabel"; text = "0:00"; ObjectID = "3ac-Rj-OF4"; */
+"3ac-Rj-OF4.text" = "0:00";
+
+/* Class = "UIButton"; normalTitle = "+"; ObjectID = "8Zx-ZJ-7jJ"; */
+"8Zx-ZJ-7jJ.normalTitle" = "+";
+
+/* Class = "UILabel"; text = "20"; ObjectID = "8dy-MU-EOU"; */
+"8dy-MU-EOU.text" = "20";
+
+/* Class = "UILabel"; text = "20"; ObjectID = "8pb-Yg-uZT"; */
+"8pb-Yg-uZT.text" = "20";
+
+/* Class = "UIButton"; normalTitle = "+"; ObjectID = "Dg9-iZ-AV2"; */
+"Dg9-iZ-AV2.normalTitle" = "+";
+
+/* Class = "UILabel"; text = "0:00"; ObjectID = "Jax-9h-n1X"; */
+"Jax-9h-n1X.text" = "0:00";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Wqd-mf-NvI"; */
+"Wqd-mf-NvI.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "-"; ObjectID = "k0P-wl-mSU"; */
+"k0P-wl-mSU.normalTitle" = "-";
+
+/* Class = "UIButton"; normalTitle = "-"; ObjectID = "k2Y-n8-EWS"; */
+"k2Y-n8-EWS.normalTitle" = "-";
+
+/* Class = "UIButton"; normalTitle = "6"; ObjectID = "luZ-w0-0j8"; */
+"luZ-w0-0j8.normalTitle" = "6";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "nXS-N7-g0Y"; */
+"nXS-N7-g0Y.text" = "Label";
+
+/* Class = "UILabel"; text = "0:00"; ObjectID = "qzq-zg-uEo"; */
+"qzq-zg-uEo.text" = "0:00";
+
+"4AN-fS-Q6D.text" = "対戦履歴";
+"u47-4U-Dmd.text" = "対戦記録";
+"lgj-b8-IHx.text" = "経過時間";
+

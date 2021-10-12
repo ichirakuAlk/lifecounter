@@ -1,0 +1,27 @@
+/* 
+  Localizable.strings
+  lifeCounter
+
+  Created by 倉知諒 on 2021/09/23.
+  Copyright © 2021 kurachi. All rights reserved.
+*/
+"deleteBtn_title" = "削除";
+"renameBtn_title" = "リネーム";
+"bgAlert_title" = "背景画像";
+"bgAlert_messsage" = "操作を選択してください";
+"bgAlert_button_set_1" = "設定（プレイヤー１）";
+"bgAlert_button_set_2" = "設定（プレイヤー２）";
+"bgAlert_button_del_1" = "削除（プレイヤー１）";
+"bgAlert_button_del_2" = "削除（プレイヤー２）";
+"bgAlert_button_cancel" = "キャンセル";
+"confirm_title" = "確認";
+"confirm_sentence_delete" = "%@\nを削除しますか？";
+"dialog_button_yes" = "はい";
+"dialog_button_no" = "いいえ";
+"rename_title" = "名前変更";
+"rename_sentence" = "新しい名前を入力してください";
+"dialog_button_change" = "変更";
+"PhotoAuthAlert_title" = "写真へのアクセスを許可";
+"PhotoAuthAlert_messsage" = "写真へのアクセスを許可する必要があります。設定を変更してください。";
+"PhotoAuthAlert_button_1" = "設定変更";
+"PhotoAuthAlert_button_cancel" = "キャンセル";

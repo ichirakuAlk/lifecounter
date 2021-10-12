@@ -1,4 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20D91" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Background" representedClassName="Background" syncable="YES">
+        <attribute name="picture" optional="YES" attributeType="Binary"/>
+        <attribute name="player" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="scale" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="Game" representedClassName="Game" syncable="YES">
+        <attribute name="gameDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="time" optional="YES" attributeType="String"/>
+        <relationship name="life" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Life" inverseName="game" inverseEntity="Life"/>
+    </entity>
+    <entity name="Life" representedClassName="Life" syncable="YES">
+        <attribute name="life" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="player" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="stage" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="game" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Game" inverseName="life" inverseEntity="Game"/>
+    </entity>
+    <entity name="Setting" representedClassName="Setting" syncable="YES">
+        <attribute name="recode" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+    </entity>
+    <elements>
+        <element name="Background" positionX="-63" positionY="-18" width="128" height="74"/>
+        <element name="Game" positionX="-63" positionY="9" width="128" height="89"/>
+        <element name="Life" positionX="-54" positionY="18" width="128" height="89"/>
+        <element name="Setting" positionX="-36" positionY="63" width="128" height="44"/>
+    </elements>
 </model>
