@@ -22,7 +22,19 @@ class ViewController_history: UIViewController,UITableViewDelegate, UITableViewD
         super.viewDidLoad()
         //アド
         //AD : unit id
-        let _bannerView: GADBannerView = GADBannerView(adSize: kGADAdSizeLargeBanner)
+        
+            let frame = { () -> CGRect in
+            if #available(iOS 11.0, *) {
+                return view.frame.inset(by: view.safeAreaInsets)
+            } else {
+                return view.frame
+            }
+            }()
+        let viewWidth = frame.size.width
+        let viewHeight = frame.size.height
+        let aspect = viewHeight/viewWidth
+//        print("banner view max height:"+(50*aspect).description)
+        let _bannerView: GADBannerView = GADBannerView(adSize: GADInlineAdaptiveBannerAdSizeWithWidthAndMaxHeight(viewWidth,50*aspect))
         _bannerView.adUnitID = Consts.ADMOB_UNIT_ID_HISTORY
         _bannerView.rootViewController = self
         //AD : test device

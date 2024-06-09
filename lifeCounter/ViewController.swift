@@ -11,30 +11,19 @@ import Photos
 import CoreData
 import GoogleMobileAds
 
-class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITableViewDelegate, UITableViewDataSource,GADInterstitialDelegate{
+class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINavigationControllerDelegate{
     
 
     @IBOutlet weak var player1view: UIView!
     @IBOutlet weak var player2view: UIView!
-    @IBOutlet weak var startBtn: UIButton!
     @IBOutlet weak var clearBtn: CustomBtn!
     @IBOutlet weak var settingBtn: UIButton!
     @IBOutlet weak var life1: UILabel!
     @IBOutlet weak var life2: UILabel!
-    @IBOutlet weak var time1: UILabel!
-    @IBOutlet weak var time2: UILabel!
-    @IBOutlet weak var time_master: UILabel!
-    @IBOutlet weak var timerSw: UISwitch!
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var lifeflow_width: NSLayoutConstraint!
-    @IBOutlet weak var constraint_sw_right: NSLayoutConstraint!
-    @IBOutlet weak var constraint_history_right: NSLayoutConstraint!
-    @IBOutlet weak var constraint_dice_right: NSLayoutConstraint!
-    @IBOutlet weak var constraint_image_right: NSLayoutConstraint!
-    @IBOutlet weak var constraint_clear_right: NSLayoutConstraint!
     @IBOutlet weak var dice: UIButton!
     @IBOutlet weak var p1bg: UIView!
     @IBOutlet weak var p2bg: UIView!
+    @IBOutlet weak var bannerView: GADBannerView!
     var lifeflow_lifes = [[Int]]()
     
     var _life1 :Int=20
@@ -52,24 +41,19 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     var viewContext:NSManagedObjectContext!
     var countDownCnt:Countdown = Countdown.three
     
-    var interstitial: GADInterstitial!
+//    var interstitial: GADInterstitial!
+    let RADIUS:CGFloat = 20
+    var screenRotate:Rotate = .normal
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         //受信設定
         NotificationCenter.default.addObserver(self, selector: #selector(notificationFunc_pushhome(notification:)), name: .notificationName, object: nil)
         
-        interstitial = createAndLoadInterstitial()
-//        interstitial = GADInterstitial(adUnitID: Consts.ADMOB_UNIT_ID_INTERSTITIAL_CLEAR)
-//        let request = GADRequest()
-//        interstitial.load(request)
+//        interstitial = createAndLoadInterstitial()
         
         // Do any additional setup after loading the view.
         player2view.transform=CGAffineTransform(rotationAngle: CGFloat(Double.pi))
         p2bg.transform=CGAffineTransform(rotationAngle: CGFloat(Double.pi))
-        startBtn.imageView?.contentMode = .scaleAspectFit
-        startBtn.contentHorizontalAlignment = .fill
-        startBtn.contentVerticalAlignment = .fill
         clearBtn.imageView?.contentMode = .scaleAspectFit
         clearBtn.contentHorizontalAlignment = .fill
         clearBtn.contentVerticalAlignment = .fill
@@ -83,11 +67,6 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         setBackground_init()
         setMasterSetting_init()
         self.setNeedsStatusBarAppearanceUpdate()
-        
-        tableView.rowHeight = 30
-        tableView?.dataSource = self
-        tableView?.delegate = self
-        timeHiddenRefresh()
         
         //写真アクセス許可
         if #available(iOS 14, *) {
@@ -107,7 +86,45 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
 //            PHPhotoLibrary.authorizationStatus()
             dice.setTitle("D6", for: .normal)
         }
+        p1bg.layer.cornerRadius = RADIUS
         
+        //ad start
+        bannerView.adUnitID = Consts.ADMOB_UNIT_ID_HISTORY
+        bannerView.rootViewController = self
+        //ad end
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        //ad
+        loadBannerAd()
+    }
+    
+    override func viewWillTransition(to size: CGSize,
+                            with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to:size, with:coordinator)
+        //ad start
+        coordinator.animate(alongsideTransition: { _ in
+            self.loadBannerAd()
+        })
+        //ad end
+    }
+    
+    //ad
+    func loadBannerAd() {
+        let frame = { () -> CGRect in
+        if #available(iOS 11.0, *) {
+            return view.frame.inset(by: view.safeAreaInsets)
+        } else {
+            return view.frame
+        }
+        }()
+        let viewWidth = frame.size.width
+        let viewHeight = frame.size.height
+        let aspect = viewHeight/viewWidth
+        bannerView.adSize = GADInlineAdaptiveBannerAdSizeWithWidthAndMaxHeight(viewWidth,50*aspect)
+        let request: GADRequest = GADRequest()
+        bannerView.load(request)
     }
     @objc func notificationFunc_pushhome(notification: NSNotification?) {
         print("called! notificationFunc_pushhome")
@@ -152,181 +169,56 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         do {
             let fetchResults = try viewContext.fetch(query)
             if fetchResults.count != 1 {
-                setRecodeSw(isOn: false)
+//                setRecodeSw(isOn: false)
             }
             else{
-                setRecodeSw(isOn: (fetchResults[0] as Setting).recode)
+//                setRecodeSw(isOn: (fetchResults[0] as Setting).recode)
             }
         } catch {
         }
-    }
-    func setRecodeSw(isOn:Bool)  {
-        timerSw.isOn=isOn
     }
     override var prefersStatusBarHidden: Bool{
         return true
     }
-    @IBAction func timerSwValueChanged(_ sender: Any) {
-        timeHiddenRefresh()
-        let appDelegate: AppDelegate = UIApplication.shared.delegate as! AppDelegate
-        let viewContext = appDelegate.persistentContainer.viewContext
-        
-        //delete
-        let request: NSFetchRequest<Setting> = Setting.fetchRequest()
-        do {
-            let fetchResults = try viewContext.fetch(request)
-            for result: AnyObject in fetchResults {
-                let record = result as! NSManagedObject
-                viewContext.delete(record)
-            }
-            try viewContext.save()
-        } catch {
-        }
-        
-        //insert
-        let entity = NSEntityDescription.entity(forEntityName: "Setting", in: viewContext)
-        let recode = NSManagedObject(entity: entity!, insertInto: viewContext) as! Setting
-        recode.recode=timerSw.isOn
-        appDelegate.saveContext()
-        
-        //select
-        let query: NSFetchRequest<Setting> = Setting.fetchRequest()
-        do {
-            let fetchResults = try viewContext.fetch(query)
-            let setting = fetchResults[0] as Setting
-            setRecodeSw(isOn: setting.recode)
-        } catch {
-        }
-        
-    }
-    func timeHiddenRefresh()  {
-        time1.isHidden = true
-        time2.isHidden = true
-        startBtn.isHidden = !timerSw.isOn
-        settingBtn.isHidden = timerSw.isOn
-        lifeflow_width.constant = timerSw.isOn ? 80 : 0
-        if Utilities.isSmall() {
-            constraint_sw_right.constant=timerSw.isOn ? 15 : 25
-            constraint_history_right.constant=timerSw.isOn ? 15 : 25
-            constraint_clear_right.constant=timerSw.isOn ? 10 : 16
-        }
-//        constraint_history_right.constant=timerSw.isOn ? 10 : 30
-        constraint_dice_right.constant=timerSw.isOn ? (Utilities.isSmall() ? -20 : -10) : 25
-        constraint_image_right.constant=timerSw.isOn ? 0 : 30
-    }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return lifeflow_lifes.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let lifes:[Int] = lifeflow_lifes[indexPath.row]
-        let cell: TableViewCell_lifeflow = tableView.dequeueReusableCell(withIdentifier: "TableViewCell_lifeflow") as! TableViewCell_lifeflow
-        cell.setCell(data: Data_lifeflow(p1life: lifes[0], p2life: lifes[1]))
-        return cell
-    }
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let swipeCell = UITableViewRowAction(style: .default, title: NSLocalizedString("deleteBtn_title", comment: "")) { action, index in
-            self.lifeflow_lifes.remove(at: indexPath.row)
-            tableView.reloadData()
-        }
-        swipeCell.backgroundColor = .red
-        return [swipeCell]
-    }
-    @IBAction func touchDown_startBtn(_ sender: Any) {
-        switch gameStatus {
-        case .ready:
-            
-            //ちょいバック回転(回転と言うよりはそれになるといった感じ。pi / 2   は画像の初期位置を0としてそれから45°き回転させた位置)
-            let random = Int.random(in: 1 ... 10)
-            startBtn.setImage(UIImage(named:"pause"), for: .normal)
-            if random % 2 == 0 {
-                currentPlayer = .player2
-            }
-            else{
-                currentPlayer = .player1
-            }
-            timer_master = Timer.scheduledTimer(timeInterval: 1.0,target: self, selector:  #selector(self.timerFunc_master),userInfo: nil, repeats: true)
-            gameStatus = .playing
-            
-        case .playing:
-            startBtn.setImage(UIImage(named:"start"), for: .normal)
-            if timer_master != nil{
-                timer_master!.invalidate()
-            }
-            gameStatus = .stop
-        case .stop:
-            startBtn.setImage(UIImage(named:"pause"), for: .normal)
-            timer_master = Timer.scheduledTimer(timeInterval: 1.0,target: self, selector:  #selector(self.timerFunc_master),userInfo: nil, repeats: true)
-            gameStatus = .playing
-        }
-    }
     @IBAction func touchDown_clearBtn(_ sender: Any) {
         let t:CGFloat = -1.0
         self.clearBtn.spinAnim(self.clearBtn,t)
         
         //広告表示(勝ってたら広告を表示)
-        if interstitial.isReady && Int(life1.text!)! > Int(life2.text!)! {
-            interstitial.present(fromRootViewController: self)
-        }
-        else {
-            print("Ad wasn't ready")
-        }
+//        if interstitial.isReady && Int(life1.text!)! > Int(life2.text!)! {
+//            interstitial.present(fromRootViewController: self)
+//        }
+//        else {
+//            print("Ad wasn't ready")
+//        }
         
         lifeReset()
-        if timerSw.isOn {
-            saveGame()
-        }
         
         //画面初期化
         screenInitialize(sender)
-        timerSwValueChanged(sender)
     }
     
-    //広告作成
-    func createAndLoadInterstitial() -> GADInterstitial {
-        var interstitial = GADInterstitial(adUnitID: Consts.ADMOB_UNIT_ID_INTERSTITIAL_CLEAR)
-        interstitial.delegate = self
-        interstitial.load(GADRequest())
-        return interstitial
-    }
-
-    //広告非表示
-    func interstitialDidDismissScreen(_ ad: GADInterstitial) {
-        print("interstitialDidDismissScreen!!")
-        interstitial = createAndLoadInterstitial()
-    }
+//    //広告作成
+//    func createAndLoadInterstitial() -> GADInterstitial {
+//        var interstitial = GADInterstitial(adUnitID: Consts.ADMOB_UNIT_ID_INTERSTITIAL_CLEAR)
+//        interstitial.delegate = self
+//        interstitial.load(GADRequest())
+//        return interstitial
+//    }
+//
+//    //広告非表示
+//    func interstitialDidDismissScreen(_ ad: GADInterstitial) {
+//        print("interstitialDidDismissScreen!!")
+//        interstitial = createAndLoadInterstitial()
+//    }
     
     func screenInitialize(_ sender: Any)  {
         passMin_master = 0//経過時間
-        updateDisp(passMin: &passMin_master ,time:time_master)
-        if timer_master != nil{
-            timer_master!.invalidate()
-        }
         lifeflow_lifes.removeAll()
-        tableView.reloadData()
-        startBtn.setImage(UIImage(named:"start"), for: .normal)
         gameStatus = .ready
     }
     
-    func saveGame()  {
-        let gameEntity = NSEntityDescription.entity(forEntityName: "Game", in: viewContext)
-        let gameRecode = NSManagedObject(entity: gameEntity!, insertInto: viewContext) as! Game
-        gameRecode.gameDate=Date()
-        gameRecode.time=time_master.text
-
-        for (index,lifes) in lifeflow_lifes.enumerated() {
-            for (index_life,life) in lifes.enumerated() {
-                let lifeEntity = NSEntityDescription.entity(forEntityName: "Life", in: viewContext)
-                let lifeRecode = NSManagedObject(entity: lifeEntity!, insertInto: viewContext) as! Life
-                lifeRecode.player=Int16(index_life)
-                lifeRecode.stage=Int16(index)
-                lifeRecode.life=Int16(life)
-                lifeRecode.game = gameRecode
-            }
-        }
-        appDelegate.saveContext()
-    }
     @IBAction func touchDown_settingBtn(_ sender: Any) {
         let actionSheet: UIAlertController = UIAlertController(
             title: NSLocalizedString("bgAlert_title", comment: ""),
@@ -419,85 +311,18 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
             }
         }
     }
-    @objc func timerFunc_master()  {
-        updateDisp(passMin: &passMin_master ,time:time_master)
-        countDown()
-        if countDownCnt == .zero {
-            recodeLife()
-        }
-    }
     
-    func updateDisp(passMin:inout Int,time : UILabel)  {
-        time.text = formatter.string(from: TimeInterval(Double(passMin)))!
-        passMin = passMin + 1
-    }
-    func recodeLife()  {
-        //前のライフと同じ場合記録しない
-        if lifeflow_lifes.count != 0
-            && lifeflow_lifes[lifeflow_lifes.count-1][0] == _life1
-            && lifeflow_lifes[lifeflow_lifes.count-1][1] == _life2
-        {
-            print("life recode return")
-            return
-        }
-        
-        lifeflow_lifes.append([_life1,_life2])
-        for lifes in lifeflow_lifes {
-            print("add! p1 : \(lifes[0]) , p2 : \(lifes[1])")
-        }
-        tableView.reloadData()
-    }
     @IBAction func touchDown_plusBtn1(_ sender: Any) {
         lifeIncrement(.player1)
-    }
-    @IBAction func touchDown_centerPlusBtn1(_ sender: Any) {
-//        if GameStatus.ready == gameStatus ||
-//            GameStatus.stop == gameStatus ||
-//            !timerSw.isOn{
-            lifeIncrement(.player1)
-//        }
-//        else{
-//            end(sender)
-//        }
     }
     @IBAction func touchDown_plusBtn2(_ sender: Any) {
         lifeIncrement(.player2)
     }
-    @IBAction func touchDown_centerPlusBtn2(_ sender: Any) {
-//        if GameStatus.ready == gameStatus ||
-//            GameStatus.stop == gameStatus ||
-//            !timerSw.isOn {
-            lifeIncrement(.player2)
-//        }
-//        else{
-//            end(sender)
-//        }
-    }
     @IBAction func touchDown_minusBtn1(_ sender: Any) {
         lifeDecrement(.player1)
     }
-    @IBAction func touchDown_centerMinusBtn1(_ sender: Any) {
-//        if GameStatus.ready == gameStatus ||
-//            GameStatus.stop == gameStatus ||
-//            !timerSw.isOn {
-            lifeDecrement(.player1)
-//        }
-//        else{
-//            end(sender)
-//        }
-    }
     @IBAction func touchDown_minusBtn2(_ sender: Any) {
         lifeDecrement(.player2)
-    }
-    @IBAction func touchDown_centerMinusBtn2(_ sender: Any) {
-//        if GameStatus.ready == gameStatus ||
-//            GameStatus.stop == gameStatus ||
-//            !timerSw.isOn {
-            lifeDecrement(.player2)
-//        }
-//        else{
-//            end(sender)
-//        }
     }
     enum Player {
         case player1
@@ -517,6 +342,11 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         case two
         case one
         case zero
+    }
+    enum Rotate{
+        case normal
+        case left
+        case right
     }
     func lifeIncrement(_ p:Player){
         switch p {
@@ -670,46 +500,86 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     //背景画像を設定
     //  playerView:プレイヤービュー
     //  setImage:背景画像
-    func settingBackground(playerView : inout UIView, setImage : UIImage,scale:CGFloat,initial:Bool = false)  {
-        
-        let imageView = UIImageView(image:setImage)
-        imageView.alpha = 0.6
-        // スクリーンの縦横サイズを取得
+//    func settingBackground(playerView : inout UIView, setImage : UIImage,scale:CGFloat,initial:Bool = false)  {
+//        
+//        let imageView = UIImageView(image:setImage)
+//        imageView.alpha = 0.8
+//        // スクリーンの縦横サイズを取得
 //        let playerViewWidth:CGFloat = playerView.frame.size.width
 //        let playerViewHeight:CGFloat = playerView.frame.size.height
-        
+//        
+//        // 画像の縦横サイズを取得
+//        let imgWidth:CGFloat = setImage.size.width
+//        let imgHeight:CGFloat = setImage.size.height
+//        print("playerViewWidth:\(playerViewWidth),imgWidth:\(imgWidth)")
+//        // 画像のスケールを計算
+//        let widthScale: CGFloat = playerViewWidth / imgWidth
+//        let heightScale: CGFloat = playerViewHeight / imgHeight
+//        print("widthScale:\(widthScale)")
+////        let finalScale: CGFloat = min(widthScale, heightScale)
+//        // 新しいフレームを計算
+//        let newWidth: CGFloat = imgWidth * widthScale
+//        let newHeight: CGFloat = imgHeight * widthScale
+//        let rect: CGRect = CGRect(x: 0, y: 0, width: newWidth, height: newHeight)
+////        print("imgWidth:\(imgWidth)")
+////        print("imgHeight:\(imgHeight)")
+//        
+//        // 画像サイズをスクリーン幅に合わせる
+////        let scale:CGFloat = playerViewWidth / imgWidth
+////        let scale:CGFloat = 0.4
+////        print("scale:\(scale)")
+////        let rect:CGRect =
+////            CGRect(x:0, y:0, width:imgWidth*scale, height:imgHeight*scale)
+////        let scale_w:CGFloat = playerViewWidth / imgWidth
+////        let scale_h:CGFloat = playerViewWidth / imgHeight
+////        let rect:CGRect =
+////            CGRect(x:0, y:0, width:imgWidth*scale_w, height:imgHeight*scale_h)
+//        
+//        // ImageView frame をCGRectで作った矩形に合わせる
+//        imageView.frame = rect;
+//        
+//        // 画像の中心を画面の中心に設定
+////        imageView.center = CGPoint(x:playerViewWidth/2, y:playerViewHeight/2)
+//        
+//        // UIImageViewのインスタンスをビューに追加
+//        imageView.tag = 100
+//        
+//        //画像のviewを削除
+//        if let viewWithTag = playerView.viewWithTag(100){
+//            viewWithTag.removeFromSuperview()
+//        }
+//        
+//        if playerView.subviews.count == 0 {
+//            playerView.addSubview(imageView)
+//        }
+//        else{
+//            var b:Bool = true
+//            for subView in playerView.subviews{
+//                if b{
+//                    playerView.addSubview(imageView)
+//                    b=false
+//                }
+//                playerView.addSubview(subView)
+//            }
+//        }
+//    }
+    func settingBackground(playerView : inout UIView, setImage : UIImage,scale:CGFloat,initial:Bool = false)  {
+        let imageView = UIImageView(image:setImage)
+        imageView.alpha = 0.8
         // 画像の縦横サイズを取得
         let imgWidth:CGFloat = setImage.size.width
         let imgHeight:CGFloat = setImage.size.height
         
-//        print("imgWidth:\(imgWidth)")
-//        print("imgHeight:\(imgHeight)")
-        
-        // 画像サイズをスクリーン幅に合わせる
-//        let scale:CGFloat = playerViewWidth / imgWidth
-//        let scale:CGFloat = 0.4
         print("scale:\(scale)")
-        let rect:CGRect =
-            CGRect(x:0, y:0, width:imgWidth*scale, height:imgHeight*scale)
-//        let scale_w:CGFloat = playerViewWidth / imgWidth
-//        let scale_h:CGFloat = playerViewWidth / imgHeight
-//        let rect:CGRect =
-//            CGRect(x:0, y:0, width:imgWidth*scale_w, height:imgHeight*scale_h)
-        
+        let rect:CGRect = CGRect(x:0, y:0, width:imgWidth*scale, height:imgHeight*scale)
         // ImageView frame をCGRectで作った矩形に合わせる
         imageView.frame = rect;
-        
-        // 画像の中心を画面の中心に設定
-//        imageView.center = CGPoint(x:playerViewWidth/2, y:playerViewHeight/2)
-        
         // UIImageViewのインスタンスをビューに追加
         imageView.tag = 100
-        
         //画像のviewを削除
         if let viewWithTag = playerView.viewWithTag(100){
             viewWithTag.removeFromSuperview()
         }
-        
         if playerView.subviews.count == 0 {
             playerView.addSubview(imageView)
         }
@@ -744,6 +614,36 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
             image = UIImage()
         }
         return image
+    }
+    @IBAction func touchDown_rotate(_ sender: Any) {
+        print("touchDown_rotate called!screenRotate(before):\(screenRotate)")
+        var rotatep1 = CGFloat(0)
+        var rotatep2 = CGFloat(Double.pi)
+        
+        if Rotate.normal == screenRotate {
+            //leftにする
+            screenRotate = .left
+            rotatep1 = CGFloat(Double.pi/2)
+            rotatep2 = CGFloat(Double.pi/2)
+        }
+        
+        else if Rotate.left == screenRotate {
+            //rightにする
+            screenRotate = .right
+            rotatep1 = CGFloat(Double.pi/2*3)
+            rotatep2 = CGFloat(Double.pi/2*3)
+        }
+        
+        else if Rotate.right == screenRotate {
+            //normalにする
+            screenRotate = .normal
+        }
+        
+        player1view.transform=CGAffineTransform(rotationAngle: rotatep1)
+        p1bg.transform=CGAffineTransform(rotationAngle: rotatep1)
+        player2view.transform=CGAffineTransform(rotationAngle: rotatep2)
+        p2bg.transform=CGAffineTransform(rotationAngle: rotatep2)
+        print("touchDown_rotate called!screenRotate(after):\(screenRotate)")
     }
 }
 
