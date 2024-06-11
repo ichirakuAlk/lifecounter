@@ -52,8 +52,21 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
 //        interstitial = createAndLoadInterstitial()
         
         // Do any additional setup after loading the view.
-        player2view.transform=CGAffineTransform(rotationAngle: CGFloat(Double.pi))
-        p2bg.transform=CGAffineTransform(rotationAngle: CGFloat(Double.pi))
+        
+        let appDelegate: AppDelegate = UIApplication.shared.delegate as! AppDelegate
+        let viewContext = appDelegate.persistentContainer.viewContext
+        let request: NSFetchRequest<Setting> = Setting.fetchRequest()
+        do {
+            let fetchResults = try viewContext.fetch(request)
+            if let setting = fetchResults.first {
+                screenRotate = Rotate(rawValue: setting.rotateDirection) ?? .normal
+            } else {
+                screenRotate = .normal
+            }
+        } catch {
+            print("Error fetching data: \(error)")
+        }
+        rotate_exec(rotate: screenRotate)
         clearBtn.imageView?.contentMode = .scaleAspectFit
         clearBtn.contentHorizontalAlignment = .fill
         clearBtn.contentVerticalAlignment = .fill
@@ -122,6 +135,7 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         let viewWidth = frame.size.width
         let viewHeight = frame.size.height
         let aspect = viewHeight/viewWidth
+        print("aspect:\(aspect)")
         bannerView.adSize = GADInlineAdaptiveBannerAdSizeWithWidthAndMaxHeight(viewWidth,50*aspect)
         let request: GADRequest = GADRequest()
         bannerView.load(request)
@@ -343,10 +357,10 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         case one
         case zero
     }
-    enum Rotate{
-        case normal
-        case left
-        case right
+    enum Rotate: Int16{
+        case normal = 0
+        case left = 1
+        case right = 2
     }
     func lifeIncrement(_ p:Player){
         switch p {
@@ -617,33 +631,63 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     }
     @IBAction func touchDown_rotate(_ sender: Any) {
         print("touchDown_rotate called!screenRotate(before):\(screenRotate)")
-        var rotatep1 = CGFloat(0)
-        var rotatep2 = CGFloat(Double.pi)
         
         if Rotate.normal == screenRotate {
             //leftにする
-            screenRotate = .left
+            rotate_exec(rotate: .left)
+        }
+        else if Rotate.left == screenRotate {
+            //rightにする
+            rotate_exec(rotate: .right)
+        }
+        else if Rotate.right == screenRotate {
+            //normalにする
+            rotate_exec(rotate: .normal)
+        }
+        let appDelegate: AppDelegate = UIApplication.shared.delegate as! AppDelegate
+        let viewContext = appDelegate.persistentContainer.viewContext
+        let request: NSFetchRequest<Setting> = Setting.fetchRequest()
+        do {
+            let fetchResults = try viewContext.fetch(request)
+            if fetchResults.isEmpty {
+                //insert
+                let entity = NSEntityDescription.entity(forEntityName: "Setting", in: viewContext)
+                if let entity = entity {
+                    let record = Setting(entity: entity, insertInto: viewContext)
+                    record.rotateDirection = screenRotate.rawValue
+                }
+            }
+            else{
+                for record in fetchResults {
+                    record.rotateDirection = screenRotate.rawValue
+                }
+            }
+            try viewContext.save()
+//            appDelegate.saveContext()
+        } catch {
+        }
+        
+
+        print("touchDown_rotate called!screenRotate(after):\(screenRotate)")
+    }
+    func rotate_exec(rotate: Rotate)  {
+        screenRotate = rotate
+        var rotatep1 = CGFloat(0)
+        var rotatep2 = CGFloat(Double.pi)
+        
+        if Rotate.left == rotate {
             rotatep1 = CGFloat(Double.pi/2)
             rotatep2 = CGFloat(Double.pi/2)
         }
-        
-        else if Rotate.left == screenRotate {
-            //rightにする
-            screenRotate = .right
+        else if Rotate.right == rotate {
             rotatep1 = CGFloat(Double.pi/2*3)
             rotatep2 = CGFloat(Double.pi/2*3)
-        }
-        
-        else if Rotate.right == screenRotate {
-            //normalにする
-            screenRotate = .normal
         }
         
         player1view.transform=CGAffineTransform(rotationAngle: rotatep1)
         p1bg.transform=CGAffineTransform(rotationAngle: rotatep1)
         player2view.transform=CGAffineTransform(rotationAngle: rotatep2)
         p2bg.transform=CGAffineTransform(rotationAngle: rotatep2)
-        print("touchDown_rotate called!screenRotate(after):\(screenRotate)")
     }
 }
 
