@@ -4,6 +4,7 @@ use_modular_headers!
 source 'https://github.com/CocoaPods/Specs.git'
 
 target 'lifeCounter' do
+  pod 'Toast-Swift', '~> 5.0.0'
   pod 'FirebaseAnalytics'
   pod 'Google-Mobile-Ads-SDK'
 end

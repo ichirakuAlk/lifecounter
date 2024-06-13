@@ -11,7 +11,11 @@ import Photos
 import CoreData
 import GoogleMobileAds
 
-class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINavigationControllerDelegate{
+class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINavigationControllerDelegate, ChildViewControllerDelegate{
+    func didPerformAction() {
+        refreshLife()
+    }
+    
     
 
     @IBOutlet weak var player1view: UIView!
@@ -53,13 +57,17 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         
         // Do any additional setup after loading the view.
         
-        let appDelegate: AppDelegate = UIApplication.shared.delegate as! AppDelegate
-        let viewContext = appDelegate.persistentContainer.viewContext
+        appDelegate = UIApplication.shared.delegate as? AppDelegate
+        viewContext = appDelegate.persistentContainer.viewContext
         let request: NSFetchRequest<Setting> = Setting.fetchRequest()
         do {
             let fetchResults = try viewContext.fetch(request)
             if let setting = fetchResults.first {
                 screenRotate = Rotate(rawValue: setting.rotateDirection) ?? .normal
+                _life1=Int(setting.defaultLifeP1)
+                life1.text = String(_life1)
+                _life2=Int(setting.defaultLifep2)
+                life2.text = String(_life2)
             } else {
                 screenRotate = .normal
             }
@@ -178,6 +186,22 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         } catch {
         }
     }
+    
+    func refreshLife() {
+        let request: NSFetchRequest<Setting> = Setting.fetchRequest()
+        do {
+            let fetchResults = try viewContext.fetch(request)
+            if let setting = fetchResults.first {
+                _life1=Int(setting.defaultLifeP1)
+                life1.text = String(_life1)
+                _life2=Int(setting.defaultLifep2)
+                life2.text = String(_life2)
+            } else {
+            }
+        } catch {
+            print("Error fetching data: \(error)")
+        }
+    }
     func setMasterSetting_init()  {
         let query: NSFetchRequest<Setting> = Setting.fetchRequest()
         do {
@@ -233,7 +257,7 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         gameStatus = .ready
     }
     
-    @IBAction func touchDown_settingBtn(_ sender: Any) {
+    @IBAction func touchDown_image_settingBtn(_ sender: Any) {
         let actionSheet: UIAlertController = UIAlertController(
             title: NSLocalizedString("bgAlert_title", comment: ""),
             message: NSLocalizedString("bgAlert_messsage", comment: ""),
@@ -274,6 +298,17 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         present(actionSheet, animated: true, completion: nil)
     }
     
+    @IBAction func touchDown_setting(_ sender: Any) {
+        //
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let childVC = storyboard.instantiateViewController(withIdentifier: "SettingsTableViewController") as? SettingsTableViewController else {
+            return
+        }
+        //        let childVC = SettingsTableViewController()
+        childVC.delegate = self
+        present(childVC, animated: true, completion: nil)
+        //        self.performSegue(withIdentifier: "toSetting", sender: nil)
+    }
     @IBAction func touchDown_dice6(_ sender: Any) {
         let diceNum_p1 = getDiceNum(type: DiceType.six)
         var diceNum_p2 = getDiceNum(type: DiceType.six)
@@ -658,6 +693,7 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
                 }
             }
             else{
+                //edit
                 for record in fetchResults {
                     record.rotateDirection = screenRotate.rawValue
                 }
@@ -714,4 +750,7 @@ class CustomBtn:UIButton{
     {
         sender.layer.removeAnimation(forKey:"rotationAnimation")
     }
+}
+protocol ChildViewControllerDelegate: AnyObject {
+    func didPerformAction()
 }

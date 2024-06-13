@@ -25,6 +25,7 @@
 		CF0E1DB726BE488D00611194 /* Background+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF0E1DB526BE488D00611194 /* Background+CoreDataProperties.swift */; };
 		CF152EFE26CA570E003A7D6C /* ViewController_popup.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF152EFD26CA570E003A7D6C /* ViewController_popup.swift */; };
 		CF152F0026CB541B003A7D6C /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF152EFF26CB541B003A7D6C /* Extentions.swift */; };
+		CF8CAB502C1A7E0600ADED09 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8CAB4F2C1A7E0500ADED09 /* SettingsTableViewController.swift */; };
 		CFA6872C2C15A37F00D0D049 /* GoogleMobileAds.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFA6872B2C15A37F00D0D049 /* GoogleMobileAds.xcframework */; };
 		CFA6872D2C15A37F00D0D049 /* GoogleMobileAds.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CFA6872B2C15A37F00D0D049 /* GoogleMobileAds.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CFC02F3B22A681A000DACEC8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC02F3A22A681A000DACEC8 /* AppDelegate.swift */; };
@@ -77,6 +78,7 @@
 		CF152EFD26CA570E003A7D6C /* ViewController_popup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController_popup.swift; sourceTree = "<group>"; };
 		CF152EFF26CB541B003A7D6C /* Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extentions.swift; sourceTree = "<group>"; };
 		CF8CAB4A2C17DA5B00ADED09 /* lifeCounter 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "lifeCounter 2.xcdatamodel"; sourceTree = "<group>"; };
+		CF8CAB4F2C1A7E0500ADED09 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		CFA6872B2C15A37F00D0D049 /* GoogleMobileAds.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:EQHXZ8M8AV:Google LLC"; lastKnownFileType = wrapper.xcframework; name = GoogleMobileAds.xcframework; path = "Pods/Google-Mobile-Ads-SDK/Frameworks/GoogleMobileAdsFramework/GoogleMobileAds.xcframework"; sourceTree = "<group>"; };
 		CFC02F3722A681A000DACEC8 /* lifeCounter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lifeCounter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFC02F3A22A681A000DACEC8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 		CFC02F3922A681A000DACEC8 /* lifeCounter */ = {
 			isa = PBXGroup;
 			children = (
+				CF8CAB4F2C1A7E0500ADED09 /* SettingsTableViewController.swift */,
 				CFC02F3A22A681A000DACEC8 /* AppDelegate.swift */,
 				CFC02F3C22A681A000DACEC8 /* ViewController.swift */,
 				CF152EFD26CA570E003A7D6C /* ViewController_popup.swift */,
@@ -309,6 +312,7 @@
 				CF0A71B326FD862500BA3769 /* Life+CoreDataClass.swift in Sources */,
 				CF0A71C126FEC28300BA3769 /* Setting+CoreDataClass.swift in Sources */,
 				CF0E1DB726BE488D00611194 /* Background+CoreDataProperties.swift in Sources */,
+				CF8CAB502C1A7E0600ADED09 /* SettingsTableViewController.swift in Sources */,
 				CF152F0026CB541B003A7D6C /* Extentions.swift in Sources */,
 				CF0A71B426FD862500BA3769 /* Life+CoreDataProperties.swift in Sources */,
 			);
