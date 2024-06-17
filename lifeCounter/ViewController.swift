@@ -10,14 +10,16 @@ import UIKit
 import Photos
 import CoreData
 import GoogleMobileAds
+import AppTrackingTransparency
 
 class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINavigationControllerDelegate, ChildViewControllerDelegate{
-    func didPerformAction() {
-        refreshLife()
+    func didPerformAction(from viewController: UIViewController) {
+        if viewController is SettingsTableViewController {
+            refreshLife()
+        } else if viewController is ViewController_image {
+            setBackground_init()
+        }
     }
-    
-    
-
     @IBOutlet weak var player1view: UIView!
     @IBOutlet weak var player2view: UIView!
     @IBOutlet weak var clearBtn: CustomBtn!
@@ -39,7 +41,7 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     let formatter = DateComponentsFormatter()
     var gameStatus:GameStatus = GameStatus.ready
     var currentPlayer : Player!
-    var selected : Player!
+    static var selected : Player!
     
     var appDelegate:AppDelegate!
     var viewContext:NSManagedObjectContext!
@@ -50,6 +52,7 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     var screenRotate:Rotate = .normal
     override func viewDidLoad() {
         super.viewDidLoad()
+        AppManager.shared.viewController=self
         //受信設定
         NotificationCenter.default.addObserver(self, selector: #selector(notificationFunc_pushhome(notification:)), name: .notificationName, object: nil)
         
@@ -109,6 +112,13 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         }
         p1bg.layer.cornerRadius = RADIUS
         
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(self.myEvent),
+            name: UIApplication.didBecomeActiveNotification,
+            object: nil
+        )
         //ad start
         bannerView.adUnitID = Consts.ADMOB_UNIT_ID_HISTORY
         bannerView.rootViewController = self
@@ -131,6 +141,20 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         //ad end
     }
     
+    //トラッキング許可をユーザから取得するためのメソッド
+    @objc func myEvent() {
+        if #available(iOS 14, *) {
+            if ATTrackingManager.trackingAuthorizationStatus == .notDetermined {
+                ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
+                    GADMobileAds.sharedInstance().start(completionHandler: nil)
+                })
+            }
+        }
+        else {
+            GADMobileAds.sharedInstance().start(completionHandler: nil)
+        }
+    }
+    
     //ad
     func loadBannerAd() {
         let frame = { () -> CGRect in
@@ -151,7 +175,7 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     @objc func notificationFunc_pushhome(notification: NSNotification?) {
         print("called! notificationFunc_pushhome")
         //画面初期化
-        screenInitialize([])
+//        screenInitialize([])
     }
     //背景設定初期メソッド（DBから読み込む）
     func setBackground_init()  {
@@ -171,11 +195,11 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
                 for result: AnyObject in fetchResults {
                     let player: Int16 = result.value(forKey: "player") as! Int16
                     
-                    if player==1 {
+                    if player==1 || player==3 {
                         player1Img=UIImage(data: result.value(forKey: "picture") as! Data)
                         scale1 = result.value(forKey: "scale") as! CGFloat
                     }
-                    else if player==2 {
+                    if player==2 || player==3 {
                         player2Img=UIImage(data: result.value(forKey: "picture") as! Data)
                         scale2 = result.value(forKey: "scale") as! CGFloat
                     }
@@ -230,11 +254,9 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
 //        else {
 //            print("Ad wasn't ready")
 //        }
-        
-        lifeReset()
-        
+        refreshLife()
         //画面初期化
-        screenInitialize(sender)
+//        screenInitialize(sender)
     }
     
 //    //広告作成
@@ -251,11 +273,11 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
 //        interstitial = createAndLoadInterstitial()
 //    }
     
-    func screenInitialize(_ sender: Any)  {
-        passMin_master = 0//経過時間
-        lifeflow_lifes.removeAll()
-        gameStatus = .ready
-    }
+//    func screenInitialize(_ sender: Any)  {
+//        passMin_master = 0//経過時間
+//        lifeflow_lifes.removeAll()
+//        gameStatus = .ready
+//    }
     
     @IBAction func touchDown_image_settingBtn(_ sender: Any) {
         let actionSheet: UIAlertController = UIAlertController(
@@ -265,31 +287,43 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         actionSheet.addAction(
             UIAlertAction(title: NSLocalizedString("bgAlert_button_set_1", comment: ""),style: .default, handler: {
                 (action: UIAlertAction!) -> Void in
-                    self.selected = .player1
-                    self.callPhotoLibrary()
+                ViewController.selected = .player1
+//                    self.callPhotoLibrary()
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    guard let childVC = storyboard.instantiateViewController(withIdentifier: "ViewController_image") as? ViewController_image else {
+                        return
+                    }
+                    childVC.delegate = self
+                    self.present(childVC, animated: true, completion: nil)
             })
         )
         actionSheet.addAction(
             UIAlertAction(title: NSLocalizedString("bgAlert_button_set_2", comment: ""), style: .default, handler: {
                 (action: UIAlertAction!) -> Void in
-                self.selected = .player2
-                self.callPhotoLibrary()
+                ViewController.selected = .player2
+//                self.callPhotoLibrary()
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                guard let childVC = storyboard.instantiateViewController(withIdentifier: "ViewController_image") as? ViewController_image else {
+                    return
+                }
+                childVC.delegate = self
+                self.present(childVC, animated: true, completion: nil)
             })
         )
-        actionSheet.addAction(
-            UIAlertAction(title: NSLocalizedString("bgAlert_button_del_1", comment: ""), style: .default, handler: {
-                (action: UIAlertAction!) -> Void in
-                self.deleteImg(player: Player.player1)
-                self.setBackground_init()
-            })
-        )
-        actionSheet.addAction(
-            UIAlertAction(title: NSLocalizedString("bgAlert_button_del_2", comment: ""), style: .default, handler: {
-                (action: UIAlertAction!) -> Void in
-                self.deleteImg(player: Player.player2)
-                self.setBackground_init()
-            })
-        )
+//        actionSheet.addAction(
+//            UIAlertAction(title: NSLocalizedString("bgAlert_button_del_1", comment: ""), style: .default, handler: {
+//                (action: UIAlertAction!) -> Void in
+//                self.deleteImg(player: Player.player1)
+//                self.setBackground_init()
+//            })
+//        )
+//        actionSheet.addAction(
+//            UIAlertAction(title: NSLocalizedString("bgAlert_button_del_2", comment: ""), style: .default, handler: {
+//                (action: UIAlertAction!) -> Void in
+//                self.deleteImg(player: Player.player2)
+//                self.setBackground_init()
+//            })
+//        )
         actionSheet.addAction(
             UIAlertAction(title: NSLocalizedString("bgAlert_button_cancel", comment: ""), style: .cancel, handler: nil)
         )
@@ -299,7 +333,6 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     }
     
     @IBAction func touchDown_setting(_ sender: Any) {
-        //
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let childVC = storyboard.instantiateViewController(withIdentifier: "SettingsTableViewController") as? SettingsTableViewController else {
             return
@@ -335,31 +368,6 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         } catch {
         }
     }
-    func lifeReset(){
-        let life:Int = 20
-        //player1
-        if _life1<life{
-            for _ in 0..<abs(life-_life1) {
-                lifeIncrement(.player1)
-            }
-        }
-        else{
-            for _ in 0..<abs(life-_life1) {
-                lifeDecrement(.player1)
-            }
-        }
-        //player2
-        if _life2<life{
-            for _ in 0..<abs(life-_life2) {
-                lifeIncrement(.player2)
-            }
-        }
-        else{
-            for _ in 0..<abs(life-_life2) {
-                lifeDecrement(.player2)
-            }
-        }
-    }
     
     @IBAction func touchDown_plusBtn1(_ sender: Any) {
         lifeIncrement(.player1)
@@ -372,10 +380,6 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     }
     @IBAction func touchDown_minusBtn2(_ sender: Any) {
         lifeDecrement(.player2)
-    }
-    enum Player {
-        case player1
-        case player2
     }
     enum GameStatus{
         case ready
@@ -417,58 +421,6 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
             life2.text = String(_life2)
         }
     }
-    // 写真へのアクセスがOFFのときに使うメソッド
-    func requestAuthorizationOn(){
-        var status:PHAuthorizationStatus
-        if #available(iOS 14, *) {
-            let accessLebel:PHAccessLevel = .addOnly
-            status = PHPhotoLibrary.authorizationStatus(for: accessLebel)
-        } else {
-            // Fallback on earlier versions
-            status = PHPhotoLibrary.authorizationStatus()
-        }
-        // authorization
-        if (status != .authorized) {
-//            if (status == PHAuthorizationStatus.denied) {
-            //アクセス不能の場合。アクセス許可をしてもらう。snowなどはこれを利用して、写真へのアクセスを禁止している場合は先に進めないようにしている。
-            //アラートビューで設定変更するかしないかを聞く
-            let alert = UIAlertController(title: NSLocalizedString("PhotoAuthAlert_title", comment: ""),
-                                          message: NSLocalizedString("PhotoAuthAlert_messsage", comment: ""),
-                                          preferredStyle: .alert)
-            let settingsAction = UIAlertAction(title: NSLocalizedString("PhotoAuthAlert_button_1", comment: ""), style: .default) { (_) -> Void in
-                guard let settingsURL = URL(string: UIApplication.openSettingsURLString ) else {
-                    return
-                }
-                UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
-            }
-            alert.addAction(settingsAction)
-            alert.addAction(UIAlertAction(title: NSLocalizedString("PhotoAuthAlert_button_cancel", comment: ""), style: .cancel) { _ in
-                // ダイアログがキャンセルされた。つまりアクセス許可は得られない。
-            })
-            self.present(alert, animated: true, completion: nil)
-        }
-    }
-    //フォトライブラリを呼び出すメソッド
-    func callPhotoLibrary(){
-        //権限の確認
-        self.requestAuthorizationOn()
-        
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.photoLibrary) {
-            
-            let picker = UIImagePickerController()
-            picker.modalPresentationStyle = UIModalPresentationStyle.popover
-            picker.delegate = self as UIImagePickerControllerDelegate & UINavigationControllerDelegate
-            picker.sourceType = UIImagePickerController.SourceType.photoLibrary
-            //以下を設定することで、写真選択後にiOSデフォルトのトリミングViewが開くようになる
-            picker.allowsEditing = true
-            if let popover = picker.popoverPresentationController {
-                popover.sourceView = self.view
-                popover.sourceRect = self.view.frame // ポップオーバーの表示元となるエリア
-                popover.permittedArrowDirections = UIPopoverArrowDirection.any
-            }
-            self.present(picker, animated: true, completion: nil)
-        }
-    }
     func countDown() {
         switch countDownCnt {
         case .three:
@@ -479,70 +431,6 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
             countDownCnt = .zero
         case .zero:
             countDownCnt = .three
-        }
-    }
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]){
-//        let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate
-//        let viewContext = appDelegate.persistentContainer.viewContext
-        if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
-            let request: NSFetchRequest<Background> = Background.fetchRequest()
-            var predicate:NSPredicate
-            let p1selected = (Player.player1 == self.selected)
-//            // スクリーンの縦横サイズを取得
-//            let playerViewWidth:CGFloat = playerView.frame.size.width
-//            let playerViewHeight:CGFloat = playerView.frame.size.height
-//
-//            // 画像の縦横サイズを取得
-//            let imgWidth:CGFloat = setImage.size.width
-//            let imgHeight:CGFloat = setImage.size.height
-            // スクリーンの縦横サイズを取得
-            let playerViewWidth:CGFloat = p1bg.frame.size.width
-//            let playerViewHeight:CGFloat = player1view.frame.size.height
-            
-            // 画像の縦横サイズを取得
-            let imgWidth:CGFloat = pickedImage.size.width
-//            let imgHeight:CGFloat = pickedImage.size.height
-            
-            let scale:CGFloat = playerViewWidth / imgWidth
-            
-            predicate = NSPredicate(format: "player = " + (p1selected ? "1" : "2"))
-            request.predicate = predicate
-            
-            var change = false
-            
-            //change
-            do {
-                let fetchResults = try viewContext.fetch(request)
-                if(fetchResults.count != 0){
-                    change=true
-                    for result: AnyObject in fetchResults {
-                        let record = result as! NSManagedObject
-                        record.setValue((p1selected ? 1 : 2), forKey: "player")
-                        record.setValue(pickedImage.pngData(), forKey: "picture")
-                        record.setValue(scale, forKey: "scale")
-                    }
-                    try viewContext.save()
-                }
-            } catch {
-            }
-            //add
-            if !change {
-                let background = NSEntityDescription.entity(forEntityName: "Background", in: viewContext)
-                let newRecord = NSManagedObject(entity: background!, insertInto: viewContext)
-                newRecord.setValue((p1selected ? 1 : 2), forKey: "player")
-                newRecord.setValue(pickedImage.pngData(), forKey: "picture")
-                newRecord.setValue(scale, forKey: "scale")
-                appDelegate.saveContext()
-            }
-            
-            //背景設定
-            if Player.player1 == self.selected{
-                self.settingBackground(playerView: &p1bg, setImage: pickedImage,scale: scale)
-            }
-            else{
-                self.settingBackground(playerView: &p2bg, setImage: pickedImage,scale: scale)
-            }
-            self.dismiss(animated: true, completion: nil)
         }
     }
     
@@ -752,5 +640,5 @@ class CustomBtn:UIButton{
     }
 }
 protocol ChildViewControllerDelegate: AnyObject {
-    func didPerformAction()
+    func didPerformAction(from viewController: UIViewController)
 }

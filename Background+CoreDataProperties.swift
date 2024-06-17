@@ -1,9 +1,8 @@
 //
 //  Background+CoreDataProperties.swift
-//  lifeCounter
+//  
 //
-//  Created by 倉知諒 on 2021/08/07.
-//  Copyright © 2021 kurachi. All rights reserved.
+//  Created by 倉知諒 on 2024/06/15.
 //
 //
 
@@ -20,5 +19,6 @@ extension Background {
     @NSManaged public var picture: Data?
     @NSManaged public var player: Int16
     @NSManaged public var scale: Float
+    @NSManaged public var id: Int32
 
 }

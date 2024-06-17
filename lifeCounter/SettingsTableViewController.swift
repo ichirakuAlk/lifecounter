@@ -192,7 +192,7 @@ class SettingsTableViewController: UITableViewController{
         }
         print("tableview offset y : \(offsetY)")
         self.view.makeToast("Saved!", point: CGPoint(x: screenSizeWidth/2, y: screenSizeHeight/2+hosei), title: nil, image: nil, completion: nil)
-        delegate?.didPerformAction()
+        delegate?.didPerformAction(from: self)
     }
 //    func addAd(dataCount:Int,adCount:Int) -> Bool {
 //        let interval = 5

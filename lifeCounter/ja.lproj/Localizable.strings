@@ -15,7 +15,7 @@
 "bgAlert_button_del_2" = "削除（プレイヤー２）";
 "bgAlert_button_cancel" = "キャンセル";
 "confirm_title" = "確認";
-"confirm_sentence_delete" = "%@\nを削除しますか？";
+"confirm_sentence_delete" = "削除しますか？";
 "dialog_button_yes" = "はい";
 "dialog_button_no" = "いいえ";
 "rename_title" = "名前変更";
