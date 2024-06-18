@@ -33,7 +33,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fbG-LI-3X4" userLabel="p1bg">
-                                <rect key="frame" x="15" y="486" width="384" height="316.5"/>
+                                <rect key="frame" x="15" y="486" width="384" height="376"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OXn-o0-U7l" userLabel="player1">
                                 <rect key="frame" x="0.0" y="496.5" width="414" height="306"/>
@@ -123,63 +123,65 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RGB-OH-td1" userLabel="middleView">
                                 <rect key="frame" x="0.0" y="410" width="414" height="76"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="luZ-w0-0j8" userLabel="dice6">
-                                        <rect key="frame" x="100" y="20" width="19.5" height="36"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                        <state key="normal" image="die.face.6" catalog="system">
-                                            <color key="titleColor" systemColor="labelColor"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="touchDown_dice6:" destination="BYZ-38-t0r" eventType="touchDown" id="gCd-cQ-bcV"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zca-e2-Ri9" userLabel="imageSettingBtn">
-                                        <rect key="frame" x="139.5" y="27" width="24" height="22"/>
-                                        <state key="normal" image="photo" catalog="system"/>
-                                        <connections>
-                                            <action selector="touchDown_image_settingBtn:" destination="BYZ-38-t0r" eventType="touchDown" id="CJK-w4-sgc"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VZk-7z-KOc" userLabel="rotate">
-                                        <rect key="frame" x="183.5" y="20" width="19" height="36"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                        <state key="normal" image="person.fill.turn.right" catalog="system">
-                                            <color key="titleColor" systemColor="labelColor"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="touchDown_rotate:" destination="BYZ-38-t0r" eventType="touchDown" id="vF9-ZZ-oAC"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TCC-Ub-C9Q" userLabel="clearBtn" customClass="CustomBtn" customModule="lifeCounter" customModuleProvider="target">
-                                        <rect key="frame" x="336" y="14" width="48" height="48"/>
-                                        <state key="normal" image="restart"/>
-                                        <connections>
-                                            <action selector="touchDown_clearBtn:" destination="BYZ-38-t0r" eventType="touchDown" id="aD5-1g-SiI"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9HQ-SV-NgL" userLabel="settingBtn">
-                                        <rect key="frame" x="222.5" y="20" width="21.5" height="36"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                        <state key="normal" image="gear" catalog="system">
-                                            <color key="titleColor" systemColor="labelColor"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="touchDown_setting:" destination="BYZ-38-t0r" eventType="touchDown" id="Hui-4l-9fr"/>
-                                        </connections>
-                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="pst-Ac-v53">
+                                        <rect key="frame" x="20" y="0.0" width="374" height="76"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zca-e2-Ri9" userLabel="dice">
+                                                <rect key="frame" x="0.0" y="20" width="22" height="36"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                                <state key="normal" image="dice" catalog="system">
+                                                    <color key="titleColor" systemColor="labelColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="touchDown_dice6:" destination="BYZ-38-t0r" eventType="touchDown" id="436-5y-nB8"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2LD-kb-0oG" userLabel="imageSettingBtn">
+                                                <rect key="frame" x="82" y="20" width="24" height="36"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                                <state key="normal" image="photo" catalog="system">
+                                                    <color key="titleColor" systemColor="labelColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="touchDown_image_settingBtn:" destination="BYZ-38-t0r" eventType="touchDown" id="EnT-Wd-bAU"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VZk-7z-KOc" userLabel="rotate">
+                                                <rect key="frame" x="166" y="20" width="19" height="36"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                                <state key="normal" image="person.fill.turn.right" catalog="system">
+                                                    <color key="titleColor" systemColor="labelColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="touchDown_rotate:" destination="BYZ-38-t0r" eventType="touchDown" id="vF9-ZZ-oAC"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9HQ-SV-NgL" userLabel="settingBtn">
+                                                <rect key="frame" x="244.5" y="20" width="21.5" height="36"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                                <state key="normal" image="gear" catalog="system">
+                                                    <color key="titleColor" systemColor="labelColor"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="touchDown_setting:" destination="BYZ-38-t0r" eventType="touchDown" id="Hui-4l-9fr"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TCC-Ub-C9Q" userLabel="clearBtn" customClass="CustomBtn" customModule="lifeCounter" customModuleProvider="target">
+                                                <rect key="frame" x="326" y="14" width="48" height="48"/>
+                                                <state key="normal" image="restart"/>
+                                                <connections>
+                                                    <action selector="touchDown_clearBtn:" destination="BYZ-38-t0r" eventType="touchDown" id="aD5-1g-SiI"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstItem="9HQ-SV-NgL" firstAttribute="leading" secondItem="VZk-7z-KOc" secondAttribute="trailing" constant="20" id="1Hg-56-nMx"/>
-                                    <constraint firstItem="luZ-w0-0j8" firstAttribute="leading" secondItem="RGB-OH-td1" secondAttribute="leading" constant="100" id="91q-gW-lIj"/>
-                                    <constraint firstItem="TCC-Ub-C9Q" firstAttribute="centerY" secondItem="RGB-OH-td1" secondAttribute="centerY" id="E2E-jD-ME3"/>
-                                    <constraint firstAttribute="trailing" secondItem="TCC-Ub-C9Q" secondAttribute="trailing" constant="30" id="ESa-1j-9qM"/>
-                                    <constraint firstItem="luZ-w0-0j8" firstAttribute="centerY" secondItem="RGB-OH-td1" secondAttribute="centerY" id="JM0-qP-UHV"/>
-                                    <constraint firstItem="VZk-7z-KOc" firstAttribute="leading" secondItem="zca-e2-Ri9" secondAttribute="trailing" constant="20" id="MiS-Mx-Z6n"/>
-                                    <constraint firstItem="9HQ-SV-NgL" firstAttribute="centerY" secondItem="RGB-OH-td1" secondAttribute="centerY" id="ToD-Q6-uPj"/>
-                                    <constraint firstItem="zca-e2-Ri9" firstAttribute="leading" secondItem="luZ-w0-0j8" secondAttribute="trailing" constant="20" id="c6e-Kb-Ww3"/>
-                                    <constraint firstItem="VZk-7z-KOc" firstAttribute="centerY" secondItem="RGB-OH-td1" secondAttribute="centerY" id="dFi-OA-bGL"/>
-                                    <constraint firstItem="zca-e2-Ri9" firstAttribute="centerY" secondItem="RGB-OH-td1" secondAttribute="centerY" id="ez4-5u-4gE"/>
+                                    <constraint firstAttribute="bottom" secondItem="pst-Ac-v53" secondAttribute="bottom" id="Eak-ak-L7t"/>
+                                    <constraint firstItem="pst-Ac-v53" firstAttribute="leading" secondItem="RGB-OH-td1" secondAttribute="leading" constant="20" id="NVc-63-Uuj"/>
+                                    <constraint firstAttribute="trailing" secondItem="pst-Ac-v53" secondAttribute="trailing" constant="20" id="ehD-EB-9mt"/>
+                                    <constraint firstItem="pst-Ac-v53" firstAttribute="top" secondItem="RGB-OH-td1" secondAttribute="top" id="qSd-ZI-mKV"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cEB-2Q-GLP" customClass="GADBannerView">
@@ -218,8 +220,8 @@
                             <constraint firstAttribute="trailing" secondItem="fbG-LI-3X4" secondAttribute="trailing" constant="15" id="azb-gT-5eu"/>
                             <constraint firstItem="RGB-OH-td1" firstAttribute="leading" secondItem="N1f-fR-9MN" secondAttribute="trailing" id="bQr-Fl-ips"/>
                             <constraint firstItem="WXi-tU-VPE" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="bn3-Vy-b7G"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="fbG-LI-3X4" secondAttribute="bottom" id="hSM-Aa-teh"/>
                             <constraint firstItem="N1f-fR-9MN" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="iad-RW-bCT"/>
-                            <constraint firstItem="fbG-LI-3X4" firstAttribute="bottom" secondItem="OXn-o0-U7l" secondAttribute="bottom" id="p5K-25-sQ4"/>
                             <constraint firstItem="OXn-o0-U7l" firstAttribute="height" secondItem="N1f-fR-9MN" secondAttribute="height" multiplier="0.4" id="rDr-Ac-C3A"/>
                             <constraint firstItem="WXi-tU-VPE" firstAttribute="leading" secondItem="N1f-fR-9MN" secondAttribute="trailing" id="tzV-8K-R2j"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="cEB-2Q-GLP" secondAttribute="bottom" id="uYB-Ut-e0d"/>
@@ -232,14 +234,14 @@
                     <connections>
                         <outlet property="bannerView" destination="cEB-2Q-GLP" id="0gg-Sz-EuJ"/>
                         <outlet property="clearBtn" destination="TCC-Ub-C9Q" id="fae-bJ-EmP"/>
-                        <outlet property="dice" destination="luZ-w0-0j8" id="Z41-q3-GxH"/>
+                        <outlet property="dice" destination="zca-e2-Ri9" id="Syc-JH-3Bz"/>
                         <outlet property="life1" destination="8pb-Yg-uZT" id="qkd-vs-tPt"/>
                         <outlet property="life2" destination="8dy-MU-EOU" id="QDy-QM-VvM"/>
                         <outlet property="p1bg" destination="fbG-LI-3X4" id="IgV-sR-Tjt"/>
                         <outlet property="p2bg" destination="nsc-y7-PLC" id="0ei-Jw-5tA"/>
                         <outlet property="player1view" destination="OXn-o0-U7l" id="gv1-2w-NQU"/>
                         <outlet property="player2view" destination="2zP-ex-cmi" id="xM4-j7-9Cw"/>
-                        <outlet property="settingBtn" destination="zca-e2-Ri9" id="qa8-vq-KMK"/>
+                        <outlet property="settingBtn" destination="2LD-kb-0oG" id="bG9-Ve-c86"/>
                         <segue destination="5g8-hv-xUn" kind="presentation" identifier="toPopUp" modalTransitionStyle="crossDissolve" id="XRw-tU-eFJ"/>
                         <segue destination="nyl-o7-97R" kind="presentation" identifier="toSetting" modalTransitionStyle="crossDissolve" id="cmi-ux-lse"/>
                         <segue destination="aKg-Xe-FZS" kind="presentation" identifier="toImageList" modalTransitionStyle="crossDissolve" id="x07-Gh-6hP"/>
@@ -501,7 +503,7 @@
                                 <rect key="frame" x="0.0" y="42" width="414" height="794"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TableViewCell_list" rowHeight="86" id="bBO-51-2ro" customClass="TableViewCell_list" customModule="soine" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TableViewCell_list" rowHeight="86" id="bBO-51-2ro" customClass="TableViewCell_list" customModule="lifeCounter" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="414" height="86"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bBO-51-2ro" id="RpQ-mX-izc">
@@ -536,7 +538,7 @@
                                             <outlet property="soineImg2" destination="2bW-o6-rRg" id="jU1-hJ-0r0"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TableViewCell_list_ad" rowHeight="50" id="p5t-sF-sFM" customClass="TableViewCell_list_ad" customModule="soine" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TableViewCell_list_ad" rowHeight="50" id="p5t-sF-sFM" customClass="TableViewCell_list_ad" customModule="lifeCounter" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="136" width="414" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="p5t-sF-sFM" id="ysh-V6-awQ">
@@ -642,8 +644,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="dice" catalog="system" width="128" height="116"/>
         <image name="dice1d" width="1299" height="1299"/>
-        <image name="die.face.6" catalog="system" width="128" height="114"/>
         <image name="gear" catalog="system" width="128" height="122"/>
         <image name="highlighter" catalog="system" width="128" height="120"/>
         <image name="person.fill.turn.right" catalog="system" width="128" height="107"/>
