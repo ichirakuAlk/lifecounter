@@ -30,6 +30,10 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     @IBOutlet weak var p1bg: UIView!
     @IBOutlet weak var p2bg: UIView!
     @IBOutlet weak var bannerView: GADBannerView!
+    @IBOutlet var bgwidthp1: NSLayoutConstraint!
+    @IBOutlet var bgwidthp2: NSLayoutConstraint!
+    @IBOutlet var bgHeightp1: NSLayoutConstraint!
+    @IBOutlet var bgHeightp2: NSLayoutConstraint!
     var lifeflow_lifes = [[Int]]()
     
     var _life1 :Int=20
@@ -52,6 +56,15 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     var screenRotate:Rotate = .normal
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let minDimension = min(p1bg.frame.width, p1bg.frame.height)
+        bgwidthp1.constant = minDimension
+        bgHeightp1.constant = minDimension
+        
+        let minDimension2 = min(p2bg.frame.width, p2bg.frame.height)
+        bgwidthp2.constant = minDimension2
+        bgHeightp2.constant = minDimension2
+        
         AppManager.shared.viewController=self
         //受信設定
         NotificationCenter.default.addObserver(self, selector: #selector(notificationFunc_pushhome(notification:)), name: .notificationName, object: nil)
@@ -612,6 +625,50 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         p1bg.transform=CGAffineTransform(rotationAngle: rotatep1)
         player2view.transform=CGAffineTransform(rotationAngle: rotatep2)
         p2bg.transform=CGAffineTransform(rotationAngle: rotatep2)
+        
+        // フレームの再計算
+        updateFramesForRotation()
+    }
+
+    func updateFramesForRotation() {
+        let player1Frame = player1view.frame
+        let player2Frame = player2view.frame
+
+        // 回転後のフレームを計算
+        let rotatedPlayer1Frame = CGRect(x: 0, y: view.bounds.height - player1Frame.width, width: player1Frame.height, height: player1Frame.width)
+        let rotatedPlayer2Frame = CGRect(x: 0, y: 0, width: player2Frame.height, height: player2Frame.width)
+
+        // Auto Layout制約を無効にしてから新しいフレームを適用
+//        player1view.translatesAutoresizingMaskIntoConstraints = true
+//        player2view.translatesAutoresizingMaskIntoConstraints = true
+        p1bg.translatesAutoresizingMaskIntoConstraints = true
+        p2bg.translatesAutoresizingMaskIntoConstraints = true
+
+//        player1view.frame = rotatedPlayer1Frame
+        p1bg.frame = rotatedPlayer1Frame
+//        player2view.frame = rotatedPlayer2Frame
+        p2bg.frame = rotatedPlayer2Frame
+
+        // 必要に応じてAuto Layout制約を再設定
+//        player1view.translatesAutoresizingMaskIntoConstraints = false
+//        player2view.translatesAutoresizingMaskIntoConstraints = false
+        p1bg.translatesAutoresizingMaskIntoConstraints = false
+        p2bg.translatesAutoresizingMaskIntoConstraints = false
+
+        // 必要な制約を再設定
+        NSLayoutConstraint.activate([
+            // player1 (下側のプレイヤー)
+//            player1view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+//            player1view.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            p1bg.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            p1bg.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+
+            // player2 (上側のプレイヤー)
+//            player2view.topAnchor.constraint(equalTo: view.topAnchor),
+//            player2view.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            p2bg.topAnchor.constraint(equalTo: view.topAnchor),
+            p2bg.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
     }
 }
 
