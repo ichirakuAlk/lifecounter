@@ -14,10 +14,10 @@ import AppTrackingTransparency
 
 class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINavigationControllerDelegate, ChildViewControllerDelegate{
     func didPerformAction(from viewController: UIViewController) {
+        setBackground_init()
         if viewController is SettingsTableViewController {
             refreshLife()
         } else if viewController is ViewController_image {
-            setBackground_init()
         }
     }
     @IBOutlet weak var player1view: UIView!
@@ -54,6 +54,8 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
 //    var interstitial: GADInterstitial!
     let RADIUS:CGFloat = 20
     var screenRotate:Rotate = .normal
+    var bgopacity:CGFloat = 0.8
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -84,6 +86,9 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
                 life1.text = String(_life1)
                 _life2=Int(setting.defaultLifep2)
                 life2.text = String(_life2)
+                if setting.bgopacity != 0 {
+                    bgopacity=CGFloat(setting.bgopacity)
+                }
             } else {
                 screenRotate = .normal
             }
@@ -218,9 +223,23 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
                     }
                 }
             }
-            self.settingBackground(playerView: &p1bg, setImage: player1Img ?? UIImage(),scale: scale1,initial: true)
-            self.settingBackground(playerView: &p2bg, setImage: player2Img ?? UIImage(),scale: scale2,initial: true)
+            
+            let request: NSFetchRequest<Setting> = Setting.fetchRequest()
+            let fetchResults2 = try viewContext.fetch(request)
+            if let setting = fetchResults2.first {
+                print("bunki 1")
+                if setting.bgopacity != 0 {
+                    bgopacity=CGFloat(setting.bgopacity)
+                }
+            }
+            else{
+                
+                    print("bunki 2")
+            }
+            self.settingBackground(playerView: &p1bg, setImage: player1Img ?? UIImage(),scale: scale1,initial: true,bgopacity: self.bgopacity)
+            self.settingBackground(playerView: &p2bg, setImage: player2Img ?? UIImage(),scale: scale2,initial: true,bgopacity: self.bgopacity)
         } catch {
+            print("Error fetching data: \(error)")
         }
     }
     
@@ -323,20 +342,20 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
                 self.present(childVC, animated: true, completion: nil)
             })
         )
-//        actionSheet.addAction(
-//            UIAlertAction(title: NSLocalizedString("bgAlert_button_del_1", comment: ""), style: .default, handler: {
-//                (action: UIAlertAction!) -> Void in
-//                self.deleteImg(player: Player.player1)
-//                self.setBackground_init()
-//            })
-//        )
-//        actionSheet.addAction(
-//            UIAlertAction(title: NSLocalizedString("bgAlert_button_del_2", comment: ""), style: .default, handler: {
-//                (action: UIAlertAction!) -> Void in
-//                self.deleteImg(player: Player.player2)
-//                self.setBackground_init()
-//            })
-//        )
+        actionSheet.addAction(
+            UIAlertAction(title: NSLocalizedString("bgAlert_button_del_1", comment: ""), style: .default, handler: {
+                (action: UIAlertAction!) -> Void in
+                self.deleteImg(player: Player.player1)
+                self.setBackground_init()
+            })
+        )
+        actionSheet.addAction(
+            UIAlertAction(title: NSLocalizedString("bgAlert_button_del_2", comment: ""), style: .default, handler: {
+                (action: UIAlertAction!) -> Void in
+                self.deleteImg(player: Player.player2)
+                self.setBackground_init()
+            })
+        )
         actionSheet.addAction(
             UIAlertAction(title: NSLocalizedString("bgAlert_button_cancel", comment: ""), style: .cancel, handler: nil)
         )
@@ -368,16 +387,32 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     }
     func deleteImg(player:Player)  {
         let request: NSFetchRequest<Background> = Background.fetchRequest()
-        let predicate = NSPredicate(format: "player = \(Player.player1==player ? "1" : "2")")
+        let predicate = NSPredicate(format: "player = \(Player.player1==player ? "1" : "2") OR player = '3'")
 
         request.predicate = predicate
         do {
             let fetchResults = try viewContext.fetch(request)
-            for result: AnyObject in fetchResults {
-                let record = result as! NSManagedObject
-                viewContext.delete(record)
+            if(fetchResults.count != 0){
+                for result: AnyObject in fetchResults {
+                    let record = result as! Background
+                    var newPlayer = record.player
+                    let pNum:Int16 = (Player.player1==player ? 1 : 2)
+                    if record.player == 0{//nil
+                    }
+                    else if record.player == pNum{//me
+                        newPlayer -= pNum
+                    }
+//                    else if record.player == pNumReverse{//you
+//                    }
+                    else if record.player == 3{//both
+                        newPlayer -= pNum
+                    }
+                    print("id:\(record.id) newPlayer:\(newPlayer)")
+                    record.setValue(newPlayer, forKey: "player")
+                    
+                    try viewContext.save()
+                }
             }
-            try viewContext.save()
         } catch {
         }
     }
@@ -513,9 +548,10 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
 //            }
 //        }
 //    }
-    func settingBackground(playerView : inout UIView, setImage : UIImage,scale:CGFloat,initial:Bool = false)  {
+    func settingBackground(playerView : inout UIView, setImage : UIImage,scale:CGFloat,initial:Bool = false,bgopacity:CGFloat)  {
+        print("settingBackground bgopacity:\(bgopacity)")
         let imageView = UIImageView(image:setImage)
-        imageView.alpha = 0.8
+        imageView.alpha = bgopacity
         // 画像の縦横サイズを取得
         let imgWidth:CGFloat = setImage.size.width
         let imgHeight:CGFloat = setImage.size.height

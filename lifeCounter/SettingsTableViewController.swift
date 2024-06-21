@@ -21,6 +21,8 @@ class SettingsTableViewController: UITableViewController{
     @IBOutlet weak var intervalLabel: UILabel!
     @IBOutlet weak var interval2: UISlider!
     @IBOutlet weak var intervalLabel2: UILabel!
+    @IBOutlet var interval3: UISlider!
+    @IBOutlet var opacityLabel: UILabel!
     
     @IBOutlet var bannerView: GADBannerView!
     weak var delegate: ChildViewControllerDelegate?
@@ -30,8 +32,7 @@ class SettingsTableViewController: UITableViewController{
 //    var bannerView: GADBannerView!
     var upperLifeP1:Int = 20
     var upperLifeP2:Int = 20
-    
-    
+    var bgopacity:Float = 0.8
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,11 +66,18 @@ class SettingsTableViewController: UITableViewController{
             if let setting = fetchResults.first {
 //                screenRotate = Rotate(rawValue: setting.rotateDirection) ?? .normal
                 upperLifeP1 = Int(setting.defaultLifeP1)
-                upperLifeP2 = Int(setting.defaultLifep2)
                 intervalLabel.text = "\(upperLifeP1)"
-                intervalLabel2.text = "\(upperLifeP2)"
                 interval.setValue(Float(upperLifeP1), animated: false)
+                
+                upperLifeP2 = Int(setting.defaultLifep2)
+                intervalLabel2.text = "\(upperLifeP2)"
                 interval2.setValue(Float(upperLifeP2), animated: false)
+                
+                if setting.bgopacity != 0 {
+                    bgopacity=setting.bgopacity
+                    opacityLabel.text = "\(bgopacity)"
+                    interval3.setValue(bgopacity, animated: false)
+                }
             } else {
 //                screenRotate = .normal
                 print("設定なし”")
@@ -116,7 +124,7 @@ class SettingsTableViewController: UITableViewController{
         // それぞれのセクション毎に何行のセルがあるかを返します
         switch section {
         case 0: // 「設定」のセクション
-            return 5
+            return 7
         case 1: // 「その他」のセクション
             return 0//要らないから表示しない
         default: // ここが実行されることはないはず
@@ -219,6 +227,7 @@ class SettingsTableViewController: UITableViewController{
                         let record = Setting(entity: entity, insertInto: viewContext)
                         record.defaultLifeP1=int16Value
                         record.defaultLifep2=int16Value2
+                        record.bgopacity=bgopacity
                     }
                 }
                 else{
@@ -226,6 +235,7 @@ class SettingsTableViewController: UITableViewController{
                     for record in fetchResults {
                         record.defaultLifeP1=int16Value
                         record.defaultLifep2=int16Value2
+                        record.bgopacity=bgopacity
                     }
                 }
             } else {
@@ -406,7 +416,12 @@ class SettingsTableViewController: UITableViewController{
         intervalLabel2.text = "\(upperLifeP2)"
 //        interval.setValue(v, animated: false)
     }
-//    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    @IBAction func valueChanged_opacity(_ sender: Any) {
+        print("interval2 value : \(interval3.value)")
+        bgopacity = Float(round(interval3.value * 10) / 10)
+        opacityLabel.text="\(bgopacity)"
+    }
+    //    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
 //        print("touchesEnded")
 //    }
     
