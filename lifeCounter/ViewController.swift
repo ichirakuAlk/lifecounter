@@ -318,6 +318,7 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
 //    }
     
     @IBAction func touchDown_image_settingBtn(_ sender: Any) {
+        rotate_exec(rotate: .normal)
         let actionSheet: UIAlertController = UIAlertController(
             title: NSLocalizedString("bgAlert_title", comment: ""),
             message: NSLocalizedString("bgAlert_messsage", comment: ""),
