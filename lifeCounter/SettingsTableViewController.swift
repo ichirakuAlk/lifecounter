@@ -43,9 +43,10 @@ class SettingsTableViewController: UITableViewController{
         // In this case, we instantiate the banner with desired ad size.
 //        bannerView = GADBannerView(adSize: kGADAdSizeBanner)
 //        bannerView = GADBannerView()
-        bannerView.adUnitID = Consts.ADMOB_UNIT_ID_HISTORY2
+        bannerView.adUnitID = Consts.ADMOB_UNIT_ID_SETTING
 //        bannerView.adUnitID = "ca-app-pub-5418872710464793/9454905695"
         bannerView.rootViewController = self
+//        bannerView.backgroundColor=UIColor.green
 //        addBannerViewToView(bannerView)
 //        bannerView.load(GADRequest())
     }
@@ -65,14 +66,16 @@ class SettingsTableViewController: UITableViewController{
             let fetchResults = try viewContext.fetch(request)
             if let setting = fetchResults.first {
 //                screenRotate = Rotate(rawValue: setting.rotateDirection) ?? .normal
-                upperLifeP1 = Int(setting.defaultLifeP1)
-                intervalLabel.text = "\(upperLifeP1)"
-                interval.setValue(Float(upperLifeP1), animated: false)
-                
-                upperLifeP2 = Int(setting.defaultLifep2)
-                intervalLabel2.text = "\(upperLifeP2)"
-                interval2.setValue(Float(upperLifeP2), animated: false)
-                
+                if setting.defaultLifeP1 != 0 {
+                    upperLifeP1 = Int(setting.defaultLifeP1)
+                    intervalLabel.text = "\(upperLifeP1)"
+                    interval.setValue(Float(upperLifeP1), animated: false)
+                }
+                if setting.defaultLifep2 != 0 {
+                    upperLifeP2 = Int(setting.defaultLifep2)
+                    intervalLabel2.text = "\(upperLifeP2)"
+                    interval2.setValue(Float(upperLifeP2), animated: false)
+                }
                 if setting.bgopacity != 0 {
                     bgopacity=setting.bgopacity
                     opacityLabel.text = "\(bgopacity)"
@@ -100,6 +103,7 @@ class SettingsTableViewController: UITableViewController{
     }
     //ad
     func loadBannerAd() {
+        print("loadBannerAd called")
         let frame = { () -> CGRect in
         if #available(iOS 11.0, *) {
             return view.frame.inset(by: view.safeAreaInsets)
@@ -124,7 +128,7 @@ class SettingsTableViewController: UITableViewController{
         // それぞれのセクション毎に何行のセルがあるかを返します
         switch section {
         case 0: // 「設定」のセクション
-            return 7
+            return 8
         case 1: // 「その他」のセクション
             return 0//要らないから表示しない
         default: // ここが実行されることはないはず

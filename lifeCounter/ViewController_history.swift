@@ -35,7 +35,7 @@ class ViewController_history: UIViewController,UITableViewDelegate, UITableViewD
         let aspect = viewHeight/viewWidth
 //        print("banner view max height:"+(50*aspect).description)
         let _bannerView: GADBannerView = GADBannerView(adSize: GADInlineAdaptiveBannerAdSizeWithWidthAndMaxHeight(viewWidth,50*aspect))
-        _bannerView.adUnitID = Consts.ADMOB_UNIT_ID_HISTORY
+        _bannerView.adUnitID = Consts.ADMOB_UNIT_ID_MAIN
         _bannerView.rootViewController = self
         //AD : test device
         let request: GADRequest = GADRequest()

@@ -38,6 +38,7 @@
 		CFC02F4322A681A000DACEC8 /* lifeCounter.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CFC02F4122A681A000DACEC8 /* lifeCounter.xcdatamodeld */; };
 		CFC02F4522A681A200DACEC8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CFC02F4422A681A200DACEC8 /* Assets.xcassets */; };
 		CFC02F4822A681A200DACEC8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CFC02F4622A681A200DACEC8 /* LaunchScreen.storyboard */; };
+		CFD7AC3A2C2571AD0070859C /* TableViewCell_list_ad.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD7AC392C2571AD0070859C /* TableViewCell_list_ad.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -96,6 +97,7 @@
 		CFC02F4422A681A200DACEC8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CFC02F4722A681A200DACEC8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CFC02F4922A681A200DACEC8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CFD7AC392C2571AD0070859C /* TableViewCell_list_ad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell_list_ad.swift; sourceTree = "<group>"; };
 		CFEB44092C15989600939BEA /* GoogleMobileAds.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:EQHXZ8M8AV:Google LLC"; lastKnownFileType = wrapper.xcframework; name = GoogleMobileAds.xcframework; path = "../Downloads/GoogleMobileAdsSdkiOS-11.5.0/GoogleMobileAds.xcframework"; sourceTree = "<group>"; };
 		CFEB440D2C1598D000939BEA /* GoogleMobileAds.xcframework */ = {isa = PBXFileReference; expectedSignature = "AppleDeveloperProgram:EQHXZ8M8AV:Google LLC"; lastKnownFileType = wrapper.xcframework; name = GoogleMobileAds.xcframework; path = Frameworks/GoogleMobileAds.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -164,6 +166,7 @@
 		CFC02F3922A681A000DACEC8 /* lifeCounter */ = {
 			isa = PBXGroup;
 			children = (
+				CFD7AC392C2571AD0070859C /* TableViewCell_list_ad.swift */,
 				CF8CAB552C1D49D700ADED09 /* TableViewCell_list.swift */,
 				CF8CAB532C1D479400ADED09 /* ViewController_image.swift */,
 				CFC02F3C22A681A000DACEC8 /* ViewController.swift */,
@@ -324,6 +327,7 @@
 				CF8CAB562C1D49D700ADED09 /* TableViewCell_list.swift in Sources */,
 				CF0A71BA26FDA9F000BA3769 /* TableViewCell_game.swift in Sources */,
 				CF152EFE26CA570E003A7D6C /* ViewController_popup.swift in Sources */,
+				CFD7AC3A2C2571AD0070859C /* TableViewCell_list_ad.swift in Sources */,
 				CFC02F3B22A681A000DACEC8 /* AppDelegate.swift in Sources */,
 				CF0A71B326FD862500BA3769 /* Life+CoreDataClass.swift in Sources */,
 				CF0A71C126FEC28300BA3769 /* Setting+CoreDataClass.swift in Sources */,

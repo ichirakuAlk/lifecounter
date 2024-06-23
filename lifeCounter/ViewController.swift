@@ -82,10 +82,14 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
             let fetchResults = try viewContext.fetch(request)
             if let setting = fetchResults.first {
                 screenRotate = Rotate(rawValue: setting.rotateDirection) ?? .normal
-                _life1=Int(setting.defaultLifeP1)
-                life1.text = String(_life1)
-                _life2=Int(setting.defaultLifep2)
-                life2.text = String(_life2)
+                if setting.defaultLifeP1 != 0 {
+                    _life1=Int(setting.defaultLifeP1)
+                    life1.text = String(_life1)
+                }
+                if setting.defaultLifep2 != 0 {
+                    _life2=Int(setting.defaultLifep2)
+                    life2.text = String(_life2)
+                }
                 if setting.bgopacity != 0 {
                     bgopacity=CGFloat(setting.bgopacity)
                 }
@@ -138,9 +142,10 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
             object: nil
         )
         //ad start
-        bannerView.adUnitID = Consts.ADMOB_UNIT_ID_HISTORY
+        bannerView.adUnitID = Consts.ADMOB_UNIT_ID_MAIN
         bannerView.rootViewController = self
         //ad end
+//        bannerView.backgroundColor=UIColor.green
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -175,6 +180,7 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     
     //ad
     func loadBannerAd() {
+        print("loadBannerAd called")
         let frame = { () -> CGRect in
         if #available(iOS 11.0, *) {
             return view.frame.inset(by: view.safeAreaInsets)

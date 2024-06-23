@@ -23,6 +23,7 @@ class ViewController_image: UIViewController {
     weak var delegate: ChildViewControllerDelegate?
     @IBOutlet var bannerView: GADBannerView!
     
+    @IBOutlet var bannerHeight: NSLayoutConstraint!
     override func viewDidLoad() {
         super.viewDidLoad()
         print("ViewController viewDidLoad")
@@ -54,9 +55,10 @@ class ViewController_image: UIViewController {
         // In this case, we instantiate the banner with desired ad size.
         //        settingAd()
         //ad start
-        bannerView.adUnitID = Consts.ADMOB_UNIT_ID_HISTORY
+        bannerView.adUnitID = Consts.ADMOB_UNIT_ID_BGSELECT
         bannerView.rootViewController = self
         //ad end
+//        bannerView.backgroundColor=UIColor.green
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -80,6 +82,7 @@ class ViewController_image: UIViewController {
     
     //ad
     func loadBannerAd() {
+        print("loadBannerAd called")
         let frame = { () -> CGRect in
             if #available(iOS 11.0, *) {
                 return view.frame.inset(by: view.safeAreaInsets)
@@ -91,10 +94,12 @@ class ViewController_image: UIViewController {
         let viewHeight = frame.size.height
         let aspect = viewHeight/viewWidth
         print("aspect:\(aspect)")
+        bannerHeight.constant=50*aspect
         bannerView.adSize = GADInlineAdaptiveBannerAdSizeWithWidthAndMaxHeight(viewWidth,50*aspect)
         let request: GADRequest = GADRequest()
         bannerView.load(request)
     }
+    
     func refreshData() {
         datas = []
         let request: NSFetchRequest<Background> = Background.fetchRequest()
@@ -122,17 +127,24 @@ class ViewController_image: UIViewController {
 /////////////////////////
 extension ViewController_image:UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return datas.count
+        return datas.count+1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let soineData: Background = datas[indexPath.row]
-        let cell: TableViewCell_list = tableView.dequeueReusableCell(withIdentifier: "TableViewCell_list") as! TableViewCell_list
-        let image:UIImage = soineData.picture == nil ? UIImage() : UIImage(data: soineData.picture!)!
-        cell.setCell(data: Data_list(category: image, scale: CGFloat(soineData.scale)))//\(String(soineData.id)):
-        cell.backgroundColor = UIColor.clear
-        cell.contentView.backgroundColor = UIColor.clear
-        return cell
+        if indexPath.row==0 {
+            let cell: TableViewCell_list_ad = tableView.dequeueReusableCell(withIdentifier: "TableViewCell_list_ad") as! TableViewCell_list_ad
+            cell.setCell(unitId: Consts.ADMOB_UNIT_ID_BGSELECT, rootViewController: self)
+            return cell
+        }
+        else{
+            let soineData: Background = datas[indexPath.row-1]
+            let cell: TableViewCell_list = tableView.dequeueReusableCell(withIdentifier: "TableViewCell_list") as! TableViewCell_list
+            let image:UIImage = soineData.picture == nil ? UIImage() : UIImage(data: soineData.picture!)!
+            cell.setCell(data: Data_list(category: image, scale: CGFloat(soineData.scale)))//\(String(soineData.id)):
+            cell.backgroundColor = UIColor.clear
+            cell.contentView.backgroundColor = UIColor.clear
+            return cell
+        }
     }
     func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
         return index
@@ -160,7 +172,7 @@ extension ViewController_image:UITableViewDataSource{
                 handler: {
                     (action: UIAlertAction!) -> Void in
                     let request: NSFetchRequest<Background> = Background.fetchRequest()
-                    request.predicate = NSPredicate(format: "id = %d", self.datas[indexPath.row].id)
+                    request.predicate = NSPredicate(format: "id = %d", self.datas[indexPath.row-1].id)
                     do{
                         let fetchResults = try viewContext.fetch(request)
                         viewContext.delete(fetchResults[0])
@@ -197,7 +209,7 @@ extension ViewController_image:UITableViewDelegate{
                     let pNum:Int16 = (p1selected ? 1 : 2)
                     let pNumReverse:Int32 = (p1selected ? 2 : 1)
                     
-                    if record.id == datas[indexPath.row].id {
+                    if record.id == datas[indexPath.row-1].id {
                         if record.player == 0{//nil
                             newPlayer += pNum
                         }
@@ -249,7 +261,7 @@ extension ViewController_image:UITableViewDelegate{
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let request: NSFetchRequest<Background> = Background.fetchRequest()
-            request.predicate = NSPredicate(format: "id = %d", datas[indexPath.row].id)
+            request.predicate = NSPredicate(format: "id = %d", datas[indexPath.row-1].id)
             do{
                 let fetchResults = try viewContext.fetch(request)
                 viewContext.delete(fetchResults[0])
