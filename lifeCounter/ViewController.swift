@@ -18,6 +18,7 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         if viewController is SettingsTableViewController {
             refreshLife()
         } else if viewController is ViewController_image {
+            rotate_exec(rotate: screenRotate)
         }
     }
     @IBOutlet weak var player1view: UIView!
@@ -318,7 +319,6 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
 //    }
     
     @IBAction func touchDown_image_settingBtn(_ sender: Any) {
-        rotate_exec(rotate: .normal)
         let actionSheet: UIAlertController = UIAlertController(
             title: NSLocalizedString("bgAlert_title", comment: ""),
             message: NSLocalizedString("bgAlert_messsage", comment: ""),
@@ -334,6 +334,7 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
                     }
                     childVC.delegate = self
                     self.present(childVC, animated: true, completion: nil)
+                    self.rotate_exec(rotate: .normal)
             })
         )
         actionSheet.addAction(
@@ -347,6 +348,7 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
                 }
                 childVC.delegate = self
                 self.present(childVC, animated: true, completion: nil)
+                self.rotate_exec(rotate: .normal)
             })
         )
         actionSheet.addAction(
@@ -613,14 +615,17 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         
         if Rotate.normal == screenRotate {
             //leftにする
+            screenRotate = .left
             rotate_exec(rotate: .left)
         }
         else if Rotate.left == screenRotate {
             //rightにする
+            screenRotate = .right
             rotate_exec(rotate: .right)
         }
         else if Rotate.right == screenRotate {
             //normalにする
+            screenRotate = .normal
             rotate_exec(rotate: .normal)
         }
         let appDelegate: AppDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -651,7 +656,7 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         print("touchDown_rotate called!screenRotate(after):\(screenRotate)")
     }
     func rotate_exec(rotate: Rotate)  {
-        screenRotate = rotate
+        print("rotate_exec called!\(rotate.rawValue)")
         var rotatep1 = CGFloat(0)
         var rotatep2 = CGFloat(Double.pi)
         

@@ -47,6 +47,7 @@ class ViewController_image: UIViewController {
         
         tableView.dataSource = self
         tableView.delegate = self
+        presentationController?.delegate=self
         
         let backButton = UIBarButtonItem()
         //        backButton.title = "もどる"
@@ -372,5 +373,13 @@ extension ViewController_image:UIImagePickerControllerDelegate,UINavigationContr
             self.dismiss(animated: true, completion: nil)
             refreshData()
         }
+    }
+}
+extension ViewController_image:UIAdaptivePresentationControllerDelegate{
+    // モーダルが閉じられたときに呼ばれるメソッド
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        print("モーダルビューが閉じられました")
+        // ここで閉じられた後の処理を行う
+        delegate?.didPerformAction(from: self)
     }
 }
