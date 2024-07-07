@@ -16,7 +16,10 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     func didPerformAction(from viewController: UIViewController) {
         setBackground_init()
         if viewController is SettingsTableViewController {
-            refreshLife()
+            if SettingsTableViewController.defaultLifeChanged {
+                refreshLife()
+                SettingsTableViewController.defaultLifeChanged=false;
+            }
         } else if viewController is ViewController_image {
             rotate_exec(rotate: screenRotate)
         }

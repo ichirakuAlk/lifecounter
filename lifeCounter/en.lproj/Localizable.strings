@@ -15,9 +15,11 @@
 "bgAlert_button_del_2" = "delete(player2)";
 "bgAlert_button_cancel" = "cancel";
 "confirm_title" = "Confirm";
-"confirm_sentence_delete" = "%@\nDelete this history?";
+"confirm_sentence_delete" = "Do you want to delete it?";
 "dialog_button_yes" = "yes";
 "dialog_button_no" = "no";
+"dialog_delete_finished" = "deleted!";
+"dialog_setting_finished" = "saved!";
 "rename_title" = "rename";
 "rename_sentence" = "Please Enter new name";
 "dialog_button_change" = "change";

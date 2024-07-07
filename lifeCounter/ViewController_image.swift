@@ -273,7 +273,7 @@ extension ViewController_image:UITableViewDelegate{
             
             let screenSizeWidth = UIScreen.main.bounds.width
             let screenSizeHeight = UIScreen.main.bounds.height
-            self.view.makeToast("削除しました", point: CGPoint(x: screenSizeWidth/2, y: screenSizeHeight/2), title: nil, image: nil, completion: nil)
+            self.view.makeToast(String(format: NSLocalizedString("dialog_delete_finished", comment: "")), point: CGPoint(x: screenSizeWidth/2, y: screenSizeHeight/2), title: nil, image: nil, completion: nil)
             
             refreshData()
         }

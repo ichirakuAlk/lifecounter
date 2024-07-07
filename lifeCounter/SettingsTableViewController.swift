@@ -34,6 +34,8 @@ class SettingsTableViewController: UITableViewController{
     var upperLifeP2:Int = 20
     var bgopacity:Float = 0.8
     
+    static var defaultLifeChanged = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
       
@@ -195,6 +197,7 @@ class SettingsTableViewController: UITableViewController{
 //        }
         save(adFlag: false)
         
+        //toast start
         let screenSizeWidth = UIScreen.main.bounds.width
         let screenSizeHeight = UIScreen.main.bounds.height
         let offsetY = self.tableView.contentOffset.y
@@ -203,8 +206,13 @@ class SettingsTableViewController: UITableViewController{
             hosei = 0
         }
         print("tableview offset y : \(offsetY)")
-        self.view.makeToast("Saved!", point: CGPoint(x: screenSizeWidth/2, y: screenSizeHeight/2+hosei), title: nil, image: nil, completion: nil)
+        self.view.makeToast(String(format: NSLocalizedString("dialog_setting_finished", comment: "")), point: CGPoint(x: screenSizeWidth/2, y: screenSizeHeight/2+hosei), title: nil, image: nil, completion: nil)
+        //toast end
+        
         delegate?.didPerformAction(from: self)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            self.dismiss(animated: true, completion: nil)
+        }
     }
 //    func addAd(dataCount:Int,adCount:Int) -> Bool {
 //        let interval = 5
@@ -237,8 +245,20 @@ class SettingsTableViewController: UITableViewController{
                 else{
                     //edit
                     for record in fetchResults {
-                        record.defaultLifeP1=int16Value
-                        record.defaultLifep2=int16Value2
+                        if record.defaultLifeP1 != int16Value {
+                            SettingsTableViewController.defaultLifeChanged = true
+                            record.defaultLifeP1=int16Value
+                        }
+//                        else{
+//                            print("プレイヤー１のデフォルトライフは変わっていない")
+//                        }
+                        if record.defaultLifep2 != int16Value2 {
+                            SettingsTableViewController.defaultLifeChanged = true
+                            record.defaultLifep2=int16Value2
+                        }
+//                        else{
+//                            print("プレイヤー２のデフォルトライフは変わっていない")
+//                        }
                         record.bgopacity=bgopacity
                     }
                 }
