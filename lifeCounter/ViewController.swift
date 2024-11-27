@@ -12,7 +12,7 @@ import CoreData
 import GoogleMobileAds
 import AppTrackingTransparency
 
-class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINavigationControllerDelegate, ChildViewControllerDelegate{
+class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINavigationControllerDelegate, ChildViewControllerDelegate,GADFullScreenContentDelegate{
     func didPerformAction(from viewController: UIViewController) {
         setBackground_init()
         if viewController is SettingsTableViewController {
@@ -33,7 +33,6 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     @IBOutlet weak var dice: UIButton!
     @IBOutlet weak var p1bg: UIView!
     @IBOutlet weak var p2bg: UIView!
-    @IBOutlet weak var bannerView: GADBannerView!
     @IBOutlet var bgwidthp1: NSLayoutConstraint!
     @IBOutlet var bgwidthp2: NSLayoutConstraint!
     @IBOutlet var bgHeightp1: NSLayoutConstraint!
@@ -55,7 +54,8 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
     var viewContext:NSManagedObjectContext!
     var countDownCnt:Countdown = Countdown.three
     
-//    var interstitial: GADInterstitial!
+    var interstitial: GADInterstitialAd?
+    
     let RADIUS:CGFloat = 20
     var screenRotate:Rotate = .normal
     var bgopacity:CGFloat = 0.8
@@ -76,6 +76,21 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         NotificationCenter.default.addObserver(self, selector: #selector(notificationFunc_pushhome(notification:)), name: .notificationName, object: nil)
         
 //        interstitial = createAndLoadInterstitial()
+        
+        if #available(iOS 13.0, *) {
+            Task{
+                do{
+                    interstitial = try await GADInterstitialAd.load(withAdUnitID: Consts.ADMOB_UNIT_ID_INTERSTITIAL_CLEAR, request: GADRequest())
+                    interstitial?.fullScreenContentDelegate = self
+                }
+                catch{
+                    print("Failed to load interstitial ad with error: \(error.localizedDescription)")
+                }
+            }
+        } else {
+            // Fallback on earlier versions
+            print("ロードしない")//バグの素
+        }
         
         // Do any additional setup after loading the view.
         
@@ -145,10 +160,6 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
             name: UIApplication.didBecomeActiveNotification,
             object: nil
         )
-        //ad start
-        bannerView.adUnitID = Consts.ADMOB_UNIT_ID_MAIN
-        bannerView.rootViewController = self
-        //ad end
 //        bannerView.backgroundColor=UIColor.green
     }
     
@@ -196,9 +207,6 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
         let viewHeight = frame.size.height
         let aspect = viewHeight/viewWidth
         print("aspect:\(aspect)")
-        bannerView.adSize = GADInlineAdaptiveBannerAdSizeWithWidthAndMaxHeight(viewWidth,50*aspect)
-        let request: GADRequest = GADRequest()
-        bannerView.load(request)
     }
     @objc func notificationFunc_pushhome(notification: NSNotification?) {
         print("called! notificationFunc_pushhome")
@@ -296,17 +304,32 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
 //        else {
 //            print("Ad wasn't ready")
 //        }
+        guard let interstitial = interstitial else {
+          return print("Ad wasn't ready.（広告が使える状態でない）")
+        }
+
+        // The UIViewController parameter is an optional.
+        interstitial.present(fromRootViewController: nil)
         refreshLife()
         //画面初期化
 //        screenInitialize(sender)
     }
     
-//    //広告作成
-//    func createAndLoadInterstitial() -> GADInterstitial {
-//        var interstitial = GADInterstitial(adUnitID: Consts.ADMOB_UNIT_ID_INTERSTITIAL_CLEAR)
-//        interstitial.delegate = self
-//        interstitial.load(GADRequest())
-//        return interstitial
+    //広告作成
+//    @available(iOS 13.0.0, *)
+//    func createAndLoadInterstitial() -> GADInterstitialAd? {
+//        Task{
+//            do{
+//                var interstitial = try await GADInterstitialAd.load(withAdUnitID: Consts.ADMOB_UNIT_ID_INTERSTITIAL_CLEAR, request: GADRequest())
+//                //            interstitial.delegate = self
+//                //        interstitial.load(GADRequest())
+//                return interstitial
+//            }
+//            catch{
+//                print("Failed to load interstitial ad with error: \(error.localizedDescription)")
+//                return nil
+//            }
+//        }
 //    }
 //
 //    //広告非表示
@@ -320,7 +343,35 @@ class ViewController: UIViewController ,UIImagePickerControllerDelegate,UINaviga
 //        lifeflow_lifes.removeAll()
 //        gameStatus = .ready
 //    }
-    
+    /// Tells the delegate that the ad failed to present full screen content.
+    func ad(_ ad: GADFullScreenPresentingAd, didFailToPresentFullScreenContentWithError error: Error) {
+        print("Ad did fail to present full screen content.")
+    }
+
+    /// Tells the delegate that the ad will present full screen content.
+    func adWillPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+        print("Ad will present full screen content.")
+    }
+
+    /// Tells the delegate that the ad dismissed full screen content.
+    func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+        print("Ad did dismiss full screen content.")
+        print("インターステシャル広告を読み込み直すよ！使い捨てらしいからね！")
+        if #available(iOS 13.0, *) {
+            Task{
+                do{
+                    interstitial = try await GADInterstitialAd.load(withAdUnitID: Consts.ADMOB_UNIT_ID_INTERSTITIAL_CLEAR, request: GADRequest())
+                    interstitial?.fullScreenContentDelegate = self
+                }
+                catch{
+                    print("Failed to load interstitial ad with error: \(error.localizedDescription)")
+                }
+            }
+        } else {
+            // Fallback on earlier versions
+            print("ロードしない")//バグの素
+        }
+    }
     @IBAction func touchDown_image_settingBtn(_ sender: Any) {
         let actionSheet: UIAlertController = UIAlertController(
             title: NSLocalizedString("bgAlert_title", comment: ""),

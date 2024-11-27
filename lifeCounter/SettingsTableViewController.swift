@@ -34,6 +34,7 @@ class SettingsTableViewController: UITableViewController{
     var upperLifeP2:Int = 20
     var bgopacity:Float = 0.8
     
+    @IBOutlet weak var saveBtn: UIButton!
     static var defaultLifeChanged = false
     
     override func viewDidLoad() {
@@ -51,6 +52,9 @@ class SettingsTableViewController: UITableViewController{
 //        bannerView.backgroundColor=UIColor.green
 //        addBannerViewToView(bannerView)
 //        bannerView.load(GADRequest())
+        if let localizedTitle = NSLocalizedString("SaveBtnTitle", comment: "") as String? {
+            saveBtn.setTitle(localizedTitle, for: .normal)
+        }
     }
 //    override func viewWillAppear(_ animated: Bool) {
 //        super.viewWillAppear(animated)

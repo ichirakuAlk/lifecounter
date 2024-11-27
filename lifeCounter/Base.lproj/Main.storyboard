@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -201,10 +200,6 @@
                                     <constraint firstItem="pst-Ac-v53" firstAttribute="top" secondItem="RGB-OH-td1" secondAttribute="top" id="qSd-ZI-mKV"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cEB-2Q-GLP" customClass="GADBannerView">
-                                <rect key="frame" x="0.0" y="802.5" width="414" height="93.5"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -212,8 +207,6 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="fbG-LI-3X4" secondAttribute="trailing" constant="15" id="0Lq-Gc-XDN"/>
                             <constraint firstItem="Dg9-iZ-AV2" firstAttribute="width" secondItem="WXi-tU-VPE" secondAttribute="width" multiplier="0.5" id="0pC-Le-tUr"/>
                             <constraint firstItem="fbG-LI-3X4" firstAttribute="leading" secondItem="N1f-fR-9MN" secondAttribute="trailing" constant="15" id="3ED-t2-qXr"/>
-                            <constraint firstAttribute="trailing" secondItem="cEB-2Q-GLP" secondAttribute="trailing" id="6JM-or-KWJ"/>
-                            <constraint firstItem="cEB-2Q-GLP" firstAttribute="top" secondItem="OXn-o0-U7l" secondAttribute="bottom" id="9qF-pf-fxN"/>
                             <constraint firstItem="RGB-OH-td1" firstAttribute="height" secondItem="N1f-fR-9MN" secondAttribute="height" multiplier="0.1" id="B61-gx-Qac"/>
                             <constraint firstItem="nsc-y7-PLC" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="DRw-ms-HQh"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="N1f-fR-9MN" secondAttribute="bottom" constant="50" id="Dh9-DY-Fy2"/>
@@ -227,7 +220,6 @@
                             <constraint firstItem="RGB-OH-td1" firstAttribute="leading" secondItem="N1f-fR-9MN" secondAttribute="trailing" id="PSQ-Ix-JFe"/>
                             <constraint firstItem="fbG-LI-3X4" firstAttribute="top" secondItem="RGB-OH-td1" secondAttribute="bottom" id="Skf-b8-Sum"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="OXn-o0-U7l" secondAttribute="trailing" id="UK7-mf-Ke1"/>
-                            <constraint firstItem="cEB-2Q-GLP" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="V5Y-Cr-PLt"/>
                             <constraint firstItem="k2Y-n8-EWS" firstAttribute="width" secondItem="WXi-tU-VPE" secondAttribute="width" multiplier="0.5" id="Wrs-EJ-Taf"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="RGB-OH-td1" secondAttribute="trailing" id="YtN-90-wT3"/>
                             <constraint firstItem="OXn-o0-U7l" firstAttribute="leading" secondItem="N1f-fR-9MN" secondAttribute="trailing" id="Yuy-R9-qYs"/>
@@ -240,11 +232,9 @@
                             <constraint firstItem="WXi-tU-VPE" firstAttribute="leading" secondItem="N1f-fR-9MN" secondAttribute="trailing" id="tzV-8K-R2j"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="WXi-tU-VPE" secondAttribute="trailing" id="uuE-ZR-ylE"/>
                             <constraint firstItem="N1f-fR-9MN" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="xAr-AI-VfT"/>
-                            <constraint firstAttribute="bottom" secondItem="cEB-2Q-GLP" secondAttribute="bottom" id="xTT-Kf-ap8"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="bannerView" destination="cEB-2Q-GLP" id="0gg-Sz-EuJ"/>
                         <outlet property="bgHeightp1" destination="rot-uu-WKI" id="aWv-pn-2fs"/>
                         <outlet property="bgHeightp2" destination="cfu-Fr-br4" id="uHU-PC-o94"/>
                         <outlet property="bgwidthp1" destination="m2t-mB-kHw" id="2tv-Sf-Ozv"/>
@@ -551,6 +541,7 @@
                         <outlet property="intervalLabel" destination="X3T-xG-8zy" id="N7X-G5-ClE"/>
                         <outlet property="intervalLabel2" destination="DhT-jz-Ajp" id="NNh-Ye-UiP"/>
                         <outlet property="opacityLabel" destination="XpY-Io-ddy" id="L8d-Rv-1bf"/>
+                        <outlet property="saveBtn" destination="Jvy-Yt-Ape" id="6GL-kx-piY"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DcA-Vg-eec" userLabel="First Responder" sceneMemberID="firstResponder"/>

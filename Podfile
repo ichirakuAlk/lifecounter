@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
-platform :ios, '12.2'
+platform :ios, '17.6'
 use_modular_headers!
 source 'https://github.com/CocoaPods/Specs.git'
 

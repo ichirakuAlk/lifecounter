@@ -27,3 +27,4 @@
 "PhotoAuthAlert_messsage" = "写真へのアクセスを許可する必要があります。設定を変更してください。";
 "PhotoAuthAlert_button_1" = "設定変更";
 "PhotoAuthAlert_button_cancel" = "キャンセル";
+"SaveBtnTitle" = "保存";
